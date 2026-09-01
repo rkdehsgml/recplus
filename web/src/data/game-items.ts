@@ -1,0 +1,43 @@
+import type { GameItem } from "@/lib/game-types";
+
+/**
+ * 임시 시드 데이터입니다. 항목 수를 늘리지 않으며, DB 연동 시 game_items 테이블로 대체합니다.
+ */
+export const seedGameItems: GameItem[] = [
+  { id: "balance-1", gameId: "balance", kind: "prompt", prompt: "평생 치킨만 vs 평생 피자만" },
+  { id: "balance-2", gameId: "balance", kind: "prompt", prompt: "여름만 있는 세상 vs 겨울만 있는 세상" },
+  { id: "balance-3", gameId: "balance", kind: "prompt", prompt: "계획 여행 vs 즉흥 여행" },
+  { id: "word-chain-1", gameId: "word-chain", kind: "prompt", prompt: "동물 이름" },
+  { id: "word-chain-2", gameId: "word-chain", kind: "prompt", prompt: "한국 음식" },
+  { id: "word-chain-3", gameId: "word-chain", kind: "prompt", prompt: "영화 제목" },
+  { id: "what-if-1", gameId: "what-if", kind: "prompt", prompt: "하루 동안 투명인간이 된다면?" },
+  { id: "what-if-2", gameId: "what-if", kind: "prompt", prompt: "초능력 하나를 고른다면?" },
+  { id: "what-if-3", gameId: "what-if", kind: "prompt", prompt: "무인도에 물건 3개만 가져간다면?" },
+  { id: "sonbyeongho-1", gameId: "sonbyeongho", kind: "prompt", prompt: "오늘 지각한 사람" },
+  { id: "sonbyeongho-2", gameId: "sonbyeongho", kind: "prompt", prompt: "자취하는 사람" },
+  { id: "sonbyeongho-3", gameId: "sonbyeongho", kind: "prompt", prompt: "아침을 안 먹고 온 사람" },
+  { id: "choseong-1", gameId: "choseong", kind: "quiz", prompt: "[음식] ㄸㅂㅇ", answer: "떡볶이" },
+  { id: "choseong-2", gameId: "choseong", kind: "quiz", prompt: "[동물] ㅋㅍㄹ", answer: "카피바라" },
+  { id: "choseong-3", gameId: "choseong", kind: "quiz", prompt: "[장소] ㅎㅇㄷ", answer: "해운대" },
+  { id: "person-quiz-1", gameId: "person-quiz", kind: "quiz", prompt: "만원권 / 한글 창제", answer: "세종대왕" },
+  { id: "person-quiz-2", gameId: "person-quiz", kind: "quiz", prompt: "거북선 / 조선 장군", answer: "이순신" },
+  { id: "person-quiz-3", gameId: "person-quiz", kind: "quiz", prompt: "E=mc² / 물리학자", answer: "아인슈타인" },
+  { id: "charades-1", gameId: "charades", kind: "host-only", prompt: "기타 치기" },
+  { id: "charades-2", gameId: "charades", kind: "host-only", prompt: "좀비 걷기" },
+  { id: "charades-3", gameId: "charades", kind: "host-only", prompt: "김밥 말기" },
+  { id: "speed-quiz-1", gameId: "speed-quiz", kind: "host-only", prompt: "아이스아메리카노" },
+  { id: "speed-quiz-2", gameId: "speed-quiz", kind: "host-only", prompt: "시험기간" },
+  { id: "speed-quiz-3", gameId: "speed-quiz", kind: "host-only", prompt: "노래방" },
+  { id: "one-mind-1", gameId: "one-mind", kind: "prompt", prompt: "치킨 하면 떠오르는 부위는?" },
+  { id: "one-mind-2", gameId: "one-mind", kind: "prompt", prompt: "초록색 하면 떠오르는 것은?" },
+  { id: "one-mind-3", gameId: "one-mind", kind: "prompt", prompt: "겨울 간식 하나?" },
+  { id: "penalty-wheel-1", gameId: "penalty-wheel", kind: "prompt", prompt: "옆 사람 칭찬 10초" },
+  { id: "penalty-wheel-2", gameId: "penalty-wheel", kind: "prompt", prompt: "웃긴 표정 5초" },
+  { id: "penalty-wheel-3", gameId: "penalty-wheel", kind: "prompt", prompt: "유행어 외치기" },
+  { id: "time-bomb-1", gameId: "time-bomb", kind: "prompt", prompt: "오늘 가장 웃겼던 사람 말하기" },
+  { id: "time-bomb-2", gameId: "time-bomb", kind: "prompt", prompt: "왼쪽 사람 칭찬하기" },
+  { id: "time-bomb-3", gameId: "time-bomb", kind: "prompt", prompt: "좋아하는 간식 말하기" },
+  { id: "awards-1", gameId: "awards", kind: "prompt", prompt: "오늘의 MVP" },
+  { id: "awards-2", gameId: "awards", kind: "prompt", prompt: "분위기 메이커상" },
+  { id: "awards-3", gameId: "awards", kind: "prompt", prompt: "최다 정답상" },
+];

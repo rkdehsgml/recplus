@@ -1,0 +1,48 @@
+.page { min-height: 100vh; background: var(--background); }
+.header, .wizard, .footer { width: min(100% - 40px, 620px); margin: 0 auto; }
+.header { display: flex; height: 82px; align-items: center; justify-content: space-between; }
+.brand { display: inline-flex; align-items: center; gap: 8px; font-size: 15px; font-weight: 750; letter-spacing: -.04em; }
+.brand span { display: grid; width: 27px; height: 27px; place-items: center; border-radius: 8px; color: white; background: linear-gradient(135deg, #0071e3, #55b7ff); font-size: 13px; }
+.close { display: grid; width: 35px; height: 35px; place-items: center; border-radius: 11px; color: var(--muted); background: var(--fill); font-size: 22px; line-height: 1; }
+.wizard { min-height: calc(100vh - 172px); padding: 44px 0 116px; }
+.progress { display: flex; gap: 6px; margin-bottom: 39px; }
+.progress span { height: 5px; flex: 1; border-radius: 99px; background: #dcdce0; transition: background 180ms ease; }
+.progress .active { background: var(--blue); }
+.step { animation: appear 260ms ease both; }
+@keyframes appear { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.stepLabel { margin: 0 0 8px; color: var(--blue); font-size: 12px; font-weight: 750; letter-spacing: .06em; }
+.step h1 { margin: 0; font-size: clamp(34px, 7vw, 46px); line-height: 1.13; letter-spacing: -.065em; }
+.description { max-width: 430px; margin: 15px 0 30px; color: var(--muted); font-size: 15px; line-height: 1.65; letter-spacing: -.03em; }
+.options { display: grid; gap: 11px; }
+.option { display: flex; width: 100%; align-items: center; gap: 14px; padding: 17px; border: 2px solid transparent; border-radius: 18px; color: var(--foreground); background: var(--surface); box-shadow: 0 1px 4px rgb(0 0 0 / 4%); cursor: pointer; text-align: left; transition: border-color 160ms ease, box-shadow 160ms ease, transform 160ms ease; }
+.option:hover { transform: translateY(-1px); }
+.option.selected { border-color: var(--blue); box-shadow: 0 0 0 4px var(--blue-soft); }
+.optionIcon { display: grid; width: 46px; height: 46px; flex: none; place-items: center; border-radius: 13px; background: var(--fill); font-size: 23px; }
+.option > span:nth-child(2) { display: grid; gap: 3px; }
+.option strong { font-size: 16px; letter-spacing: -.04em; }.option small { color: var(--muted); font-size: 12px; }
+.option b { margin-left: auto; color: var(--blue); font-size: 18px; }
+.choiceGroup { margin-top: 28px; }.choiceLabel { display: block; margin-bottom: 11px; font-size: 14px; font-weight: 700; }
+.chips, .timeOptions { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
+.chips button, .timeOptions button { min-height: 54px; border: 2px solid transparent; border-radius: 14px; color: var(--foreground); background: var(--surface); box-shadow: 0 1px 4px rgb(0 0 0 / 4%); cursor: pointer; font-size: 15px; font-weight: 700; }
+.chips .chipSelected, .timeOptions .timeSelected { border-color: var(--blue); color: var(--blue); background: var(--blue-soft); box-shadow: 0 0 0 3px var(--blue-soft); }
+.modeCards { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; }
+.modeCards button { display: grid; gap: 5px; min-height: 141px; padding: 18px; border: 2px solid transparent; border-radius: 18px; color: var(--foreground); background: var(--surface); box-shadow: 0 1px 4px rgb(0 0 0 / 4%); cursor: pointer; text-align: left; }
+.modeCards .modeSelected { border-color: var(--blue); background: #fafdff; box-shadow: 0 0 0 4px var(--blue-soft); }
+.modeCards span { font-size: 26px; }.modeCards strong { font-size: 16px; letter-spacing: -.04em; }.modeCards small { color: var(--muted); font-size: 12px; }
+.timeOptions button { display: grid; place-content: center; font-size: 22px; }.timeOptions small { margin-top: 1px; font-size: 11px; }
+.selectionPreview { display: grid; gap: 9px; margin-top: 25px; padding: 18px; border-radius: 17px; background: var(--surface); box-shadow: 0 1px 4px rgb(0 0 0 / 4%); }
+.selectionPreview span { color: var(--muted); font-size: 12px; }.selectionPreview strong { font-size: 15px; letter-spacing: -.035em; line-height: 1.5; }
+.footer { position: fixed; right: 0; bottom: 0; left: 0; display: flex; align-items: center; justify-content: space-between; padding: 15px max(20px, calc((100vw - 620px) / 2)); border-top: 1px solid rgb(0 0 0 / 5%); background: rgb(245 245 247 / 88%); backdrop-filter: blur(15px); }
+.primaryButton, .backButton { min-height: 49px; padding: 0 20px; border: 0; border-radius: 999px; cursor: pointer; font-size: 14px; font-weight: 700; }
+.primaryButton { color: white; background: var(--blue); box-shadow: 0 8px 18px rgb(0 113 227 / 22%); }.primaryButton span { margin-left: 8px; font-size: 18px; }
+.backButton { color: var(--muted); background: transparent; }
+.complete { width: min(100% - 40px, 500px); margin: 88px auto; text-align: center; }.completeIcon { display: grid; width: 62px; height: 62px; margin: 0 auto 22px; place-items: center; border-radius: 50%; color: var(--blue); background: var(--blue-soft); font-size: 29px; font-weight: 750; }
+.complete h1 { margin: 0; font-size: clamp(35px, 7vw, 48px); line-height: 1.14; letter-spacing: -.065em; }.complete > p:not(.stepLabel) { margin: 15px 0 25px; color: var(--muted); font-size: 15px; line-height: 1.65; }
+.summary { display: grid; gap: 10px; padding: 19px; margin-bottom: 25px; border-radius: 17px; background: var(--surface); color: var(--muted); font-size: 14px; text-align: left; }.summary span:first-child { color: var(--foreground); font-weight: 700; }
+.secondaryLink { display: block; margin-top: 19px; color: var(--muted); font-size: 13px; }
+@media (max-width: 520px) { .header, .wizard { width: min(100% - 32px, 620px); }.header { height: 70px; }.wizard { padding-top: 34px; }.footer { padding: 14px 16px calc(14px + env(safe-area-inset-bottom)); }.modeCards { grid-template-columns: 1fr; }.modeCards button { min-height: 102px; }.complete { margin-top: 62px; } }
+
+.peopleInput { display: inline-flex; height: 55px; align-items: center; gap: 5px; padding: 0 15px; margin-bottom: 10px; border: 2px solid var(--blue); border-radius: 14px; color: var(--blue); background: var(--blue-soft); }.peopleInput input, .teamHeading label input, .teamNames input { border: 0; outline: 0; color: var(--foreground); background: transparent; font: inherit; font-weight: 750; }.peopleInput input { width: 72px; font-size: 20px; }.peopleInput span { font-size: 14px; font-weight: 700; }.teamHeading { display: flex; align-items: center; justify-content: space-between; }.teamHeading .choiceLabel { margin: 0; }.teamHeading label { display: inline-flex; height: 35px; align-items: center; gap: 4px; padding: 0 10px; border-radius: 10px; color: var(--blue); background: var(--blue-soft); font-size: 12px; font-weight: 700; }.teamHeading label input { width: 35px; color: var(--blue); text-align: center; }.teamHint { margin: 8px 0 11px; color: var(--muted); font-size: 12px; line-height: 1.5; }.teamNames { display: grid; grid-template-columns: repeat(2, 1fr); gap: 7px; }.teamNames label { display: grid; grid-template-columns: 25px minmax(0, 1fr); align-items: center; gap: 6px; min-height: 40px; padding: 0 9px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }.teamNames label > span { display: grid; width: 21px; height: 21px; place-items: center; border-radius: 6px; color: var(--blue); background: var(--blue-soft); font-size: 10px; font-weight: 750; }.teamNames input { width: 100%; font-size: 12px; }
+
+.chips, .timeOptions { grid-template-columns: repeat(auto-fit, minmax(68px, 1fr)); }.chips button, .timeOptions button { min-width: 0; min-height: 54px; padding-right: 8px; padding-left: 8px; line-height: 1.25; white-space: normal; }.footer > * { min-width: 0; }.primaryButton, .backButton { display: inline-flex; align-items: center; justify-content: center; max-inline-size: 100%; text-align: center; white-space: normal; }.primaryButton { min-height: 50px; }
+@media (max-width: 380px) { .chips, .timeOptions { grid-template-columns: repeat(2, minmax(0, 1fr)); }.teamNames { grid-template-columns: 1fr; }.footer { gap: 10px; }.primaryButton, .backButton { padding-right: 14px; padding-left: 14px; font-size: 13px; } }
