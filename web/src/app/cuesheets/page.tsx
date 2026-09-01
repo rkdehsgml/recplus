@@ -2,8 +2,10 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { deleteCueSheet, loadCueSheets, type SavedCueSheet } from "@/lib/cuesheets";
+import { deleteCueSheet, type SavedCueSheet } from "@/lib/cuesheets";
+import { deleteCueSheetFromCloud, loadCloudCueSheets } from "@/lib/event-plan-store";
 import { placeLabels } from "@/lib/game-types";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import styles from "./page.module.css";
 
 function totalMinutes(cue: SavedCueSheet) {
@@ -13,34 +15,81 @@ function totalMinutes(cue: SavedCueSheet) {
 export default function CueSheetsPage() {
   const [cueSheets, setCueSheets] = useState<SavedCueSheet[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [signedOut, setSignedOut] = useState(false);
+  const [deleteError, setDeleteError] = useState("");
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      setCueSheets(loadCueSheets());
+    let active = true;
+    const supabase = createSupabaseBrowserClient();
+
+    async function loadForSignedInUser() {
+      const { data, error } = await supabase.auth.getUser();
+      if (!active) return;
+
+      if (error || !data.user) {
+        setCueSheets([]);
+        setSignedOut(true);
+        setLoaded(true);
+        return;
+      }
+
+      const cloud = await loadCloudCueSheets();
+      if (!active) return;
+
+      setCueSheets(cloud);
+      setSignedOut(false);
       setLoaded(true);
+    }
+
+    const frame = window.requestAnimationFrame(() => {
+      void loadForSignedInUser();
     });
-    return () => window.cancelAnimationFrame(frame);
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session?.user) {
+        setCueSheets([]);
+        setSignedOut(true);
+        setLoaded(true);
+        return;
+      }
+      void loadForSignedInUser();
+    });
+
+    return () => {
+      active = false;
+      window.cancelAnimationFrame(frame);
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
-  function remove(cue: SavedCueSheet) {
+  async function remove(cue: SavedCueSheet) {
     if (!window.confirm(`“${cue.name}” 행사 플랜을 삭제할까요?`)) return;
+    setDeleteError("");
+    const cloud = await deleteCueSheetFromCloud(cue.id);
+    if (cloud === "failed") {
+      setDeleteError("계정에 저장된 행사 플랜을 삭제하지 못했어요. 잠시 후 다시 시도해주세요.");
+      return;
+    }
     setCueSheets(deleteCueSheet(cue.id));
   }
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <Link className={styles.brand} href="/"><span>R</span> 레크마스터</Link>
-        <Link className={styles.newButton} href="/create">＋ 새 행사 준비</Link>
-      </header>
-
       <section className={styles.intro}>
         <p>MY EVENTS</p>
         <h1>저장한 행사 플랜을<br />필요할 때 다시 꺼내세요.</h1>
-        <span>이 기기의 브라우저에 저장된 행사 플랜 {cueSheets.length}개</span>
+        <span>{signedOut ? "로그인한 계정의 행사 플랜만 표시됩니다." : `이 기기와 로그인한 계정에서 불러온 행사 플랜 ${cueSheets.length}개`}</span>
       </section>
 
-      {loaded && cueSheets.length ? (
+      {deleteError && <p className={styles.error} role="alert">{deleteError}</p>}
+
+      {signedOut ? (
+        <section className={styles.signInEmpty}>
+          <span>◷</span>
+          <h2>행사 플랜을 보려면 로그인하세요.</h2>
+          <p>로그인한 계정의 행사 플랜만 이 화면에 표시됩니다.</p>
+          <Link href="/login">로그인하기</Link>
+        </section>
+      ) : loaded && cueSheets.length ? (
         <section className={styles.grid}>
           {cueSheets.map((cue) => (
             <article className={styles.card} key={cue.id}>

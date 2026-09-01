@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createCustomGameItems } from "@/lib/game-catalog";
@@ -63,11 +62,6 @@ export default function NewGamePage() {
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <Link className={styles.brand} href="/"><span>R</span> 레크마스터</Link>
-        <Link className={styles.cancel} href="/games">취소</Link>
-      </header>
-
       <form className={styles.form} onSubmit={submit}>
         <div className={styles.intro}><p>MY GAME</p><h1>우리 모임만의<br />게임을 만들어요.</h1><span>저장된 게임은 이 기기에서만 보이며, 나중에 커뮤니티 제안으로 확장할 수 있어요.</span></div>
 

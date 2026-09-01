@@ -50,11 +50,7 @@ export default function ResultContent() {
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <Link className={styles.brand} href="/"><span>R</span> 레크마스터</Link>
-        <Link className={styles.edit} href="/create">조건 수정</Link>
-      </header>
-
+      <div className={styles.contextAction}><Link href="/create">← 조건 수정</Link></div>
       <EditableCue key={cueKey} initialCue={cue} input={input} />
     </main>
   );

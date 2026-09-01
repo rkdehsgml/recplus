@@ -2,7 +2,7 @@ import type { Archetype, GameDefinition, GameItem, GameItemKind } from "./game-t
 
 export type ItemOrderByGame = Record<string, string[]>;
 
-function itemKindFor(archetype: Archetype): GameItemKind {
+export function itemKindFor(archetype: Archetype): GameItemKind {
   if (archetype === "QUIZ") return "quiz";
   if (archetype === "PERFORM") return "host-only";
   return "prompt";

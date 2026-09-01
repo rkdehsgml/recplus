@@ -23,3 +23,9 @@ export function deleteCustomGame(id: string) {
   window.localStorage.setItem(CUSTOM_GAMES_KEY, JSON.stringify(games));
   return games;
 }
+
+export function updateCustomGame(id: string, patch: Partial<GameDefinition>) {
+  const games = loadCustomGames().map((game) => game.id === id ? { ...game, ...patch } : game);
+  window.localStorage.setItem(CUSTOM_GAMES_KEY, JSON.stringify(games));
+  return games;
+}

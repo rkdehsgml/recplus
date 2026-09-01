@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import styles from "./page.module.css";
@@ -51,11 +50,6 @@ export default function CreatePage() {
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}>
-        <Link className={styles.brand} href="/"><span>R</span> 레크마스터</Link>
-        <Link className={styles.close} href="/" aria-label="홈으로 돌아가기">×</Link>
-      </header>
-
       <section className={styles.wizard}>
         <div className={styles.progress} aria-label={`${step} / 3 단계`}>
           {[1, 2, 3].map((item) => <span className={item <= step ? styles.active : ""} key={item} />)}

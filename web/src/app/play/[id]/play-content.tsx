@@ -2,8 +2,13 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { getCueSheet, type SavedCueSheet } from "@/lib/cuesheets";
+import { games } from "@/data/games";
+import type { SavedCueSheet } from "@/lib/cuesheets";
+import { loadCustomGames } from "@/lib/custom-games";
+import { loadCloudCueSheet } from "@/lib/event-plan-store";
 import { createItemOrders, gameItemsFor, orderedGameItems, type ItemOrderByGame } from "@/lib/game-catalog";
+import { currentItemsFor, loadItemPacks } from "@/lib/item-packs";
+import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import {
   clearPlaySession,
   loadPlaySession,
@@ -41,6 +46,14 @@ function playerNumber(player: PersonalScore) {
   return Number(player.id.replace("player-", "")) || 0;
 }
 
+/** 저장 당시의 문항 스냅샷 대신 지금의 문제팩을 씁니다. 문항을 추가하면 저장해둔 큐시트에도 바로 반영돼요. */
+function withCurrentItems(cue: SavedCueSheet): SavedCueSheet {
+  const packs = loadItemPacks();
+  const catalog = [...loadCustomGames(), ...games];
+
+  return { ...cue, games: cue.games.map((game) => ({ ...game, items: currentItemsFor(game, packs, catalog) })) };
+}
+
 export default function PlayContent({ id }: { id: string }) {
   const [cue, setCue] = useState<SavedCueSheet | null>();
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -55,11 +68,16 @@ export default function PlayContent({ id }: { id: string }) {
   const [answerVisible, setAnswerVisible] = useState(false);
   const [gameProgress, setGameProgress] = useState<GameProgress[]>([]);
   const [restoredAt, setRestoredAt] = useState<string | null>(null);
+  const [authRequired, setAuthRequired] = useState(false);
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      const saved = getCueSheet(id) ?? null;
+    let active = true;
+    const supabase = createSupabaseBrowserClient();
+
+    function loadPlan(stored: SavedCueSheet | null) {
+      if (!active) return;
       const session = loadPlaySession(id);
+      const saved = stored ? withCurrentItems(stored) : null;
 
       setCue(saved);
       if (!saved || !saved.games.length) return;
@@ -76,8 +94,37 @@ export default function PlayContent({ id }: { id: string }) {
       setGameProgress(saved.games.map((_, index) => session?.gameProgress[index] ?? "pending"));
       setItemOrders(createItemOrders(saved.games, session?.itemOrders));
       setRestoredAt(session?.updatedAt ?? null);
+    }
+
+    async function loadForSignedInUser() {
+      const { data, error } = await supabase.auth.getUser();
+      if (!active) return;
+
+      if (error || !data.user) {
+        setAuthRequired(true);
+        loadPlan(null);
+        return;
+      }
+
+      setAuthRequired(false);
+      const cloud = await loadCloudCueSheet(id);
+      loadPlan(cloud);
+    }
+
+    void loadForSignedInUser();
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session?.user) {
+        setAuthRequired(true);
+        loadPlan(null);
+        return;
+      }
+      void loadForSignedInUser();
     });
-    return () => window.cancelAnimationFrame(frame);
+
+    return () => {
+      active = false;
+      listener.subscription.unsubscribe();
+    };
   }, [id]);
 
   useEffect(() => {
@@ -187,7 +234,7 @@ export default function PlayContent({ id }: { id: string }) {
   }
 
   if (cue === undefined) return <main className={styles.state}>진행 화면을 준비하고 있어요…</main>;
-  if (!cue || !game) return <main className={styles.state}><h1>큐시트를 찾지 못했어요.</h1><p>이 브라우저에 저장된 큐시트인지 확인해주세요.</p><Link href="/cuesheets">저장한 큐시트 보기</Link></main>;
+  if (!cue || !game) return <main className={styles.state}><h1>{authRequired ? "로그인이 필요해요." : "큐시트를 찾지 못했어요."}</h1><p>{authRequired ? "행사 플랜과 진행 화면은 로그인한 계정에서만 열 수 있어요." : "이 계정에 저장된 큐시트인지 확인해주세요."}</p><Link href={authRequired ? "/login" : "/cuesheets"}>{authRequired ? "로그인하기" : "저장한 큐시트 보기"}</Link></main>;
 
   const item = orderedItems[promptIndex];
   const completedCount = gameProgress.filter((progress) => progress === "completed").length;

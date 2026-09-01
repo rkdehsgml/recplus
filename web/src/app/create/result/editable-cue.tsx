@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useMemo, useState } from "react";
 import type { RecommendedGame, RecommendationInput } from "@/engine/recommend";
 import { saveCueSheet } from "@/lib/cuesheets";
+import { saveCueSheetToCloud } from "@/lib/event-plan-store";
 import { phaseLabels, placeLabels } from "@/lib/game-types";
 import styles from "./page.module.css";
 
@@ -16,6 +17,8 @@ export default function EditableCue({ initialCue, input }: EditableCueProps) {
   const [cue, setCue] = useState(initialCue);
   const [name, setName] = useState(`${placeLabels[input.place]} ${input.targetMinutes}분 행사 플랜`);
   const [savedId, setSavedId] = useState<string | null>(null);
+  const [saveMessage, setSaveMessage] = useState("");
+  const [saving, setSaving] = useState(false);
   const total = useMemo(() => cue.reduce((sum, game) => sum + game.allocatedDuration, 0), [cue]);
 
   function move(index: number, direction: -1 | 1) {
@@ -41,10 +44,21 @@ export default function EditableCue({ initialCue, input }: EditableCueProps) {
     setSavedId(null);
   }
 
-  function save() {
+  async function save() {
     if (!cue.length || !name.trim()) return;
+    setSaving(true);
+    setSaveMessage("");
     const saved = saveCueSheet({ ...input, name: name.trim(), games: cue });
+    const cloud = await saveCueSheetToCloud(saved);
     setSavedId(saved.id);
+    setSaving(false);
+    setSaveMessage(
+      cloud.status === "synced"
+        ? "이 기기와 로그인한 계정에 저장했어요."
+        : cloud.status === "signed-out"
+          ? "이 기기에 저장했어요. 계정 저장은 로그인 후 이용할 수 있어요."
+          : "이 기기에는 저장했어요. 계정 저장은 잠시 후 다시 시도해주세요.",
+    );
   }
 
   return (
@@ -103,8 +117,8 @@ export default function EditableCue({ initialCue, input }: EditableCueProps) {
 
       <section className={styles.savePanel}>
         <div><label htmlFor="cue-name">행사 플랜 이름</label><input id="cue-name" value={name} onChange={(event) => { setName(event.target.value); setSavedId(null); }} /></div>
-        <button onClick={save} disabled={!cue.length || !name.trim() || Boolean(savedId)}>{savedId ? "저장 완료" : "행사 플랜 저장"}</button>
-        {savedId && <p className={styles.savedMessage}>저장했어요. <Link href={`/play/${savedId}`}>지금 진행 시작 →</Link></p>}
+        <button onClick={save} disabled={!cue.length || !name.trim() || Boolean(savedId) || saving}>{savedId ? "저장 완료" : saving ? "저장 중…" : "행사 플랜 저장"}</button>
+        {savedId && <p className={styles.savedMessage}>{saveMessage} <Link href={`/play/${savedId}`}>지금 진행 시작 →</Link></p>}
       </section>
 
       <section className={styles.actions}>

@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { games } from "@/data/games";
+import { itemTargetFor } from "@/data/item-targets";
 import { loadCustomGames } from "@/lib/custom-games";
 import { gameContextLabel, gamePeopleLabel, gameTeamLabel } from "@/lib/game-discovery";
 import { gameItemsFor } from "@/lib/game-catalog";
+import { addedItemsFor, loadItemPacks, type ItemPacksByGame } from "@/lib/item-packs";
 import { archetypeLabels, difficultyLabels, placeLabels, type GameDefinition } from "@/lib/game-types";
 import styles from "./page.module.css";
 
@@ -13,9 +15,13 @@ const icons = { QUIZ: "🧠", TALK: "💬", SURVIVAL: "⚡", PERFORM: "🎭", PI
 
 export default function GameDetailContent({ id }: { id: string }) {
   const [customGames, setCustomGames] = useState<GameDefinition[]>([]);
+  const [packs, setPacks] = useState<ItemPacksByGame>({});
 
   useEffect(() => {
-    const frame = window.requestAnimationFrame(() => setCustomGames(loadCustomGames()));
+    const frame = window.requestAnimationFrame(() => {
+      setCustomGames(loadCustomGames());
+      setPacks(loadItemPacks());
+    });
     return () => window.cancelAnimationFrame(frame);
   }, []);
 
@@ -29,13 +35,14 @@ export default function GameDetailContent({ id }: { id: string }) {
     return <main className={styles.empty}><span>✦</span><h1>게임을 찾지 못했어요.</h1><p>게임 라이브러리에서 다시 찾아주세요.</p><Link href="/games">게임 라이브러리 보기</Link></main>;
   }
 
-  const items = gameItemsFor(game);
+  const addedItems = addedItemsFor(game, packs);
+  const items = [...gameItemsFor(game), ...addedItems];
+  const itemTarget = itemTargetFor(game);
   const profile = game.profile;
 
   return (
     <main className={styles.page}>
-      <header className={styles.header}><Link className={styles.brand} href="/"><span>R</span> 레크마스터</Link><Link className={styles.back} href="/games">← 게임 라이브러리</Link></header>
-
+      <Link className={styles.breadcrumb} href="/games">← 게임 둘러보기</Link>
       <section className={styles.hero}>
         <div className={styles.heroIcon}>{icons[game.archetype]}</div>
         <div className={styles.heroCopy}>
@@ -62,10 +69,13 @@ export default function GameDetailContent({ id }: { id: string }) {
             <ol>{game.ruleSteps.map((step, index) => <li key={`${step}-${index}`}><span>{index + 1}</span><p>{step}</p></li>)}</ol>
           </article>
 
-          {items.length > 0 && <article className={styles.sectionCard}>
-            <div className={styles.sectionTitle}><p>CONTENT PACK</p><h2>문제·제시어 미리보기</h2><span>현재 {items.length}개 · DB 연동 후 문제팩을 확장할 수 있어요.</span></div>
-            <div className={styles.itemList}>{items.slice(0, 3).map((item, index) => <div key={item.id}><span>{index + 1}</span><p>{item.prompt}</p>{item.kind === "quiz" && <small>정답은 진행자 화면에서 확인</small>}{item.kind === "host-only" && <small>진행자 전용 제시어</small>}</div>)}</div>
-          </article>}
+          <article className={styles.sectionCard}>
+            <div className={styles.sectionTitle}><p>CONTENT PACK</p><h2>문제·제시어</h2><span>지금 {items.length}개 · 목표 {itemTarget}개{addedItems.length > 0 ? ` · 직접 추가한 ${addedItems.length}개 포함` : ""}</span></div>
+            {items.length > 0
+              ? <div className={styles.itemList}>{items.slice(0, 3).map((item, index) => <div key={item.id}><span>{index + 1}</span><p>{item.prompt}</p>{item.kind === "quiz" && <small>정답은 진행자 화면에서 확인</small>}{item.kind === "host-only" && <small>진행자 전용 제시어</small>}</div>)}</div>
+              : <p className={styles.packEmpty}>아직 등록된 문항이 없어요. 진행 중에 꺼내 쓸 문항을 채워두세요.</p>}
+            <Link className={styles.packLink} href={`/games/${game.id}/items`}>문제팩 관리 <span>→</span></Link>
+          </article>
         </section>
 
         <aside className={styles.sideContent}>

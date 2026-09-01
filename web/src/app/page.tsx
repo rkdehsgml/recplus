@@ -24,18 +24,6 @@ export default function Home() {
 
   return (
     <main className={styles.page}>
-      <nav className={styles.nav} aria-label="주요 메뉴">
-        <Link className={styles.brand} href="/" aria-label="레크플러스 홈">
-          <span className={styles.brandMark}>R</span>
-          <span>레크플러스</span>
-        </Link>
-        <div className={styles.navActions}>
-          <Link className={styles.navLink} href="/games">게임 찾기</Link>
-          <Link className={styles.navLink} href="/create">행사 준비</Link>
-          <Link className={styles.navLink} href="/cuesheets">내 행사</Link>
-        </div>
-      </nav>
-
       <section className={styles.hero}>
         <div className={styles.heroCopy}>
           <p className={styles.eyebrow}>GROUP GAME DISCOVERY</p>
