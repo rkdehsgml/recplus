@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>레크마스터 — 랜딩 3종</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+:root{
+  --blue:#0071E3;--blue2:#42A5F5;--sky:#5AC8FA;--purple:#6C5CE7;
+  --grad:linear-gradient(135deg,#0071E3,#42A5F5 55%,#5AC8FA);
+  --grad2:linear-gradient(135deg,#6C5CE7,#0071E3 50%,#5AC8FA);
+  --bg:#F5F5F7;--card:#fff;--fill:#F0F0F3;--fill2:#E8E8ED;
+  --txt:#1D1D1F;--txt2:#6E6E73;--txt3:#8E8E93;--line:rgba(0,0,0,.08);
+  --dbg:#0F0F10;--dcard:#18181B;--dline:rgba(255,255,255,.09);--dtxt:#F5F5F7;--dtxt2:#A1A1AA;
+  --font:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+  --sh:0 4px 20px rgba(0,0,0,.07);--shl:0 24px 70px rgba(0,0,0,.14);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:var(--font);-webkit-font-smoothing:antialiased;letter-spacing:-.015em;line-height:1.5;background:var(--bg)}
+button{cursor:pointer;border:none;font-family:var(--font);color:inherit}
+h1,h2,h3{letter-spacing:-.035em;font-weight:700;line-height:1.13}
+a{text-decoration:none}
+
+/* ===== VARIANT SWITCHER ===== */
+.vsw{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);z-index:999;background:rgba(28,28,30,.92);backdrop-filter:blur(20px);border-radius:980px;padding:5px;display:flex;gap:3px;box-shadow:0 10px 40px rgba(0,0,0,.35)}
+.vsw button{padding:9px 18px;border-radius:980px;font-size:13px;font-weight:600;color:#A1A1AA;transition:.2s}
+.vsw button.on{background:#fff;color:#111}
+.variant{display:none}.variant.on{display:block}
+
+/* shared */
+.btn{padding:14px 30px;border-radius:980px;font-weight:600;font-size:16px;transition:.22s;display:inline-flex;align-items:center;gap:8px}
+.btn:active{transform:scale(.97)}
+.wrap{max-width:1060px;margin:0 auto;padding:0 24px}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .7s cubic-bezier(.16,1,.3,1),transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* ============ A안: 그라데이션 히어로 ============ */
+.a-nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,.7);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line);z-index:100;display:flex;align-items:center}
+.a-nav .wrap{display:flex;align-items:center;gap:26px;width:100%}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:16px;color:var(--txt)}
+.logo .dot{width:27px;height:27px;background:var(--grad);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px}
+.a-nav a{color:var(--txt2);font-size:13.5px;font-weight:500}
+.a-nav a:hover{color:var(--txt)}
+.a-nav .nb{margin-left:auto;background:var(--txt);color:#fff;padding:8px 17px;border-radius:980px;font-size:13.5px;font-weight:600}
+
+.a-hero{position:relative;padding:150px 0 90px;text-align:center;overflow:hidden;background:var(--bg)}
+.a-blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.5;pointer-events:none}
+.b1{width:520px;height:520px;background:#42A5F5;top:-160px;left:-120px;animation:float1 14s ease-in-out infinite}
+.b2{width:460px;height:460px;background:#6C5CE7;top:-90px;right:-130px;animation:float2 17s ease-in-out infinite}
+.b3{width:420px;height:420px;background:#5AC8FA;top:220px;left:42%;animation:float1 20s ease-in-out infinite}
+@keyframes float1{0%,100%{transform:translate(0,0)}50%{transform:translate(38px,44px)}}
+@keyframes float2{0%,100%{transform:translate(0,0)}50%{transform:translate(-44px,34px)}}
+@media(prefers-reduced-motion:reduce){.a-blob{animation:none}}
+.a-hero .inner{position:relative;z-index:2}
+.pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.75);backdrop-filter:blur(10px);border:1px solid rgba(255,255,255,.9);color:var(--blue);padding:8px 17px;border-radius:980px;font-size:13.5px;font-weight:600;margin-bottom:26px;box-shadow:0 2px 14px rgba(0,113,227,.12)}
+.a-hero h1{font-size:72px;margin-bottom:22px;color:var(--txt)}
+.a-hero h1 .g{background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.a-hero .lead{font-size:20px;color:var(--txt2);max-width:600px;margin:0 auto 34px;line-height:1.55}
+.a-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn-grad{background:var(--grad);color:#fff;box-shadow:0 10px 30px rgba(0,113,227,.34)}
+.btn-grad:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(0,113,227,.42)}
+.btn-glass{background:rgba(255,255,255,.7);backdrop-filter:blur(10px);color:var(--txt);border:1px solid var(--line)}
+.a-note{font-size:13.5px;color:var(--txt3);margin-top:18px}
+@media(max-width:760px){.a-hero{padding:120px 0 70px}.a-hero h1{font-size:44px}.a-hero .lead{font-size:17px}}
+
+.a-mock{position:relative;z-index:2;margin-top:56px;display:flex;justify-content:center;gap:22px;align-items:flex-end;flex-wrap:wrap;padding:0 24px}
+.mk-desk{flex:1;min-width:300px;max-width:520px;background:#fff;border-radius:16px;box-shadow:var(--shl);overflow:hidden;border:1px solid var(--line);animation:rise 1s cubic-bezier(.16,1,.3,1)}
+@keyframes rise{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+.mk-bar{height:30px;background:var(--fill);display:flex;align-items:center;padding:0 11px;gap:5px}
+.mk-bar i{width:9px;height:9px;border-radius:50%;display:block}
+.mk-body{padding:18px;font-size:11px;min-height:300px}
+.mk-h{font-size:17px;font-weight:700;margin-bottom:13px;color:var(--txt)}
+.mk-row{display:flex;align-items:center;gap:10px;background:var(--bg);border-radius:10px;padding:9px 11px;margin-bottom:7px}
+.mk-row .n{width:20px;height:20px;border-radius:6px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:var(--txt)}
+.mk-row .t{font-size:12px;font-weight:600;color:var(--txt)}
+.mk-row .s{font-size:10px;color:var(--txt2);margin-top:1px}
+.mk-row .m{margin-left:auto;font-size:10.5px;color:var(--txt3)}
+.mk-curve{display:flex;align-items:flex-end;gap:4px;height:40px;background:var(--bg);border-radius:10px;padding:7px;margin-bottom:10px}
+.mk-curve div{flex:1;border-radius:3px}
+.mk-phone{width:214px;background:#fff;border-radius:30px;padding:9px;box-shadow:var(--shl);border:1px solid var(--line);animation:rise 1s .15s backwards cubic-bezier(.16,1,.3,1)}
+.mk-pin{background:var(--bg);border-radius:23px;padding:15px;height:360px;overflow:hidden}
+.mk-ph{font-size:16px;font-weight:700;line-height:1.2;margin-bottom:7px;color:var(--txt)}
+.mk-ph .g{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.mk-cta{background:var(--grad);color:#fff;border-radius:10px;padding:10px;text-align:center;font-size:11px;font-weight:600;margin:11px 0}
+.mk-lbl{font-size:9.5px;font-weight:700;color:var(--txt3);margin:11px 0 6px}
+
+.a-sec{padding:96px 0;background:#fff}
+.a-sec.tint{background:var(--bg)}
+.st{text-align:center;font-size:14px;font-weight:600;background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:13px}
+.a-sec h2{font-size:46px;text-align:center;margin-bottom:16px;color:var(--txt)}
+.a-sec .sl{font-size:18px;color:var(--txt2);text-align:center;max-width:600px;margin:0 auto 54px;line-height:1.6}
+@media(max-width:760px){.a-sec{padding:66px 0}.a-sec h2{font-size:32px}.a-sec .sl{font-size:16px;margin-bottom:38px}}
+
+/* bento */
+.bento{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.bx{background:var(--bg);border-radius:22px;padding:28px;position:relative;overflow:hidden;transition:.28s cubic-bezier(.16,1,.3,1)}
+.a-sec.tint .bx{background:#fff;box-shadow:var(--sh)}
+.bx:hover{transform:translateY(-4px);box-shadow:var(--shl)}
+.bx.w2{grid-column:span 2}
+.bx h3{font-size:21px;margin-bottom:10px;color:var(--txt)}
+.bx p{font-size:14.5px;color:var(--txt2);line-height:1.6}
+.bx .bic{width:44px;height:44px;border-radius:13px;background:var(--grad);display:flex;align-items:center;justify-content:center;font-size:21px;margin-bottom:16px}
+.bx.grad{background:var(--grad);color:#fff}
+.bx.grad h3,.bx.grad p{color:#fff}.bx.grad p{opacity:.88}
+.bx.grad .bic{background:rgba(255,255,255,.22);backdrop-filter:blur(10px)}
+@media(max-width:860px){.bento{grid-template-columns:1fr}.bx.w2{grid-column:span 1}}
+
+.chips{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.chip{background:#fff;border-radius:980px;padding:10px 18px;font-size:14px;font-weight:500;box-shadow:var(--sh);display:flex;align-items:center;gap:7px;color:var(--txt)}
+.a-sec.tint .chip{background:var(--bg);box-shadow:none;border:1px solid var(--line)}
+.chip .sc{font-size:11px;color:var(--txt3)}
+.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;margin-top:56px}
+.nums .n{font-size:46px;font-weight:700;background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent;letter-spacing:-.04em}
+.nums .l{font-size:14px;color:var(--txt2);margin-top:4px}
+@media(max-width:760px){.nums{grid-template-columns:1fr 1fr;gap:28px}.nums .n{font-size:34px}}
+
+.a-cta{padding:120px 24px;text-align:center;background:var(--grad2);position:relative;overflow:hidden}
+.a-cta h2{font-size:50px;color:#fff;margin-bottom:16px}
+.a-cta p{font-size:19px;color:rgba(255,255,255,.9);margin-bottom:34px;line-height:1.55}
+.btn-w{background:#fff;color:var(--blue);box-shadow:0 12px 34px rgba(0,0,0,.2)}
+.btn-w:hover{transform:translateY(-2px)}
+.a-cta .nt{font-size:14px;color:rgba(255,255,255,.75);margin-top:18px}
+@media(max-width:760px){.a-cta{padding:80px 20px}.a-cta h2{font-size:33px}.a-cta p{font-size:16.5px}}
+footer{background:var(--bg);padding:46px 0;font-size:13.5px;color:var(--txt2)}
+footer .wrap{display:flex;justify-content:space-between;gap:22px;flex-wrap:wrap}
+footer a{color:var(--txt2)}
+
+/* ============ B안: 다크 프리미엄 ============ */
+.b-root{background:var(--dbg);color:var(--dtxt);min-height:100vh}
+.b-nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(15,15,16,.72);backdrop-filter:blur(20px);border-bottom:1px solid var(--dline);z-index:100;display:flex;align-items:center}
+.b-nav .wrap{display:flex;align-items:center;gap:26px;width:100%}
+.b-nav .logo{color:var(--dtxt)}
+.b-nav a{color:var(--dtxt2);font-size:13.5px;font-weight:500}
+.b-nav .nb{margin-left:auto;background:var(--grad);color:#fff;padding:8px 17px;border-radius:980px;font-size:13.5px;font-weight:600}
+.b-hero{position:relative;padding:160px 0 100px;text-align:center;overflow:hidden}
+.b-glow{position:absolute;width:760px;height:520px;background:radial-gradient(ellipse at center,rgba(66,165,245,.32),rgba(108,92,231,.14) 45%,transparent 70%);top:-60px;left:50%;transform:translateX(-50%);pointer-events:none}
+.b-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse 70% 55% at 50% 30%,#000,transparent)}
+.b-hero .inner{position:relative;z-index:2}
+.b-pill{display:inline-flex;align-items:center;gap:7px;background:rgba(255,255,255,.06);border:1px solid var(--dline);color:var(--sky);padding:8px 17px;border-radius:980px;font-size:13.5px;font-weight:600;margin-bottom:26px}
+.b-hero h1{font-size:74px;margin-bottom:22px;color:#fff}
+.b-hero h1 .g{background:linear-gradient(120deg,#5AC8FA,#42A5F5 40%,#8B7FFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.b-hero .lead{font-size:20px;color:var(--dtxt2);max-width:590px;margin:0 auto 34px;line-height:1.55}
+.btn-dg{background:var(--grad);color:#fff;box-shadow:0 10px 36px rgba(66,165,245,.36)}
+.btn-dg:hover{transform:translateY(-2px)}
+.btn-dghost{background:rgba(255,255,255,.06);color:#fff;border:1px solid var(--dline)}
+.b-sec{padding:96px 0}
+.b-sec h2{font-size:44px;text-align:center;margin-bottom:16px;color:#fff}
+.b-sec .sl{font-size:18px;color:var(--dtxt2);text-align:center;max-width:600px;margin:0 auto 54px;line-height:1.6}
+.b-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.bc{background:var(--dcard);border:1px solid var(--dline);border-radius:20px;padding:28px;transition:.28s}
+.bc:hover{border-color:rgba(66,165,245,.4);transform:translateY(-4px)}
+.bc .bic{width:44px;height:44px;border-radius:13px;background:rgba(66,165,245,.14);border:1px solid rgba(66,165,245,.25);display:flex;align-items:center;justify-content:center;font-size:20px;margin-bottom:16px}
+.bc h3{font-size:19px;margin-bottom:9px;color:#fff}
+.bc p{font-size:14.5px;color:var(--dtxt2);line-height:1.6}
+.b-strip{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.b-chip{background:var(--dcard);border:1px solid var(--dline);border-radius:980px;padding:10px 18px;font-size:14px;color:var(--dtxt);display:flex;gap:7px;align-items:center}
+.b-chip .sc{font-size:11px;color:var(--dtxt2)}
+.b-nums{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;text-align:center;margin-top:56px}
+.b-nums .n{font-size:46px;font-weight:700;background:linear-gradient(120deg,#5AC8FA,#8B7FFF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.b-nums .l{font-size:14px;color:var(--dtxt2);margin-top:4px}
+.b-cta{padding:110px 24px;text-align:center;position:relative;overflow:hidden}
+.b-cta h2{font-size:48px;color:#fff;margin-bottom:16px}
+.b-cta p{font-size:19px;color:var(--dtxt2);margin-bottom:34px}
+.b-foot{border-top:1px solid var(--dline);padding:44px 0;color:var(--dtxt2);font-size:13.5px}
+.b-foot .wrap{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.b-foot a{color:var(--dtxt2)}
+@media(max-width:860px){.b-cards{grid-template-columns:1fr}}
+@media(max-width:760px){.b-hero{padding:126px 0 74px}.b-hero h1{font-size:44px}.b-sec h2{font-size:32px}.b-cta h2{font-size:33px}.b-nums{grid-template-columns:1fr 1fr}}
+
+/* ============ C안: 스토리텔링 ============ */
+.c-nav{position:fixed;top:0;left:0;right:0;height:56px;background:rgba(255,255,255,.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);z-index:100;display:flex;align-items:center}
+.c-nav .wrap{display:flex;align-items:center;gap:26px;width:100%}
+.c-nav a{color:var(--txt2);font-size:13.5px;font-weight:500}
+.c-nav .nb{margin-left:auto;background:var(--grad);color:#fff;padding:8px 17px;border-radius:980px;font-size:13.5px;font-weight:600}
+.c-hero{padding:140px 0 80px;background:#fff}
+.c-hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center}
+.c-hero h1{font-size:56px;margin-bottom:20px;color:var(--txt)}
+.c-hero h1 .g{background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent}
+.c-hero .lead{font-size:18px;color:var(--txt2);line-height:1.6;margin-bottom:30px}
+.c-hero .btns{display:flex;gap:11px;flex-wrap:wrap}
+.c-vis{background:var(--grad2);border-radius:26px;padding:32px;box-shadow:var(--shl);position:relative;overflow:hidden}
+.c-vis .cf{position:absolute;inset:0;pointer-events:none}
+.c-vcard{background:rgba(255,255,255,.16);backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.24);border-radius:15px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:11px;color:#fff}
+.c-vcard .n{width:24px;height:24px;border-radius:8px;background:rgba(255,255,255,.24);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+.c-vcard .t{font-size:14px;font-weight:600}
+.c-vcard .s{font-size:11.5px;opacity:.82;margin-top:2px}
+.c-vcard .m{margin-left:auto;font-size:12px;opacity:.8}
+.c-vlbl{color:rgba(255,255,255,.9);font-size:12px;font-weight:600;margin-bottom:12px}
+@media(max-width:860px){.c-hero .wrap{grid-template-columns:1fr;gap:36px}.c-hero h1{font-size:38px}}
+.c-story{padding:90px 0;background:var(--bg)}
+.c-step{display:grid;grid-template-columns:1fr 1fr;gap:52px;align-items:center;margin-bottom:80px}
+.c-step:nth-child(even) .c-txt{order:2}
+.c-step:last-child{margin-bottom:0}
+.c-tag{display:inline-block;background:var(--grad);color:#fff;padding:5px 13px;border-radius:980px;font-size:12.5px;font-weight:600;margin-bottom:14px}
+.c-step h3{font-size:30px;margin-bottom:13px;color:var(--txt)}
+.c-step p{font-size:16.5px;color:var(--txt2);line-height:1.65;margin-bottom:16px}
+.c-step ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+.c-step li{font-size:15px;color:var(--txt2);display:flex;gap:9px}
+.c-step li::before{content:'✓';color:var(--blue);font-weight:700}
+.c-box{background:#fff;border-radius:22px;padding:26px;box-shadow:var(--sh);min-height:250px;display:flex;flex-direction:column;justify-content:center}
+@media(max-width:860px){.c-step{grid-template-columns:1fr;gap:26px;margin-bottom:56px}.c-step:nth-child(even) .c-txt{order:0}.c-step h3{font-size:24px}}
+.c-quote{padding:90px 0;background:#fff;text-align:center}
+.c-quote .q{font-size:30px;font-weight:600;line-height:1.5;max-width:760px;margin:0 auto 22px;color:var(--txt);letter-spacing:-.03em}
+.c-quote .a{font-size:14.5px;color:var(--txt3)}
+@media(max-width:760px){.c-quote .q{font-size:21px}}
+.sb{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:14px}
+.sbx{aspect-ratio:1;background:var(--bg);border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:10.5px;font-weight:600;color:var(--txt2)}
+.sbx .i{font-size:20px}
+</style>
+</head>
+<body>
+
+<div class="vsw">
+  <button class="on" onclick="sw('a',this)">A · 그라데이션</button>
+  <button onclick="sw('b',this)">B · 다크</button>
+  <button onclick="sw('c',this)">C · 스토리</button>
+</div>
+
+<!-- ================= A안 ================= -->
+<div class="variant on" id="v-a">
+  <nav class="a-nav"><div class="wrap">
+    <div class="logo"><span class="dot">🎯</span> 레크마스터</div>
+    <a href="#a-f">기능</a><a href="#a-g">게임</a>
+    <button class="nb">무료로 시작</button>
+  </div></nav>
+
+  <section class="a-hero">
+    <div class="a-blob b1"></div><div class="a-blob b2"></div><div class="a-blob b3"></div>
+    <div class="inner wrap">
+      <div class="pill">🎓 새터 · MT · 워크샵 진행자를 위한</div>
+      <h1>떠맡은 레크,<br><span class="g">5분</span>이면 끝나요</h1>
+      <p class="lead">장소·인원·시간만 고르면 검증된 게임으로 큐시트를 짜드려요. 참가자는 설치할 필요 없어요.</p>
+      <div class="a-btns">
+        <button class="btn btn-grad">무료로 시작하기</button>
+        <a href="#a-f" class="btn btn-glass">어떻게 작동하나요</a>
+      </div>
+      <div class="a-note">설치 없이 웹에서 바로 · 회원가입 없이 체험 가능</div>
+    </div>
+    <div class="a-mock">
+      <div class="mk-desk">
+        <div class="mk-bar"><i style="background:#FF5F57"></i><i style="background:#FEBC2E"></i><i style="background:#28C840"></i></div>
+        <div class="mk-body">
+          <div class="mk-h">큐시트 빌더</div>
+          <div class="mk-curve">
+            <div style="height:35%;background:#34C759"></div><div style="height:55%;background:#FFCC00"></div>
+            <div style="height:80%;background:#FF9500"></div><div style="height:100%;background:#FF3B30"></div>
+            <div style="height:68%;background:#AF52DE"></div>
+          </div>
+          <div class="mk-row"><div class="n">1</div><div><div class="t">청개구리 가위바위보</div><div class="s">가볍게 몸풀기</div></div><div class="m">5분</div></div>
+          <div class="mk-row"><div class="n">2</div><div><div class="t">밸런스 게임</div><div class="s">대화 유발 최강</div></div><div class="m">15분</div></div>
+          <div class="mk-row"><div class="n">3</div><div><div class="t">카테고리 초성 퀴즈</div><div class="s">지락실 시그니처</div></div><div class="m">20분</div></div>
+          <div class="mk-row"><div class="n">4</div><div><div class="t">랜덤 플레이 댄스</div><div class="s">영상 공유 바이럴</div></div><div class="m">10분</div></div>
+        </div>
+      </div>
+      <div class="mk-phone"><div class="mk-pin">
+        <div class="mk-ph">떠맡은 레크,<br><span class="g">5분</span>이면 끝나요</div>
+        <div style="font-size:10.5px;color:var(--txt2)">장소·인원·시간만 고르면 끝</div>
+        <div class="mk-cta">＋ 새 큐시트 만들기</div>
+        <div class="mk-lbl">🔥 지금 뜨는 게임</div>
+        <div class="mk-row"><span>🥇</span><div class="t">카테고리 초성</div><div class="m">지락실</div></div>
+        <div class="mk-row"><span>🥈</span><div class="t">랜덤플레이댄스</div><div class="m">지락실</div></div>
+        <div class="mk-row"><span>🥉</span><div class="t">밸런스 게임</div><div class="m">전예능</div></div>
+        <div class="mk-lbl">📁 저장된 큐시트</div>
+        <div class="mk-row"><span>🎓</span><div class="t">25 컴공 새터</div><div class="m">60분</div></div>
+      </div></div>
+    </div>
+  </section>
+
+  <section class="a-sec" id="a-f"><div class="wrap">
+    <div class="st reveal">이렇게 해결해요</div>
+    <h2 class="reveal">준비 3시간을 5분으로</h2>
+    <p class="sl reveal">게임 목록을 던져주는 게 아니라, 검증된 순서로 조립된 완성형 큐시트를 드려요.</p>
+    <div class="bento">
+      <div class="bx w2 grad reveal"><div class="bic">⚡</div><h3>3번의 탭으로 큐시트 완성</h3><p>장소·인원·시간만 고르면 끝. 텐션 곡선에 맞춰 오프닝부터 피날레까지 자동으로 조립됩니다. 목표 시간에 딱 맞게 배분되고, 마음에 안 드는 게임은 탭 한 번으로 교체돼요.</p></div>
+      <div class="bx reveal"><div class="bic">🎤</div><h3>폰만 보면 돼요</h3><p>읽기만 하면 되는 대본, 사운드보드, 조별 점수판까지. 진행자에게만 정답이 보여요.</p></div>
+      <div class="bx reveal"><div class="bic">👥</div><h3>조 편성도 자동</h3><p>2~6개 조로 랜덤 배정. 이름을 붙여넣거나 번호로 나눠요.</p></div>
+      <div class="bx reveal"><div class="bic">✏️</div><h3>우리만의 게임</h3><p>유형만 고르면 점수·타이머 규칙이 자동으로 붙어요. 내용만 채우세요.</p></div>
+      <div class="bx reveal"><div class="bic">🚑</div><h3>돌발 상황 대비</h3><p>고기가 안 익어도 걱정 없어요. 구급상자로 5분을 순삭시켜요.</p></div>
+    </div>
+  </div></section>
+
+  <section class="a-sec tint" id="a-g"><div class="wrap">
+    <div class="st reveal">검증된 게임만</div>
+    <h2 class="reveal">예능에서 터진 게임,<br>현장에서 되는 것만</h2>
+    <p class="sl reveal">"방송이니까 되는" 게임은 뺐어요. 준비물 없이 진행자 혼자 굴릴 수 있는 것만.</p>
+    <div class="chips reveal">
+      <div class="chip">카테고리 초성 퀴즈 <span class="sc">지락실</span></div>
+      <div class="chip">랜덤 플레이 댄스 <span class="sc">지락실</span></div>
+      <div class="chip">청개구리 가위바위보 <span class="sc">지락실</span></div>
+      <div class="chip">몸으로 말해요 <span class="sc">지락실</span></div>
+      <div class="chip">인물 퀴즈 <span class="sc">신서유기</span></div>
+      <div class="chip">이어 말하기 <span class="sc">신서유기</span></div>
+      <div class="chip">시한폭탄 <span class="sc">신서유기</span></div>
+      <div class="chip">밸런스 게임 <span class="sc">전예능</span></div>
+      <div class="chip">눈치 게임 <span class="sc">국민게임</span></div>
+      <div class="chip">손병호 게임 <span class="sc">국민게임</span></div>
+      <div class="chip">이심전심 <span class="sc">가족오락관</span></div>
+      <div class="chip">벌칙 룰렛 <span class="sc">유틸</span></div>
+    </div>
+    <div class="nums reveal">
+      <div><div class="n">15+</div><div class="l">검증된 기본 게임</div></div>
+      <div><div class="n">6</div><div class="l">게임 유형 템플릿</div></div>
+      <div><div class="n">0</div><div class="l">참가자 설치 앱</div></div>
+      <div><div class="n">5분</div><div class="l">큐시트 완성</div></div>
+    </div>
+  </div></section>
+
+  <section class="a-cta">
+    <h2>이번 MT, 걱정 없이</h2>
+    <p>준비는 5분, 진행은 폰 하나로.<br>지금 바로 첫 큐시트를 만들어보세요.</p>
+    <button class="btn btn-w">무료로 시작하기</button>
+    <div class="nt">설치 없이 웹에서 바로 · 신용카드 필요 없음</div>
+  </section>
+  <footer><div class="wrap">
+    <div><div class="logo" style="margin-bottom:8px"><span class="dot">🎯</span> 레크마스터</div>
+    <div style="font-size:12.5px;color:var(--txt3)">떠맡은 레크를 5분 만에 끝내드립니다</div></div>
+    <div style="display:flex;gap:20px"><a href="#a-f">기능</a><a href="#a-g">게임</a></div>
+  </div></footer>
+</div>
+
+<!-- ================= B안 ================= -->
+<div class="variant b-root" id="v-b">
+  <nav class="b-nav"><div class="wrap">
+    <div class="logo"><span class="dot">🎯</span> 레크마스터</div>
+    <a href="#b-f">기능</a><a href="#b-g">게임</a>
+    <button class="nb">무료로 시작</button>
+  </div></nav>
+
+  <section class="b-hero">
+    <div class="b-grid"></div><div class="b-glow"></div>
+    <div class="inner wrap">
+      <div class="b-pill">✦ 새터 · MT · 워크샵 진행자를 위한</div>
+      <h1>떠맡은 레크,<br><span class="g">5분</span>이면 끝나요</h1>
+      <p class="lead">장소·인원·시간만 고르면 검증된 게임으로 큐시트를 짜드려요. 참가자는 설치할 필요 없어요.</p>
+      <div class="a-btns">
+        <button class="btn btn-dg">무료로 시작하기</button>
+        <a href="#b-f" class="btn btn-dghost">어떻게 작동하나요</a>
+      </div>
+      <div style="font-size:13.5px;color:var(--dtxt2);margin-top:18px">설치 없이 웹에서 바로 · 회원가입 없이 체험</div>
+    </div>
+  </section>
+
+  <section class="b-sec" id="b-f"><div class="wrap">
+    <h2 class="reveal">준비 3시간을 5분으로</h2>
+    <p class="sl reveal">게임 목록이 아니라, 검증된 순서로 조립된 완성형 큐시트를 드려요.</p>
+    <div class="b-cards">
+      <div class="bc reveal"><div class="bic">⚡</div><h3>큐시트 자동 생성</h3><p>장소·인원·시간만 고르면 텐션 곡선에 맞춰 기승전결이 조립돼요. 목표 시간에 딱 맞게 배분됩니다.</p></div>
+      <div class="bc reveal"><div class="bic">🎤</div><h3>현장 진행 콘솔</h3><p>대본·사운드보드·조별 점수판까지. 진행자에게만 정답이 보이고, 시간이 밀리면 바로 알려줘요.</p></div>
+      <div class="bc reveal"><div class="bic">✏️</div><h3>게임 직접 만들기</h3><p>유형만 고르면 점수·타이머 규칙이 자동으로 붙어요. 만든 게임은 커뮤니티에 공유할 수 있어요.</p></div>
+    </div>
+  </div></section>
+
+  <section class="b-sec" id="b-g"><div class="wrap">
+    <h2 class="reveal">예능에서 터진 게임만</h2>
+    <p class="sl reveal">준비물 없이 진행자 혼자 굴릴 수 있는 것만 남겼어요.</p>
+    <div class="b-strip reveal">
+      <div class="b-chip">카테고리 초성 퀴즈 <span class="sc">지락실</span></div>
+      <div class="b-chip">랜덤 플레이 댄스 <span class="sc">지락실</span></div>
+      <div class="b-chip">몸으로 말해요 <span class="sc">지락실</span></div>
+      <div class="b-chip">인물 퀴즈 <span class="sc">신서유기</span></div>
+      <div class="b-chip">시한폭탄 <span class="sc">신서유기</span></div>
+      <div class="b-chip">밸런스 게임 <span class="sc">전예능</span></div>
+      <div class="b-chip">눈치 게임 <span class="sc">국민게임</span></div>
+      <div class="b-chip">손병호 게임 <span class="sc">국민게임</span></div>
+      <div class="b-chip">벌칙 룰렛 <span class="sc">유틸</span></div>
+    </div>
+    <div class="b-nums reveal">
+      <div><div class="n">15+</div><div class="l">검증된 게임</div></div>
+      <div><div class="n">6</div><div class="l">유형 템플릿</div></div>
+      <div><div class="n">0</div><div class="l">참가자 앱</div></div>
+      <div><div class="n">5분</div><div class="l">큐시트 완성</div></div>
+    </div>
+  </div></section>
+
+  <section class="b-cta">
+    <div class="b-glow" style="top:auto;bottom:-140px"></div>
+    <div style="position:relative;z-index:2">
+      <h2>이번 MT, 걱정 없이</h2>
+      <p>준비는 5분, 진행은 폰 하나로.</p>
+      <button class="btn btn-dg">무료로 시작하기</button>
+    </div>
+  </section>
+  <div class="b-foot"><div class="wrap">
+    <div class="logo"><span class="dot">🎯</span> 레크마스터</div>
+    <div style="display:flex;gap:20px"><a href="#b-f">기능</a><a href="#b-g">게임</a></div>
+  </div></div>
+</div>
+
+<!-- ================= C안 ================= -->
+<div class="variant" id="v-c">
+  <nav class="c-nav"><div class="wrap">
+    <div class="logo"><span class="dot">🎯</span> 레크마스터</div>
+    <a href="#c-s">과정</a>
+    <button class="nb">무료로 시작</button>
+  </div></nav>
+
+  <section class="c-hero"><div class="wrap">
+    <div>
+      <div class="pill" style="background:var(--fill);border:none;box-shadow:none">🎓 학생회 · 동아리 · 워크샵</div>
+      <h1>레크 담당이<br>됐다고요?<br><span class="g">5분</span>이면 끝나요</h1>
+      <p class="lead">하고 싶어서가 아니라 직책 때문에 떠맡았죠. 새벽에 유튜브 뒤지지 말고, 검증된 큐시트를 받으세요.</p>
+      <div class="btns">
+        <button class="btn btn-grad">무료로 시작하기</button>
+        <a href="#c-s" class="btn btn-glass" style="background:var(--fill)">과정 보기</a>
+      </div>
+    </div>
+    <div class="c-vis">
+      <div class="c-vlbl">📋 60분 큐시트 · 40명 팀전</div>
+      <div class="c-vcard"><div class="n">1</div><div><div class="t">청개구리 가위바위보</div><div class="s">가볍게 몸풀기</div></div><div class="m">5분</div></div>
+      <div class="c-vcard"><div class="n">2</div><div><div class="t">밸런스 게임</div><div class="s">대화 유발</div></div><div class="m">15분</div></div>
+      <div class="c-vcard"><div class="n">3</div><div><div class="t">카테고리 초성 퀴즈</div><div class="s">본격 승부</div></div><div class="m">20분</div></div>
+      <div class="c-vcard"><div class="n">4</div><div><div class="t">랜덤 플레이 댄스</div><div class="s">피날레 · 인증샷</div></div><div class="m">10분</div></div>
+    </div>
+  </div></section>
+
+  <section class="c-story" id="c-s"><div class="wrap">
+    <div class="c-step reveal">
+      <div class="c-txt"><span class="c-tag">D-3 · 준비</span>
+        <h3>새벽에 유튜브<br>뒤지지 마세요</h3>
+        <p>"MT 게임 추천" 검색 30분. 블로그를 긁어모아도 40명·2시간에 맞을지 확신이 안 서죠.</p>
+        <ul><li>장소·인원·시간만 고르면 자동 조립</li><li>텐션 곡선으로 기승전결 보장</li><li>목표 시간에 딱 맞게 배분</li></ul></div>
+      <div class="c-box">
+        <div style="font-size:12px;color:var(--txt3);margin-bottom:10px">텐션 흐름</div>
+        <div class="mk-curve" style="height:56px">
+          <div style="height:35%;background:#34C759"></div><div style="height:55%;background:#FFCC00"></div>
+          <div style="height:80%;background:#FF9500"></div><div style="height:100%;background:#FF3B30"></div>
+          <div style="height:68%;background:#AF52DE"></div>
+        </div>
+        <div class="mk-row"><div class="n">1</div><div><div class="t">눈치 게임</div><div class="s">오프닝</div></div><div class="m">5분</div></div>
+        <div class="mk-row"><div class="n">2</div><div><div class="t">밸런스 게임</div><div class="s">아이스브레이킹</div></div><div class="m">15분</div></div>
+      </div>
+    </div>
+
+    <div class="c-step reveal">
+      <div class="c-txt"><span class="c-tag">현장 · 진행</span>
+        <h3>폰만 보고<br>프로처럼</h3>
+        <p>룰이 꼬이고 점수를 틀리고 다음 순서를 까먹는 순간, 분위기가 식습니다.</p>
+        <ul><li>읽기만 하면 되는 대본</li><li>진행자에게만 보이는 정답</li><li>2~6개 조 점수판 · 조 편성 자동</li></ul></div>
+      <div class="c-box">
+        <div style="background:var(--bg);border-radius:13px;padding:15px;margin-bottom:12px">
+          <div style="font-size:10.5px;font-weight:700;color:var(--blue);margin-bottom:8px">📢 진행 대본</div>
+          <div style="font-size:15px;font-weight:600;line-height:1.45;color:var(--txt)">"카테고리와 초성을 보고 맞혀요! 틀리면 통과!"</div>
+          <div style="background:#E8F1FD;border-radius:9px;padding:9px;text-align:center;font-size:13px;color:var(--blue);font-weight:600;margin-top:10px">🔑 정답: <b>떡볶이</b></div>
+        </div>
+        <div class="sb">
+          <div class="sbx" style="color:#34C759"><span class="i">🔔</span>정답</div>
+          <div class="sbx" style="color:#FF3B30"><span class="i">❌</span>오답</div>
+          <div class="sbx" style="color:#AF52DE"><span class="i">🥁</span>긴장</div>
+          <div class="sbx" style="color:#FF9500"><span class="i">🎉</span>환호</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="c-step reveal">
+      <div class="c-txt"><span class="c-tag">돌발 · 대응</span>
+        <h3>고기가 안 익어도<br>괜찮아요</h3>
+        <p>예정에 없던 20분이 비었는데 준비한 건 다 썼을 때, 구급상자를 여세요.</p>
+        <ul><li>넌센스·아재개그·즉석 미션</li><li>큐시트를 망가뜨리지 않고 삽입</li><li>반응 없는 게임은 바로 건너뛰기</li></ul></div>
+      <div class="c-box" style="text-align:center">
+        <div style="font-size:46px;margin-bottom:14px">🚑</div>
+        <div style="background:var(--bg);border-radius:13px;padding:18px">
+          <div style="font-size:17px;font-weight:700;color:var(--txt);margin-bottom:8px">왕이 넘어지면?</div>
+          <div style="font-size:14px;color:#34C759;font-weight:600">✅ 킹콩</div>
+        </div>
+      </div>
+    </div>
+  </div></section>
+
+  <section class="c-quote"><div class="wrap">
+    <div class="q">"게임 목록은 어디에나 있어요.<br>없는 건 <span style="background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent">순서와 자신감</span>이죠."</div>
+    <div class="a">레크마스터가 채우는 빈자리</div>
+  </div></section>
+
+  <section class="a-cta">
+    <h2>이번 MT, 걱정 없이</h2>
+    <p>준비는 5분, 진행은 폰 하나로.</p>
+    <button class="btn btn-w">무료로 시작하기</button>
+    <div class="nt">설치 없이 웹에서 바로 · 신용카드 필요 없음</div>
+  </section>
+  <footer><div class="wrap">
+    <div class="logo"><span class="dot">🎯</span> 레크마스터</div>
+    <div style="display:flex;gap:20px"><a href="#c-s">과정</a></div>
+  </div></footer>
+</div>
+
+<script>
+function sw(v,el){
+  document.querySelectorAll('.variant').forEach(x=>x.classList.remove('on'));
+  document.getElementById('v-'+v).classList.add('on');
+  document.querySelectorAll('.vsw button').forEach(x=>x.classList.remove('on'));
+  el.classList.add('on');
+  document.body.style.background=v==='b'?'#0F0F10':'var(--bg)';
+  window.scrollTo(0,0);
+  setTimeout(obs,60);
+}
+let io;
+function obs(){
+  if(io)io.disconnect();
+  io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')}),{threshold:.12});
+  document.querySelectorAll('.variant.on .reveal').forEach(el=>{el.classList.remove('in');io.observe(el)});
+}
+obs();
+</script>
+</body>
+</html>

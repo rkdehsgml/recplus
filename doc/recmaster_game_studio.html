@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>레크마스터 · 게임 스튜디오</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F5F7;--card:#fff;--card2:#FBFBFD;--fill:#F0F0F3;--fill2:#E8E8ED;
+  --blue:#0071E3;--blueH:#0077ED;--blueSoft:#E8F1FD;
+  --green:#34C759;--orange:#FF9500;--red:#FF3B30;--purple:#AF52DE;--yellow:#FFCC00;
+  --txt:#1D1D1F;--txt2:#6E6E73;--txt3:#8E8E93;--line:rgba(0,0,0,.08);--line2:rgba(0,0,0,.05);
+  --font:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+  --sh-sm:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);
+  --sh:0 4px 16px rgba(0,0,0,.06);--sh-lg:0 12px 40px rgba(0,0,0,.12);
+  --r:16px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{background:var(--bg);color:var(--txt);font-family:var(--font);font-size:15px;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+button,input,textarea,select{font-family:var(--font)}
+button{cursor:pointer;border:none;color:inherit;background:none}
+::-webkit-scrollbar{width:11px;height:11px}::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:11px;border:3px solid transparent;background-clip:content-box}
+h1,h2,h3{letter-spacing:-.025em;font-weight:700}
+.wrap{max-width:1160px;margin:0 auto;padding:28px 28px 70px}
+.view{display:none;animation:f .35s cubic-bezier(.16,1,.3,1)}.view.on{display:block}
+@keyframes f{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+.top{display:flex;align-items:center;gap:14px;margin-bottom:24px;flex-wrap:wrap}
+.top h1{font-size:26px}
+.top .sub{font-size:13.5px;color:var(--txt2);margin-top:4px}
+.top .acts{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
+.btn{padding:10px 17px;border-radius:980px;font-weight:600;font-size:14px;transition:.18s;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.btn:active{transform:scale(.96)}
+.btn-pri{background:var(--blue);color:#fff}.btn-pri:hover{background:var(--blueH)}
+.btn-sec{background:var(--fill);color:var(--txt)}.btn-sec:hover{background:var(--fill2)}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--txt)}.btn-ghost:hover{background:var(--fill)}
+.btn-danger{background:var(--fill);color:var(--red)}
+.btn-sm{padding:7px 12px;font-size:13px}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:22px}
+.stat{background:var(--card);border-radius:var(--r);padding:18px;box-shadow:var(--sh-sm)}
+.stat .n{font-size:27px;font-weight:700;letter-spacing:-.03em}
+.stat .l{font-size:13px;color:var(--txt2);margin-top:2px}
+.stat.b .n{color:var(--blue)}.stat.g .n{color:var(--green)}.stat.o .n{color:var(--orange)}.stat.r .n{color:var(--red)}
+
+.bar{background:var(--card);border-radius:var(--r);padding:14px 16px;box-shadow:var(--sh-sm);margin-bottom:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.search{flex:1;min-width:180px;display:flex;align-items:center;gap:8px;background:var(--fill);border-radius:11px;padding:9px 13px}
+.search input{border:none;background:none;outline:none;font-size:14px;width:100%;color:var(--txt)}
+select.f{background:var(--fill);border:none;border-radius:11px;padding:9px 12px;font-size:13.5px;font-weight:500;cursor:pointer;color:var(--txt)}
+
+table{width:100%;border-collapse:collapse;background:var(--card);border-radius:var(--r);overflow:hidden;box-shadow:var(--sh-sm)}
+th{text-align:left;font-size:12px;font-weight:600;color:var(--txt2);padding:13px 14px;border-bottom:1px solid var(--line);white-space:nowrap}
+td{padding:13px 14px;border-bottom:1px solid var(--line2);font-size:14px;vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tbody tr{transition:.13s}tbody tr:hover{background:var(--card2)}
+.gname{font-weight:600}
+.gsrc{font-size:12px;color:var(--txt3);margin-top:2px}
+.tag{font-size:11px;font-weight:600;padding:4px 9px;border-radius:980px;display:inline-block;white-space:nowrap}
+.a-QUIZ{background:#FFF6E0;color:#B8860B}.a-TALK{background:#E3F2FF;color:#0071E3}.a-SURVIVAL{background:#FFEBE9;color:#D70015}
+.a-PERFORM{background:#E4F8EA;color:#248A3D}.a-PICK{background:#F4EBFC;color:#8944AB}.a-BOMB{background:#FFF0E6;color:#C93400}
+.st{font-size:11.5px;font-weight:600;padding:4px 10px;border-radius:980px}
+.st-live{background:#E4F8EA;color:#248A3D}.st-draft{background:var(--fill);color:var(--txt2)}.st-warn{background:#FFF6E0;color:#B8860B}
+.tacts{display:flex;gap:6px;justify-content:flex-end}
+.iconbtn{width:32px;height:32px;border-radius:9px;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:14px;transition:.15s}
+.iconbtn:hover{background:var(--fill2)}
+.iconbtn.del:hover{background:#FFEBE9;color:var(--red)}
+.empty{text-align:center;padding:56px;color:var(--txt2);font-size:14px;line-height:1.7}
+
+/* EDITOR */
+.ed{display:grid;grid-template-columns:1fr 320px;gap:20px;align-items:start}
+.panel{background:var(--card);border-radius:var(--r);padding:22px;box-shadow:var(--sh-sm);margin-bottom:16px}
+.panel h3{font-size:16px;margin-bottom:15px;display:flex;align-items:center;gap:8px}
+.panel h3 .hint{margin-left:auto;font-size:12.5px;color:var(--txt3);font-weight:400}
+.field{margin-bottom:17px}
+.field:last-child{margin-bottom:0}
+.field label{display:block;font-size:13.5px;font-weight:600;margin-bottom:7px}
+.field .h{font-size:12.5px;color:var(--txt3);font-weight:400;margin-left:5px}
+.input,.textarea{width:100%;background:var(--card);border:1px solid var(--line);border-radius:11px;padding:11px 13px;font-size:14px;color:var(--txt);transition:.16s}
+.input:focus,.textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 4px var(--blueSoft)}
+.textarea{resize:vertical;min-height:74px;line-height:1.55;font-family:var(--font)}
+.textarea.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px;min-height:150px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tgl-g{display:flex;gap:7px;flex-wrap:wrap}
+.tgl{padding:9px 14px;border-radius:980px;background:var(--fill);font-size:13.5px;font-weight:500;transition:.16s}
+.tgl:hover{background:var(--fill2)}
+.tgl.on{background:var(--blue);color:#fff}
+.arch-g{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.ac{background:var(--card2);border:2px solid var(--line);border-radius:13px;padding:13px;text-align:left;transition:.18s}
+.ac:hover{border-color:var(--fill2)}
+.ac.on{border-color:var(--blue);background:var(--blueSoft)}
+.ac .i{font-size:22px;margin-bottom:6px}
+.ac .t{font-size:13.5px;font-weight:600}
+.ac .d{font-size:11.5px;color:var(--txt2);margin-top:2px}
+
+.mode-tab{display:flex;gap:6px;margin-bottom:14px}
+.mt{padding:8px 14px;border-radius:980px;background:var(--fill);font-size:13px;font-weight:500}
+.mt.on{background:var(--txt);color:#fff}
+.prow{display:flex;gap:8px;margin-bottom:8px;align-items:center}
+.prow .input{flex:1}
+.prow .idx{width:26px;font-size:12px;color:var(--txt3);text-align:right;flex-shrink:0}
+.prow .del{width:36px;height:40px;border-radius:10px;background:var(--fill);color:var(--red);font-size:14px;flex-shrink:0}
+.addrow{width:100%;background:var(--card2);border:1.5px dashed var(--line);border-radius:11px;padding:11px;color:var(--blue);font-weight:600;font-size:13.5px;margin-top:4px}
+.addrow:hover{background:var(--blueSoft);border-color:var(--blue)}
+.parsed{background:var(--fill);border-radius:11px;padding:13px;margin-top:11px;max-height:200px;overflow-y:auto;font-size:13px;line-height:1.8;color:var(--txt2)}
+.parsed b{color:var(--blue)}
+
+/* validation side */
+.side{position:sticky;top:20px}
+.vitem{display:flex;gap:10px;padding:11px 0;border-bottom:1px solid var(--line2);font-size:13.5px;line-height:1.5}
+.vitem:last-child{border-bottom:none}
+.vi{flex-shrink:0;font-size:14px}
+.v-ok{color:var(--green)}.v-warn{color:var(--orange)}.v-err{color:var(--red)}
+.vtxt{color:var(--txt2)}
+.vsum{padding:13px;border-radius:12px;font-size:13.5px;font-weight:600;text-align:center;margin-bottom:14px}
+.vs-ok{background:#E4F8EA;color:#248A3D}.vs-warn{background:#FFF6E0;color:#B8860B}.vs-err{background:#FFEBE9;color:#D70015}
+
+/* preview modal */
+.mbg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;padding:20px}
+.mbg.on{display:flex;animation:f .25s}
+.modal{background:var(--card);border-radius:22px;padding:24px;max-width:440px;width:100%;box-shadow:var(--sh-lg);max-height:88vh;overflow-y:auto}
+.modal h3{font-size:19px;margin-bottom:8px}
+.modal p{font-size:13.5px;color:var(--txt2);margin-bottom:16px;line-height:1.6}
+.pvbox{background:var(--bg);border-radius:18px;padding:18px}
+.pvhead{display:flex;align-items:center;gap:9px;margin-bottom:12px}
+.pvstep{font-size:11.5px;color:var(--txt2);font-weight:600;background:var(--card);padding:6px 10px;border-radius:980px}
+.pvname{font-size:17px;font-weight:700}
+.pvtimer{margin-left:auto;font-size:19px;font-weight:700;color:var(--orange);font-variant-numeric:tabular-nums}
+.pvprompt{background:var(--card);border-radius:16px;padding:17px;box-shadow:var(--sh-sm)}
+.pvlbl{font-size:11px;font-weight:600;color:var(--blue);margin-bottom:9px}
+.pvscript{font-size:17px;font-weight:600;line-height:1.5}
+.pvscript b{color:var(--blue)}
+.pvpanel{background:var(--card2);border:1px solid var(--line);border-radius:13px;padding:14px;margin-top:12px}
+.pvq{font-size:19px;font-weight:700;text-align:center;line-height:1.4}
+.mcans{background:var(--blueSoft);border-radius:10px;padding:10px;text-align:center;font-size:14px;color:var(--blue);font-weight:600;margin-top:11px}
+.mclbl{font-size:11px;font-weight:700;color:var(--orange);text-align:center;margin-bottom:9px}
+.pvbtns{display:flex;gap:7px;margin-top:12px}
+.pvbtns button{flex:1;padding:10px;border-radius:11px;font-size:13px;font-weight:600;background:var(--fill)}
+.pvbtns .p{background:var(--blue);color:#fff}
+.pvsb{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;margin-top:11px}
+.pvs{aspect-ratio:1;background:var(--card);border-radius:14px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10.5px;font-weight:600;box-shadow:var(--sh-sm)}
+.pvs .i{font-size:18px}
+.toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(30,30,32,.93);backdrop-filter:blur(20px);color:#fff;padding:13px 22px;border-radius:980px;font-size:14px;font-weight:500;opacity:0;transition:.35s cubic-bezier(.16,1,.3,1);z-index:200;box-shadow:var(--sh-lg)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:900px){.wrap{padding:20px 16px 60px}.stats{grid-template-columns:1fr 1fr}.ed{grid-template-columns:1fr}.side{position:static}.arch-g{grid-template-columns:1fr 1fr}.hide-s{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ===== LIST ===== -->
+<div class="view on" id="v-list">
+  <div class="top">
+    <div><h1>🎮 게임 스튜디오</h1><div class="sub">게임과 문제를 추가하고, 검증하고, 실제 진행 화면으로 확인하세요</div></div>
+    <div class="acts">
+      <button class="btn btn-ghost" onclick="document.getElementById('imp').click()">📥 JSON 가져오기</button>
+      <input type="file" id="imp" accept=".json" style="display:none" onchange="importJSON(event)">
+      <button class="btn btn-ghost" onclick="exportJSON()">📤 JSON 내보내기</button>
+      <button class="btn btn-pri" onclick="newGame()">＋ 새 게임</button>
+    </div>
+  </div>
+  <div class="stats">
+    <div class="stat b"><div class="n" id="s1">0</div><div class="l">전체 게임</div></div>
+    <div class="stat g"><div class="n" id="s2">0</div><div class="l">배포 가능</div></div>
+    <div class="stat o"><div class="n" id="s3">0</div><div class="l">보완 필요</div></div>
+    <div class="stat r"><div class="n" id="s4">0</div><div class="l">전체 문제 수</div></div>
+  </div>
+  <div class="bar">
+    <div class="search"><span>🔍</span><input id="q" placeholder="게임 이름 검색" oninput="renderList()"></div>
+    <select class="f" id="fArch" onchange="renderList()"><option value="">전체 유형</option></select>
+    <select class="f" id="fPhase" onchange="renderList()"><option value="">전체 구간</option></select>
+    <select class="f" id="fStat" onchange="renderList()"><option value="">전체 상태</option><option value="live">배포 가능</option><option value="warn">보완 필요</option></select>
+  </div>
+  <div id="tableWrap"></div>
+</div>
+
+<!-- ===== EDITOR ===== -->
+<div class="view" id="v-edit">
+  <div class="top">
+    <button class="btn btn-sec btn-sm" onclick="go('v-list')">‹ 목록</button>
+    <div><h1 id="edTitle">새 게임</h1><div class="sub">유형을 고르면 필요한 입력 폼이 자동으로 바뀝니다</div></div>
+    <div class="acts">
+      <button class="btn btn-ghost" onclick="previewGame()">▶ 미리보기</button>
+      <button class="btn btn-pri" onclick="saveGame()">저장</button>
+    </div>
+  </div>
+  <div class="ed">
+    <div>
+      <div class="panel"><h3>1 · 게임 유형</h3><div class="arch-g" id="archG"></div></div>
+      <div class="panel"><h3>2 · 기본 정보</h3>
+        <div class="field"><label>게임 이름</label><input class="input" id="fName" placeholder="예: 카테고리 초성 퀴즈" oninput="validate()"></div>
+        <div class="field"><label>진행 대본 <span class="h">진행자가 읽을 문장. &lt;b&gt;로 강조 가능</span></label><textarea class="textarea" id="fScript" placeholder="예: 카테고리와 초성을 보고 맞혀요! 틀리면 통과 👇" oninput="validate()"></textarea></div>
+        <div class="row2">
+          <div class="field"><label>출처 <span class="h">지락실 등</span></label><input class="input" id="fSrc" placeholder="지락실" oninput="validate()"></div>
+          <div class="field"><label>추천 이유 <span class="h">큐시트에 표시</span></label><input class="input" id="fWhy" placeholder="지락실 시그니처" oninput="validate()"></div>
+        </div>
+      </div>
+      <div class="panel"><h3>3 · 콘텐츠 <span class="hint" id="poolHint"></span></h3>
+        <div class="mode-tab">
+          <button class="mt on" id="mtRow" onclick="setPoolMode('row')">한 줄씩 입력</button>
+          <button class="mt" id="mtBulk" onclick="setPoolMode('bulk')">대량 붙여넣기</button>
+        </div>
+        <div id="poolArea"></div>
+      </div>
+      <div class="panel"><h3>4 · 태그 <span class="hint">추천 엔진이 사용합니다</span></h3>
+        <div class="field"><label>큐시트 구간</label><div class="tgl-g" id="tPhase"></div></div>
+        <div class="field"><label>인원 구성</label><div class="tgl-g" id="tMode"></div></div>
+        <div class="field"><label>가능한 장소 <span class="h">복수 선택</span></label><div class="tgl-g" id="tPlace"></div></div>
+        <div class="row2">
+          <div class="field"><label>소요 시간</label><div class="tgl-g" id="tDur"></div></div>
+          <div class="field"><label>텐션 강도 <span class="h">1~5</span></label><div class="tgl-g" id="tEnergy"></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="side">
+      <div class="panel"><h3>✅ 검증</h3><div id="vSum"></div><div id="vList"></div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<div class="mbg" id="mbg" onclick="if(event.target.id==='mbg')closeM()"><div class="modal" id="mbox"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const ARCH={
+  QUIZ:{ko:'퀴즈형',ic:'🧠',d:'정답이 하나인 문제',pool:'qa'},
+  TALK:{ko:'토크형',ic:'💬',d:'정답 없는 질문',pool:'text'},
+  SURVIVAL:{ko:'서바이벌형',ic:'⚡',d:'탈락·생존',pool:'opt'},
+  PERFORM:{ko:'퍼포먼스형',ic:'🎭',d:'제시어 표현',pool:'text'},
+  PICK:{ko:'룰렛/추첨형',ic:'🎰',d:'랜덤 뽑기',pool:'text'},
+  BOMB:{ko:'폭탄/긴장형',ic:'💣',d:'랜덤 타이머',pool:'opt'},
+};
+const POOL_LABEL={QUIZ:'문제 · 정답',TALK:'질문 리스트',SURVIVAL:'조건 리스트 (선택)',PERFORM:'제시어 리스트',PICK:'항목 리스트',BOMB:'미니 문제 (선택)'};
+const PHASE={opening:'오프닝',icebreak:'아이스브레이킹',main:'메인',finale:'피날레'};
+const PLACE={bus:'🚌 버스',room:'🏠 방·소규모',hall:'🎤 대강당'};
+const MODE={solo:'개인전',team:'팀전',both:'팀/개인'};
+
+let GAMES=[],editing=null,poolMode='row';
+const SEED=[
+ {k:'choseong',name:'카테고리 초성 퀴즈',arch:'QUIZ',phase:'main',energy:4,dur:20,place:['bus','room','hall'],mode:'both',src:'지락실',why:'지락실 시그니처',script:'카테고리와 초성을 보고 맞혀요! 틀리면 통과 👇',pool:[{q:'[음식] ㄸㅂㅇ',a:'떡볶이'},{q:'[음식] ㅁㄹㅌ',a:'마라탕'},{q:'[동물] ㅋㅍㄹ',a:'카피바라'},{q:'[장소] ㅎㅇㄷ',a:'해운대'},{q:'[유행어] ㅇㅈㄸ',a:'알잘딱'},{q:'[영화] ㄱㅁㅊ',a:'기생충'},{q:'[여름] ㅅㅂ',a:'수박'},{q:'[동물] ㄹㅅㅍㄷ',a:'레서판다'}]},
+ {k:'inmul',name:'인물 퀴즈',arch:'QUIZ',phase:'main',energy:4,dur:15,place:['room','hall'],mode:'both',src:'신서유기',why:'유서깊은 게임',script:'힌트 3개로 인물을 맞혀요! 👇',pool:[{q:'조선 4대 왕 / 만원권 / 한글 창제',a:'세종대왕'},{q:'조선 장군 / 거북선 / 백원 동전',a:'이순신'},{q:'파란 펭귄 / 헬멧 / 노는 게 제일 좋아',a:'뽀로로'}]},
+ {k:'balance',name:'밸런스 게임',arch:'TALK',phase:'icebreak',energy:3,dur:15,place:['bus','room','hall'],mode:'both',src:'전예능',why:'대화 유발 최강',script:'둘 중 하나! 고르고 이유를 물어보세요 👇',pool:['평생 치킨만 vs 평생 피자만','부먹 vs 찍먹','민초 좋아 vs 민초 싫어','산 vs 바다','계획파 vs 즉흥파','1교시 전공 vs 6교시 교양','돈 많고 시간 없음 vs 시간 많고 돈 없음','새터 밤샘 vs 일찍 자기','강아지상 vs 고양이상']},
+ {k:'mommal',name:'몸으로 말해요',arch:'PERFORM',phase:'main',energy:4,dur:15,place:['room','hall'],mode:'team',src:'지락실',why:'세계적 검증',script:'말 없이 몸으로만! 팀원이 맞혀요 👇',pool:['기타치기','수영','볼링','태권도','낚시','셀카찍기','줄넘기','좀비걷기','로봇춤','펭귄걸음']},
+ {k:'nunchi',name:'눈치 게임',arch:'SURVIVAL',phase:'opening',energy:2,dur:5,place:['room','hall'],mode:'solo',src:'국민게임',why:'룰 초간단',script:'"순서 없이 아무나 1부터! <b>같이 외치면 둘 다 탈락</b>"',pool:[]},
+ {k:'roulette',name:'벌칙 룰렛',arch:'PICK',phase:'finale',energy:4,dur:5,place:['room','hall'],mode:'both',src:'유틸',why:'벌칙자 정하기',script:'룰렛을 돌려 벌칙을 정해요! 👇',pool:['애교 3종 세트','성대모사 하나','옆사람 칭찬 10초','유행어 외치기','웃긴 표정 5초']},
+];
+
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1600);}
+function go(v){document.querySelectorAll('.view').forEach(x=>x.classList.remove('on'));document.getElementById(v).classList.add('on');window.scrollTo(0,0);}
+function modal(h){document.getElementById('mbox').innerHTML=h;document.getElementById('mbg').classList.add('on');}
+function closeM(){document.getElementById('mbg').classList.remove('on');}
+function load(){try{const s=localStorage.getItem('rm_studio');GAMES=s?JSON.parse(s):JSON.parse(JSON.stringify(SEED));}catch(e){GAMES=JSON.parse(JSON.stringify(SEED));}}
+function save(){try{localStorage.setItem('rm_studio',JSON.stringify(GAMES));}catch(e){}}
+function poolCount(g){return (g.pool||[]).filter(p=>typeof p==='string'?p.trim():(p.q&&p.q.trim())).length;}
+
+/* 게임 상태 판정 = 검증 결과 */
+function checkGame(g){
+  const issues=[];const n=poolCount(g);
+  if(!g.name||!g.name.trim())issues.push({t:'err',m:'게임 이름이 없습니다'});
+  if(!g.script||!g.script.trim())issues.push({t:'warn',m:'진행 대본이 비어 있습니다'});
+  if(!g.place||!g.place.length)issues.push({t:'err',m:'가능한 장소를 하나 이상 선택하세요'});
+  const needPool=['QUIZ','TALK','PERFORM','PICK'].includes(g.arch);
+  if(needPool){
+    if(n===0)issues.push({t:'err',m:'콘텐츠가 하나도 없습니다'});
+    else if(n<8)issues.push({t:'warn',m:`콘텐츠 ${n}개 · 8개 이상 권장`});
+    else issues.push({t:'ok',m:`콘텐츠 ${n}개 확보`});
+  }
+  if(g.arch==='QUIZ'&&g.pool){
+    const noAns=g.pool.filter(p=>p.q&&p.q.trim()&&(!p.a||!p.a.trim())).length;
+    if(noAns)issues.push({t:'err',m:`정답이 빈 문제 ${noAns}개 · 진행자가 정답을 봐야 합니다`});
+  }
+  if(g.pool&&g.pool.length){
+    const keys=g.pool.map(p=>typeof p==='string'?p.trim():(p.q||'').trim()).filter(Boolean);
+    const dup=keys.length-new Set(keys).size;
+    if(dup)issues.push({t:'warn',m:`중복된 항목 ${dup}개`});
+  }
+  if(!g.why||!g.why.trim())issues.push({t:'warn',m:'추천 이유가 없으면 큐시트에서 설득력이 떨어져요'});
+  if(!issues.some(i=>i.t==='err'||i.t==='warn'))issues.push({t:'ok',m:'모든 항목이 정상입니다'});
+  return issues;
+}
+function statusOf(g){const is=checkGame(g);if(is.some(i=>i.t==='err'))return 'warn';if(is.some(i=>i.t==='warn'))return 'warn';return 'live';}
+
+/* ===== LIST ===== */
+function renderList(){
+  const q=(document.getElementById('q').value||'').trim();
+  const fa=document.getElementById('fArch').value,fp=document.getElementById('fPhase').value,fs=document.getElementById('fStat').value;
+  let list=GAMES.filter(g=>(!q||g.name.includes(q))&&(!fa||g.arch===fa)&&(!fp||g.phase===fp)&&(!fs||statusOf(g)===fs));
+  document.getElementById('s1').textContent=GAMES.length;
+  document.getElementById('s2').textContent=GAMES.filter(g=>statusOf(g)==='live').length;
+  document.getElementById('s3').textContent=GAMES.filter(g=>statusOf(g)==='warn').length;
+  document.getElementById('s4').textContent=GAMES.reduce((s,g)=>s+poolCount(g),0);
+  const w=document.getElementById('tableWrap');
+  if(!list.length){w.innerHTML=`<div class="empty" style="background:var(--card);border-radius:16px">조건에 맞는 게임이 없어요.<br>필터를 바꾸거나 새 게임을 추가하세요.</div>`;return;}
+  w.innerHTML=`<table><thead><tr><th>게임</th><th>유형</th><th class="hide-s">구간</th><th class="hide-s">장소</th><th class="hide-s">인원</th><th>시간</th><th>문제</th><th>상태</th><th></th></tr></thead><tbody>
+  ${list.map(g=>{const i=GAMES.indexOf(g);const st=statusOf(g);const n=poolCount(g);
+    return `<tr><td><div class="gname">${g.name}</div><div class="gsrc">${g.src||'출처 없음'}</div></td>
+    <td><span class="tag a-${g.arch}">${ARCH[g.arch].ic} ${ARCH[g.arch].ko}</span></td>
+    <td class="hide-s">${PHASE[g.phase]||'-'}</td>
+    <td class="hide-s">${(g.place||[]).map(p=>PLACE[p].split(' ')[0]).join('')}</td>
+    <td class="hide-s">${MODE[g.mode]||'-'}</td>
+    <td>${g.dur}분</td>
+    <td>${n?n+'개':'<span style="color:var(--txt3)">–</span>'}</td>
+    <td><span class="st st-${st}">${st==='live'?'배포 가능':'보완 필요'}</span></td>
+    <td><div class="tacts"><button class="iconbtn" title="미리보기" onclick="previewIdx(${i})">▶</button><button class="iconbtn" title="편집" onclick="editGame(${i})">✏️</button><button class="iconbtn del" title="삭제" onclick="delGame(${i})">🗑</button></div></td></tr>`;
+  }).join('')}</tbody></table>`;
+}
+function delGame(i){const g=GAMES[i];modal(`<h3>게임 삭제</h3><p>"<b>${g.name}</b>"을 삭제할까요? 되돌릴 수 없어요.</p><div style="display:flex;gap:10px"><button class="btn btn-sec" style="flex:1;justify-content:center;padding:12px" onclick="closeM()">취소</button><button class="btn" style="flex:1;justify-content:center;padding:12px;background:var(--red);color:#fff" onclick="doDel(${i})">삭제</button></div>`);}
+function doDel(i){GAMES.splice(i,1);save();closeM();renderList();toast('삭제했어요');}
+
+/* ===== EDITOR ===== */
+function newGame(){editing={k:'g'+Date.now(),name:'',arch:'QUIZ',phase:'main',energy:3,dur:15,place:['room'],mode:'both',src:'',why:'',script:'',pool:[{q:'',a:''}]};poolMode='row';document.getElementById('edTitle').textContent='새 게임';go('v-edit');renderEditor();}
+function editGame(i){editing=JSON.parse(JSON.stringify(GAMES[i]));editing._i=i;poolMode='row';document.getElementById('edTitle').textContent=editing.name||'게임 편집';go('v-edit');renderEditor();}
+function renderEditor(){
+  const e=editing;
+  document.getElementById('archG').innerHTML=Object.entries(ARCH).map(([k,a])=>`<button class="ac ${e.arch===k?'on':''}" onclick="setArch('${k}')"><div class="i">${a.ic}</div><div class="t">${a.ko}</div><div class="d">${a.d}</div></button>`).join('');
+  document.getElementById('fName').value=e.name||'';
+  document.getElementById('fScript').value=e.script||'';
+  document.getElementById('fSrc').value=e.src||'';
+  document.getElementById('fWhy').value=e.why||'';
+  document.getElementById('poolHint').textContent=POOL_LABEL[e.arch];
+  document.getElementById('mtRow').classList.toggle('on',poolMode==='row');
+  document.getElementById('mtBulk').classList.toggle('on',poolMode==='bulk');
+  renderPool();
+  document.getElementById('tPhase').innerHTML=Object.entries(PHASE).map(([k,v])=>`<button class="tgl ${e.phase===k?'on':''}" onclick="setF('phase','${k}')">${v}</button>`).join('');
+  document.getElementById('tMode').innerHTML=Object.entries(MODE).map(([k,v])=>`<button class="tgl ${e.mode===k?'on':''}" onclick="setF('mode','${k}')">${v}</button>`).join('');
+  document.getElementById('tPlace').innerHTML=Object.entries(PLACE).map(([k,v])=>`<button class="tgl ${(e.place||[]).includes(k)?'on':''}" onclick="togPlace('${k}')">${v}</button>`).join('');
+  document.getElementById('tDur').innerHTML=[5,10,15,20,30].map(d=>`<button class="tgl ${e.dur===d?'on':''}" onclick="setF('dur',${d})">${d}분</button>`).join('');
+  document.getElementById('tEnergy').innerHTML=[1,2,3,4,5].map(n=>`<button class="tgl ${e.energy===n?'on':''}" onclick="setF('energy',${n})">${n}</button>`).join('');
+  validate();
+}
+function setArch(k){editing.arch=k;const need=ARCH[k].pool;if(need==='qa'&&(!editing.pool.length||typeof editing.pool[0]==='string'))editing.pool=[{q:'',a:''}];if(need!=='qa'&&editing.pool.length&&typeof editing.pool[0]==='object')editing.pool=[''];renderEditor();}
+function setF(f,v){editing[f]=v;renderEditor();}
+function togPlace(k){const p=editing.place||[];if(p.includes(k)){if(p.length>1)editing.place=p.filter(x=>x!==k);}else editing.place=[...p,k];renderEditor();}
+function setPoolMode(m){syncFields();poolMode=m;renderEditor();}
+function syncFields(){if(!editing)return;editing.name=document.getElementById('fName').value;editing.script=document.getElementById('fScript').value;editing.src=document.getElementById('fSrc').value;editing.why=document.getElementById('fWhy').value;}
+function renderPool(){
+  const e=editing,area=document.getElementById('poolArea'),kind=ARCH[e.arch].pool;
+  if(kind==='opt'&&poolMode==='row'&&!e.pool.length){area.innerHTML=`<div style="font-size:13.5px;color:var(--txt2);background:var(--fill);border-radius:11px;padding:14px;line-height:1.6">이 유형은 콘텐츠가 <b>필수가 아니에요</b>. 대본만으로 진행됩니다.<br>필요하면 아래에서 조건·미니문제를 추가하세요.</div><button class="addrow" onclick="addPool()">＋ 항목 추가</button>`;return;}
+  if(poolMode==='bulk'){
+    const ph=kind==='qa'?'문제와 정답을 탭 또는 쉼표로 구분해 한 줄씩 붙여넣으세요.\n\n[음식] ㄸㅂㅇ, 떡볶이\n[동물] ㅋㅍㄹ, 카피바라':'한 줄에 하나씩 붙여넣으세요.\n\n평생 치킨만 vs 평생 피자만\n부먹 vs 찍먹';
+    area.innerHTML=`<textarea class="textarea mono" id="bulkTa" placeholder="${ph.replace(/"/g,'&quot;')}" oninput="parseBulk()"></textarea>
+      <div style="font-size:12.5px;color:var(--txt3);margin-top:8px">💡 엑셀에서 복사한 표를 그대로 붙여넣을 수 있어요</div>
+      <div id="bulkPreview"></div>
+      <button class="btn btn-pri" style="margin-top:12px;width:100%;justify-content:center" onclick="applyBulk()">파싱한 항목으로 교체</button>`;
+    return;
+  }
+  if(kind==='qa'){
+    area.innerHTML=e.pool.map((p,i)=>`<div class="prow"><span class="idx">${i+1}</span><input class="input" placeholder="문제" value="${esc(p.q||'')}" oninput="editing.pool[${i}].q=this.value;validate()"><input class="input" placeholder="정답" value="${esc(p.a||'')}" oninput="editing.pool[${i}].a=this.value;validate()"><button class="del" onclick="delPool(${i})">✕</button></div>`).join('')+`<button class="addrow" onclick="addPool()">＋ 문제 추가</button>`;
+  }else{
+    area.innerHTML=e.pool.map((p,i)=>`<div class="prow"><span class="idx">${i+1}</span><input class="input" placeholder="항목 ${i+1}" value="${esc(p)}" oninput="editing.pool[${i}]=this.value;validate()"><button class="del" onclick="delPool(${i})">✕</button></div>`).join('')+`<button class="addrow" onclick="addPool()">＋ 항목 추가</button>`;
+  }
+}
+function esc(s){return String(s).replace(/"/g,'&quot;');}
+function addPool(){const kind=ARCH[editing.arch].pool;editing.pool.push(kind==='qa'?{q:'',a:''}:'');renderPool();validate();}
+function delPool(i){editing.pool.splice(i,1);renderPool();validate();}
+let bulkParsed=[];
+function parseBulk(){
+  const raw=document.getElementById('bulkTa').value;const kind=ARCH[editing.arch].pool;
+  const lines=raw.split('\n').map(l=>l.trim()).filter(Boolean);
+  bulkParsed=lines.map(l=>{
+    if(kind==='qa'){const parts=l.split(/\t|,(?=[^,]*$)/);if(parts.length>=2)return {q:parts.slice(0,-1).join(',').trim(),a:parts[parts.length-1].trim()};return {q:l,a:''};}
+    return l;
+  });
+  const pv=document.getElementById('bulkPreview');
+  if(!bulkParsed.length){pv.innerHTML='';return;}
+  pv.innerHTML=`<div class="parsed">${bulkParsed.slice(0,15).map((p,i)=>`<div>${i+1}. ${kind==='qa'?esc(p.q)+' → <b>'+esc(p.a||'(정답 없음)')+'</b>':esc(p)}</div>`).join('')}${bulkParsed.length>15?`<div style="color:var(--txt3)">외 ${bulkParsed.length-15}개 더…</div>`:''}</div><div style="font-size:13px;color:var(--txt2);margin-top:8px">총 <b style="color:var(--blue)">${bulkParsed.length}개</b> 인식됨</div>`;
+}
+function applyBulk(){if(!bulkParsed.length){toast('붙여넣은 내용이 없어요');return;}editing.pool=JSON.parse(JSON.stringify(bulkParsed));poolMode='row';renderEditor();toast(`${editing.pool.length}개 항목을 넣었어요`);}
+function validate(){
+  syncFields();
+  const is=checkGame(editing);
+  const errs=is.filter(i=>i.t==='err').length,warns=is.filter(i=>i.t==='warn').length;
+  const sum=document.getElementById('vSum');
+  if(errs)sum.innerHTML=`<div class="vsum vs-err">배포 불가 · 오류 ${errs}건</div>`;
+  else if(warns)sum.innerHTML=`<div class="vsum vs-warn">배포 가능하나 보완 권장 · ${warns}건</div>`;
+  else sum.innerHTML=`<div class="vsum vs-ok">✓ 배포 가능</div>`;
+  document.getElementById('vList').innerHTML=is.map(i=>`<div class="vitem"><span class="vi ${i.t==='ok'?'v-ok':i.t==='warn'?'v-warn':'v-err'}">${i.t==='ok'?'✓':i.t==='warn'?'⚠':'✕'}</span><span class="vtxt">${i.m}</span></div>`).join('');
+}
+function saveGame(){
+  syncFields();
+  const is=checkGame(editing);
+  if(is.some(i=>i.t==='err')){toast('오류를 먼저 해결해주세요');return;}
+  const clean={...editing};delete clean._i;
+  clean.pool=(clean.pool||[]).filter(p=>typeof p==='string'?p.trim():(p.q&&p.q.trim()));
+  if(editing._i!==undefined)GAMES[editing._i]=clean;else GAMES.push(clean);
+  save();go('v-list');renderList();toast('저장했어요');
+}
+
+/* ===== PREVIEW ===== */
+function previewIdx(i){editing=JSON.parse(JSON.stringify(GAMES[i]));previewGame();}
+let pvIdx=0,pvShow=false;
+function previewGame(){syncFields();pvIdx=0;pvShow=false;renderPreview();}
+function renderPreview(){
+  const g=editing,kind=ARCH[g.arch].pool;
+  const items=(g.pool||[]).filter(p=>typeof p==='string'?p.trim():(p.q&&p.q.trim()));
+  let panel='';
+  if(items.length){
+    const it=items[pvIdx%items.length];
+    if(kind==='qa'){
+      panel=`<div class="pvpanel"><div class="pvq">${esc(it.q)}</div><div class="mcans">🔑 정답: <b>${esc(it.a)}</b></div>
+      <div style="font-size:14px;color:var(--green);text-align:center;margin-top:9px;font-weight:600;min-height:19px">${pvShow?'📢 '+esc(it.a):''}</div>
+      <div class="pvbtns"><button class="p" onclick="pvShow=true;renderPreview()">참가자에게 공개</button><button onclick="pvIdx++;pvShow=false;renderPreview()">다음 →</button></div>
+      <div style="font-size:11px;color:var(--txt3);text-align:center;margin-top:8px">${(pvIdx%items.length)+1} / ${items.length}</div></div>`;
+    }else if(g.arch==='PERFORM'){
+      panel=`<div class="pvpanel"><div class="mclbl">🙈 MC만 보세요</div><div class="pvq">${esc(it)}</div>
+      <div class="pvbtns"><button class="p" onclick="pvIdx++;renderPreview()">맞혔어요 ✓</button><button onclick="pvIdx++;renderPreview()">다음 →</button></div>
+      <div style="font-size:11px;color:var(--txt3);text-align:center;margin-top:8px">${(pvIdx%items.length)+1} / ${items.length}</div></div>`;
+    }else{
+      panel=`<div class="pvpanel"><div class="pvq">${esc(it)}</div>
+      <div class="pvbtns">${g.arch==='PICK'?`<button class="p" onclick="pvIdx=Math.floor(Math.random()*${items.length});renderPreview()">🎰 돌리기</button>`:''}<button onclick="pvIdx++;renderPreview()">다음 →</button></div>
+      <div style="font-size:11px;color:var(--txt3);text-align:center;margin-top:8px">${(pvIdx%items.length)+1} / ${items.length}</div></div>`;
+    }
+  }
+  modal(`<h3>▶ 진행 화면 미리보기</h3><p>진행자가 현장에서 실제로 보게 될 화면이에요.</p>
+  <div class="pvbox">
+    <div class="pvhead"><span class="pvstep">1/4</span><span class="pvname">${esc(g.name||'(이름 없음)')}</span><span class="pvtimer">${String(g.dur).padStart(2,'0')}:00</span></div>
+    <div class="pvprompt"><div class="pvlbl">📢 진행 대본 · ${esc(g.src||'출처 없음')}</div>
+      <div class="pvscript">${g.script||'<span style="color:var(--txt3)">대본이 비어 있습니다</span>'}</div>
+      ${panel}</div>
+    <div class="pvsb">
+      <div class="pvs" style="color:var(--green)"><span class="i">🔔</span>정답</div>
+      <div class="pvs" style="color:var(--red)"><span class="i">❌</span>오답</div>
+      <div class="pvs" style="color:var(--purple)"><span class="i">🥁</span>긴장</div>
+      <div class="pvs" style="color:var(--orange)"><span class="i">🎉</span>환호</div>
+    </div>
+  </div>
+  <button class="btn btn-sec" style="width:100%;justify-content:center;padding:13px;margin-top:16px" onclick="closeM()">닫기</button>`);
+}
+
+/* ===== JSON ===== */
+function exportJSON(){
+  const data=JSON.stringify(GAMES,null,2);
+  const b=new Blob([data],{type:'application/json'});const u=URL.createObjectURL(b);
+  const a=document.createElement('a');a.href=u;a.download='recmaster-games.json';a.click();URL.revokeObjectURL(u);
+  toast(`게임 ${GAMES.length}개를 내보냈어요`);
+}
+function importJSON(ev){
+  const f=ev.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{try{const d=JSON.parse(r.result);if(!Array.isArray(d))throw 0;
+    modal(`<h3>📥 가져오기</h3><p>파일에서 게임 <b>${d.length}개</b>를 찾았어요. 어떻게 할까요?</p><div style="display:flex;gap:10px"><button class="btn btn-sec" style="flex:1;justify-content:center;padding:12px" onclick='doImport(${JSON.stringify(JSON.stringify(d))},false)'>기존에 추가</button><button class="btn btn-pri" style="flex:1;justify-content:center;padding:12px" onclick='doImport(${JSON.stringify(JSON.stringify(d))},true)'>전체 교체</button></div>`);
+  }catch(e){toast('올바른 JSON 파일이 아니에요');}};
+  r.readAsText(f);ev.target.value='';
+}
+function doImport(s,replace){const d=JSON.parse(s);if(replace)GAMES=d;else GAMES=GAMES.concat(d);save();closeM();renderList();toast(`게임 ${d.length}개를 가져왔어요`);}
+
+/* init */
+load();
+document.getElementById('fArch').innerHTML='<option value="">전체 유형</option>'+Object.entries(ARCH).map(([k,a])=>`<option value="${k}">${a.ic} ${a.ko}</option>`).join('');
+document.getElementById('fPhase').innerHTML='<option value="">전체 구간</option>'+Object.entries(PHASE).map(([k,v])=>`<option value="${k}">${v}</option>`).join('');
+renderList();
+</script>
+</body>
+</html>

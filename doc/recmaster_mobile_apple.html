@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#F5F5F7">
+<title>레크마스터 — 진행</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F5F7;--card:#fff;--card2:#FBFBFD;--fill:#F0F0F3;--fill2:#E8E8ED;
+  --blue:#0071E3;--blueH:#0077ED;--blueSoft:#E8F1FD;
+  --green:#34C759;--orange:#FF9500;--red:#FF3B30;--purple:#AF52DE;--yellow:#FFCC00;--teal:#30B0C7;
+  --txt:#1D1D1F;--txt2:#6E6E73;--txt3:#8E8E93;--line:rgba(0,0,0,.08);--line2:rgba(0,0,0,.05);
+  --font:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+  --sh-sm:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);
+  --sh:0 4px 16px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --sh-lg:0 12px 40px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.05);
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;-webkit-user-select:none;user-select:none}
+html,body{background:var(--bg);color:var(--txt);font-family:var(--font);-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+body{max-width:460px;margin:0 auto;min-height:100vh;position:relative}
+button{cursor:pointer;border:none;color:inherit;background:none;font-family:var(--font)}
+::-webkit-scrollbar{display:none}
+h1,h2,h3{letter-spacing:-.03em;font-weight:700}
+.view{display:none;animation:fade .4s cubic-bezier(.16,1,.3,1)}
+.view.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.pad{padding:24px 20px 40px}
+.status{display:flex;justify-content:space-between;padding:14px 22px 0;font-size:13px;font-weight:600}
+
+/* ===== HOME ===== */
+.home{min-height:100vh;padding:24px 20px 40px;display:flex;flex-direction:column}
+.brand{display:flex;align-items:center;gap:9px;font-size:16px;font-weight:700;margin-bottom:auto}
+.brand .dot{width:28px;height:28px;background:linear-gradient(135deg,var(--blue),#42A5F5);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:0 3px 8px rgba(0,113,227,.3)}
+.greet{font-size:15px;color:var(--txt2);margin-bottom:6px;margin-top:20px}
+.htitle{font-size:34px;font-weight:700;line-height:1.15;letter-spacing:-.04em;margin-bottom:12px}
+.htitle .em{color:var(--blue)}
+.hsub{font-size:15px;color:var(--txt2);line-height:1.55;margin-bottom:30px}
+.cta{background:var(--blue);color:#fff;font-size:17px;font-weight:600;padding:18px;border-radius:16px;width:100%;transition:.18s;box-shadow:0 8px 24px rgba(0,113,227,.28);display:flex;align-items:center;justify-content:center;gap:8px}
+.cta:active{transform:scale(.97)}
+.sec{font-size:16px;font-weight:600;margin:32px 0 14px;display:flex;align-items:center;gap:7px}
+.sec .more{margin-left:auto;font-size:13.5px;color:var(--blue);font-weight:500}
+.hscroll{display:flex;gap:12px;overflow-x:auto;margin:0 -20px;padding:0 20px 4px}
+.tg{min-width:140px;background:var(--card);border-radius:16px;padding:16px;box-shadow:var(--sh-sm)}
+.tg .r{font-size:20px;margin-bottom:8px}
+.tg .n{font-size:15.5px;font-weight:600;margin-bottom:3px}
+.tg .m{font-size:12px;color:var(--txt2)}
+.saved{background:var(--card);border-radius:16px;padding:15px;display:flex;align-items:center;gap:13px;margin-bottom:11px;box-shadow:var(--sh-sm);transition:.15s}
+.saved:active{transform:scale(.98)}
+.saved .ic{width:44px;height:44px;border-radius:12px;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:20px}
+.saved .st{font-size:15px;font-weight:600}.saved .ss{font-size:12.5px;color:var(--txt2);margin-top:2px}
+.saved .cv{margin-left:auto;color:var(--txt3);font-size:20px}
+.empty{background:var(--card);border-radius:16px;padding:28px;text-align:center;color:var(--txt2);font-size:13.5px;line-height:1.6;box-shadow:var(--sh-sm)}
+
+/* ===== WIZARD ===== */
+.top{display:flex;align-items:center;gap:14px;margin-bottom:24px}
+.back{width:40px;height:40px;border-radius:12px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--sh-sm);flex-shrink:0}
+.prog{display:flex;gap:6px;flex:1}
+.prog span{height:5px;flex:1;background:var(--fill2);border-radius:5px;transition:.4s cubic-bezier(.16,1,.3,1)}
+.prog span.on{background:var(--blue)}
+.stepq{font-size:13px;color:var(--blue);font-weight:600;margin-bottom:6px}
+.stept{font-size:26px;font-weight:700;letter-spacing:-.03em;margin-bottom:24px}
+.opt{background:var(--card);border:2px solid transparent;border-radius:18px;padding:18px;display:flex;align-items:center;gap:14px;margin-bottom:12px;transition:.18s;width:100%;text-align:left;box-shadow:var(--sh-sm)}
+.opt:active{transform:scale(.98)}
+.opt.sel{border-color:var(--blue);box-shadow:0 0 0 4px var(--blueSoft),var(--sh-sm)}
+.opt .oi{font-size:26px;flex-shrink:0}
+.opt .ot{font-size:17px;font-weight:600}.opt .os{font-size:12.5px;color:var(--txt2);margin-top:2px}
+.opt .ck{margin-left:auto;color:var(--blue);font-weight:700;font-size:19px;opacity:0}
+.opt.sel .ck{opacity:1}
+.slider-wrap{background:var(--card);border-radius:18px;padding:20px;margin-top:8px;box-shadow:var(--sh-sm)}
+.slider-row{display:flex;align-items:center;gap:12px}
+input[type=range]{-webkit-appearance:none;flex:1;height:6px;background:var(--fill2);border-radius:6px;outline:none}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:28px;height:28px;background:#fff;border-radius:50%;box-shadow:0 3px 10px rgba(0,0,0,.2);border:1px solid var(--line)}
+.slider-val{text-align:center;font-size:32px;font-weight:700;color:var(--blue);margin-top:16px;letter-spacing:-.03em}
+.rangelbl{font-size:12.5px;color:var(--txt3)}
+.chips{display:flex;gap:10px;flex-wrap:wrap}
+.chip{flex:1;min-width:66px;background:var(--card);border:2px solid transparent;border-radius:14px;padding:16px 8px;text-align:center;font-size:16px;font-weight:600;transition:.18s;box-shadow:var(--sh-sm)}
+.chip:active{transform:scale(.96)}
+.chip.sel{border-color:var(--blue);color:var(--blue);box-shadow:0 0 0 4px var(--blueSoft),var(--sh-sm)}
+.wizbtn{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;padding:16px 20px calc(20px + env(safe-area-inset-bottom));background:linear-gradient(to top,var(--bg) 72%,transparent)}
+.wizbtn button{width:100%;padding:17px;border-radius:16px;background:var(--blue);color:#fff;font-size:17px;font-weight:600;transition:.18s;box-shadow:0 8px 20px rgba(0,113,227,.25)}
+.wizbtn button:active{transform:scale(.97)}
+.wizbtn button:disabled{background:var(--fill2);color:var(--txt3);box-shadow:none}
+
+/* ===== CUESHEET ===== */
+.genload{text-align:center;padding:90px 0}
+.spinner{width:48px;height:48px;border:4px solid var(--fill2);border-top-color:var(--blue);border-radius:50%;margin:0 auto 22px;animation:spin 1s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.genload .gt{font-size:17px;font-weight:600}.genload .gs{font-size:13.5px;color:var(--txt2);margin-top:7px}
+.doneh{font-size:26px;font-weight:700;letter-spacing:-.03em;margin-bottom:5px}
+.dones{font-size:13.5px;color:var(--txt2);margin-bottom:18px}
+.curve{display:flex;align-items:flex-end;gap:5px;height:48px;background:var(--card);border-radius:14px;padding:10px 12px;margin-bottom:8px;box-shadow:var(--sh-sm)}
+.curve .b{flex:1;border-radius:5px 5px 2px 2px;transition:height .6s cubic-bezier(.16,1,.3,1);min-height:8px}
+.curvelbl{font-size:12px;color:var(--txt3);text-align:center;margin-bottom:18px}
+.qc{background:var(--card);border-radius:16px;padding:15px;margin-bottom:11px;display:flex;align-items:center;gap:13px;box-shadow:var(--sh-sm);transition:.15s}
+.qc:active{transform:scale(.99)}
+.qc .num{width:28px;height:28px;border-radius:9px;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;flex-shrink:0}
+.qc .qb{flex:1;min-width:0}
+.qc .qt{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.qc .qn{font-size:16px;font-weight:600}
+.qc .qtm{font-size:12.5px;color:var(--txt2);margin-left:auto}
+.qc .qw{font-size:12.5px;color:var(--txt2);margin-top:3px}
+.sbadge{font-size:10px;font-weight:600;color:var(--purple);background:#F4EBFC;padding:2px 7px;border-radius:980px}
+.qc .swap{color:var(--txt3);font-size:18px;padding:4px}
+.btnrow{display:flex;gap:10px;margin-top:18px}
+.b2{flex:1;padding:16px;border-radius:16px;font-size:15px;font-weight:600;transition:.18s}
+.b2:active{transform:scale(.97)}
+.bgo{background:var(--blue);color:#fff;box-shadow:0 6px 18px rgba(0,113,227,.25)}
+.bsub{background:var(--fill);color:var(--txt)}
+
+/* ===== PLAY ===== */
+.play{padding:16px 16px 24px;min-height:100vh;display:flex;flex-direction:column;background:var(--bg)}
+.phead{display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-top:8px}
+.pstep{font-size:12px;color:var(--txt2);font-weight:600;background:var(--card);padding:7px 11px;border-radius:980px;box-shadow:var(--sh-sm)}
+.pgname{font-size:20px;font-weight:700;letter-spacing:-.02em}
+.ptimer{margin-left:auto;font-size:24px;font-weight:700;color:var(--orange);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.ptimer.warn{color:var(--red)}
+.sos{width:44px;height:44px;border-radius:13px;background:var(--card);display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:var(--sh-sm)}
+.prompter{background:var(--card);border-radius:20px;padding:20px;margin-bottom:12px;flex:1;display:flex;flex-direction:column;min-height:160px;box-shadow:var(--sh)}
+.plabel{font-size:11.5px;font-weight:600;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:5px}
+.script{font-size:20px;font-weight:600;line-height:1.5;letter-spacing:-.02em}
+.script b{color:var(--blue)}
+.switches{display:flex;gap:8px;margin-top:auto;padding-top:16px;flex-wrap:wrap}
+.sw{font-size:12.5px;font-weight:600;color:var(--txt);background:var(--fill);padding:9px 13px;border-radius:980px;transition:.15s}
+.sw:active{background:var(--blue);color:#fff}
+.panel{background:var(--card2);border:1px solid var(--line);border-radius:16px;padding:16px;margin-top:14px}
+.panel .pq{font-size:21px;font-weight:700;text-align:center;line-height:1.4;letter-spacing:-.02em}
+.panel .pa{font-size:15px;color:var(--green);text-align:center;margin-top:10px;font-weight:600;min-height:20px}
+.panel-btns{display:flex;gap:8px;margin-top:14px}
+.panel-btns button{flex:1;padding:11px;border-radius:12px;font-size:13.5px;font-weight:600;background:var(--fill);color:var(--txt);transition:.15s}
+.panel-btns button:active{transform:scale(.95)}
+.panel-btns .prim{background:var(--blue);color:#fff}
+.sboard{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin-bottom:12px}
+.sb{aspect-ratio:1;border-radius:18px;font-size:12px;font-weight:600;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:transform .1s;box-shadow:var(--sh-sm)}
+.sb:active{transform:scale(.9)}
+.sb .i{font-size:22px}
+.sb.c{background:var(--card);color:var(--green)}
+.sb.w{background:var(--card);color:var(--red)}
+.sb.t{background:var(--card);color:var(--purple)}
+.sb.h{background:var(--card);color:var(--orange)}
+.score{display:flex;gap:10px;margin-bottom:12px}
+.tm{flex:1;background:var(--card);border-radius:16px;padding:13px;text-align:center;box-shadow:var(--sh-sm)}
+.tm .tn{font-size:13px;font-weight:600;color:var(--txt2)}
+.tm .ts{font-size:32px;font-weight:700;margin:4px 0;font-variant-numeric:tabular-nums;letter-spacing:-.03em}
+.tm.a .ts{color:var(--blue)}.tm.b .ts{color:var(--purple)}
+.tm .tb{display:flex;gap:7px}
+.tm .tbtn{flex:1;padding:9px;border-radius:11px;font-weight:700;font-size:14px;background:var(--fill);color:var(--txt);transition:.12s}
+.tm .tbtn:active{transform:scale(.9)}
+.pnav{display:flex;gap:10px}
+.pnav button{flex:1;padding:16px;border-radius:16px;font-size:15px;font-weight:600;transition:.18s}
+.pnav button:active{transform:scale(.97)}
+.pprev{background:var(--fill);color:var(--txt);flex:0 0 56px}
+.pnext{background:var(--blue);color:#fff;box-shadow:0 6px 16px rgba(0,113,227,.25)}
+.pdone{background:var(--green);color:#fff;box-shadow:0 6px 16px rgba(52,199,89,.28)}
+
+/* ===== SHARE ===== */
+.share{padding:24px 20px;min-height:100vh;display:flex;flex-direction:column;justify-content:center}
+.share h2{text-align:center;margin-bottom:18px;font-size:24px}
+.story{aspect-ratio:9/16;max-height:520px;border-radius:28px;background:linear-gradient(155deg,#0071E3,#42A5F5 55%,#5AC8FA);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px;margin:0 auto;width:100%;box-shadow:var(--sh-lg)}
+.story .cf{position:absolute;inset:0;pointer-events:none}
+.story .tp{font-size:56px;margin-bottom:12px;filter:drop-shadow(0 4px 16px rgba(0,0,0,.2))}
+.story .ml{font-size:13px;font-weight:700;color:rgba(255,255,255,.9);letter-spacing:3px}
+.story .mn{font-size:36px;font-weight:800;margin:8px 0;color:#fff;letter-spacing:-.03em;text-shadow:0 2px 16px rgba(0,0,0,.2)}
+.story .wn{font-size:15px;font-weight:600;color:#fff;background:rgba(255,255,255,.22);padding:7px 18px;border-radius:980px;backdrop-filter:blur(10px)}
+.story .pn{font-size:13.5px;color:rgba(255,255,255,.85);margin-top:22px}.story .pn b{color:#fff;font-weight:700}
+.story .hs{position:absolute;bottom:24px;font-size:14px;font-weight:700;color:rgba(255,255,255,.95)}
+.share-btns{display:flex;gap:10px;margin-top:20px}
+
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(30,30,32,.92);backdrop-filter:blur(20px);color:#fff;padding:13px 22px;border-radius:980px;font-size:14px;font-weight:500;opacity:0;transition:.35s cubic-bezier(.16,1,.3,1);z-index:999;box-shadow:var(--sh-lg)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.flash{animation:fl .3s}@keyframes fl{50%{transform:scale(1.22)}}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="view active" id="home">
+  <div class="home">
+    <div class="brand"><span class="dot">🎯</span> 레크마스터</div>
+    <div class="greet">안녕하세요 👋</div>
+    <div class="htitle">떠맡은 레크,<br><span class="em">5분</span>이면 끝나요</div>
+    <div class="hsub">장소·인원·시간만 고르면 검증된 게임으로<br>큐시트를 짜드려요. 설치도 필요 없어요.</div>
+    <button class="cta" onclick="startWizard()">＋ 새 큐시트 만들기</button>
+    <div class="sec">🔥 지금 뜨는 게임 <span class="more">이번주 새터</span></div>
+    <div class="hscroll">
+      <div class="tg"><div class="r">🥇</div><div class="n">카테고리 초성</div><div class="m">지락실 · 메인</div></div>
+      <div class="tg"><div class="r">🥈</div><div class="n">랜덤플레이댄스</div><div class="m">지락실 · 피날레</div></div>
+      <div class="tg"><div class="r">🥉</div><div class="n">밸런스 게임</div><div class="m">전예능 · 토크</div></div>
+    </div>
+    <div class="sec">📁 저장된 큐시트</div>
+    <div id="savedList"><div class="empty">아직 만든 큐시트가 없어요.<br>첫 큐시트를 만들어보세요.</div></div>
+  </div>
+</div>
+
+<!-- WIZARD -->
+<div class="view" id="wizard"><div class="pad">
+  <div class="top"><button class="back" onclick="wizBack()">‹</button>
+    <div class="prog"><span id="p1"></span><span id="p2"></span><span id="p3"></span></div></div>
+  <div id="wizBody"></div>
+</div><div class="wizbtn"><button id="wizNext" onclick="wizNextStep()">다음</button></div></div>
+
+<!-- CUESHEET -->
+<div class="view" id="cuesheet"><div class="pad" id="cueBody"></div></div>
+
+<!-- PLAY -->
+<div class="view" id="play"><div id="playBody" class="play"></div></div>
+
+<!-- SHARE -->
+<div class="view" id="share">
+  <div class="share">
+    <h2>🎉 오늘의 레크 끝!</h2>
+    <div class="story"><div class="cf" id="cf"></div>
+      <div class="tp">🏆</div><div class="ml">TODAY'S MVP</div>
+      <div class="mn" id="mvpName">민준</div><div class="wn">🥇 최종 우승</div>
+      <div class="pn">오늘의 벌칙자 · <b id="penName">지훈</b></div>
+      <div class="hs" id="shareHash">#새터 #레크마스터</div></div>
+    <div class="share-btns">
+      <button class="b2 bsub" onclick="toast('이미지로 저장했어요')">저장</button>
+      <button class="b2 bgo" onclick="toast('인스타 스토리로 공유해요')">📸 스토리 공유</button></div>
+    <button class="b2 bsub" style="margin-top:10px" onclick="go('home')">홈으로</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const GAMES={
+  chungazame:{name:'청개구리 가위바위보',phase:'opening',energy:2,dur:5,place:['room','hall'],mode:'both',src:'지락실',why:'가볍게 몸풀기 · 준비물 0',script:'"제가 낸 것을 <b>이기면 지고, 지면 이기는</b> 거예요! 자, 가위바위보!" (점점 빠르게)',switches:['헷갈려 할 때','속도 올릴 때'],type:'simple'},
+  nunchi:{name:'눈치 게임',phase:'opening',energy:2,dur:5,place:['room','hall'],mode:'solo',src:'국민게임',why:'룰 초간단 · 어디서나',script:'"순서 없이 아무나 1부터 외쳐요. <b>같이 외치면 둘 다 탈락!</b> 마지막 한 명이 벌칙"',switches:['안 나설 때'],type:'simple'},
+  game369:{name:'369 게임',phase:'opening',energy:3,dur:5,place:['bus','room'],mode:'solo',src:'국민게임',why:'버스에서 최고 · 순발력',script:'"돌아가며 숫자 세는데 <b>3·6·9에서는 박수!</b> 틀리면 벌칙 쌓여요"',switches:['난이도 올릴 때'],type:'simple'},
+  balance:{name:'밸런스 게임',phase:'icebreak',energy:3,dur:15,place:['bus','room','hall'],mode:'both',src:'전예능',why:'자연스러운 대화 유도',script:'둘 중 하나! 고르고 이유를 물어보세요 👇',switches:['더 극단적으로','현실 질문으로'],type:'balance',pool:['평생 치킨만 vs 평생 피자만','여름만 있는 세상 vs 겨울만 있는 세상','민초 좋아 vs 민초 싫어','부먹 vs 찍먹','친구랑 여행 vs 혼자 여행','돈 많고 시간 없음 vs 시간 많고 돈 없음','1교시 전공 vs 6교시 교양','전 애인 기억 삭제 vs 첫사랑 다시 만남','새터 밤샘 vs 일찍 자기']},
+  ieomal:{name:'이어 말하기',phase:'icebreak',energy:3,dur:10,place:['bus','room'],mode:'both',src:'신서유기',why:'준비물 0 · 버스에서 최고',script:'주제 안에서 돌아가며! <b>3초 안에 못 대거나 중복이면 탈락</b> 👇',switches:['주제 바꾸기'],type:'category',pool:['동물 이름','과일','나라 이름','음식 메뉴','아이돌 그룹','2호선 지하철역','편의점 이름','웹툰 제목']},
+  manyak:{name:'만약에',phase:'icebreak',energy:2,dur:10,place:['bus','room'],mode:'both',src:'토크국민',why:'가벼운 상상 토크',script:'"만약에…" 질문에 각자 답해요. 정답은 없어요 👇',switches:['더 엉뚱하게'],type:'question',pool:['하루 동안 투명인간이 된다면?','동물 한 마리로 변한다면?','10억이 생기면 제일 먼저?','과거로 딱 하루 돌아간다면?','초능력 하나를 고른다면?','무인도에 물건 3개만 가져간다면?']},
+  sonbyeongho:{name:'손병호 게임',phase:'icebreak',energy:3,dur:10,place:['room'],mode:'solo',src:'국민게임',why:'서로 알아가기',script:'다섯 손가락 펴고 시작! 해당되면 접어요. <b>다 접으면 벌칙</b> 👇',switches:['더 친밀하게'],type:'question',pool:['연애 중인 사람 접어','오늘 지각한 사람 접어','자취하는 사람 접어','짝사랑 있는 사람 접어','새내기 접어','아침 안 먹고 온 사람 접어']},
+  choseong:{name:'카테고리 초성 퀴즈',phase:'main',energy:4,dur:20,place:['bus','room','hall'],mode:'both',src:'지락실',why:'지락실 시그니처 · 무한 확장',script:'카테고리와 초성을 보고 맞혀요! 틀리면 통과 👇',switches:['힌트 주기','카테고리 바꾸기'],type:'quiz',pool:[{q:'[음식] ㄸㅂㅇ',a:'떡볶이'},{q:'[음식] ㅁㄹㅌ',a:'마라탕'},{q:'[동물] ㅋㅍㄹ',a:'카피바라'},{q:'[동물] ㄹㅅㅍㄷ',a:'레서판다'},{q:'[장소] ㅅㅅㅇㅊㅂ',a:'성산일출봉'},{q:'[유행어] ㅇㅈㄸ',a:'알잘딱'},{q:'[여름] ㅅㅂ',a:'수박'},{q:'[영화] ㄱㅁㅊ',a:'기생충'}]},
+  inmul:{name:'인물 퀴즈',phase:'main',energy:4,dur:15,place:['room','hall'],mode:'both',src:'신서유기',why:'신서유기 유서깊은 게임',script:'힌트 3개로 인물을 맞혀요! 빨리 맞힐수록 고득점 👇',switches:['힌트 더 주기'],type:'quiz',pool:[{q:'조선 4대 왕 / 만원권 / 한글 창제',a:'세종대왕'},{q:'조선 장군 / 거북선 / 백원 동전',a:'이순신'},{q:'물리학자 / 혀 내민 사진 / E=mc²',a:'아인슈타인'},{q:'파란 펭귄 / 헬멧 / 노는 게 제일 좋아',a:'뽀로로'},{q:'빨간 옷 / 순록 썰매 / 12월',a:'산타클로스'},{q:'노란 캐릭터 / 볼 빨간 / 전기',a:'피카츄'}]},
+  mommal:{name:'몸으로 말해요',phase:'main',energy:4,dur:15,place:['room','hall'],mode:'team',src:'지락실',why:'세계적 검증 · 폰 제시어만',script:'말 없이 몸으로만! 팀원이 맞혀요. 60초 안에 최대한 👇',switches:['쉬운 걸로','동작 큰 걸로'],type:'word',pool:['기타치기','수영','볼링','태권도','낚시','셀카찍기','줄넘기','좀비걷기','김밥말기','로봇춤','골프스윙','펭귄걸음']},
+  speed:{name:'스피드 퀴즈',phase:'main',energy:4,dur:15,place:['room','hall'],mode:'team',src:'특기대회',why:'팀 대결 · 한 단어 설명',script:'출제자가 말·몸짓으로 설명, 팀원이 맞혀요! "통과" 가능 👇',switches:['쉬운 단어','어려운 단어'],type:'word',pool:['짝사랑','아이스아메리카노','지각','다이어트','롤러코스터','소개팅','시험기간','노래방','현타','국룰','워라밸','인싸']},
+  simjeon:{name:'이심전심',phase:'main',energy:3,dur:15,place:['room','hall'],mode:'team',src:'가족오락관',why:'팀 궁합 테스트',script:'같은 질문에 각자 답을 적고, 겹치면 득점! 👇',switches:['답 갈리는 걸로'],type:'question',pool:['치킨 하면 떠오르는 부위는?','초록색 하면?','여름 하면 한 단어?','분식집 대표 메뉴는?','유명한 가수 한 명?','겨울 간식 하나?']},
+  randomdance:{name:'랜덤 플레이 댄스',phase:'finale',energy:5,dur:10,place:['room','hall'],mode:'both',src:'지락실',share:true,why:'지락실 대표 · 영상 공유로 바이럴',script:'노래가 랜덤으로 바뀌면 그 안무를 춰요! <b>영상 찍어 공유하면 인생샷</b> 📸',switches:['최신곡으로','추억의 곡으로'],type:'simple'},
+  roulette:{name:'벌칙 룰렛',phase:'finale',energy:4,dur:5,place:['room','hall'],mode:'both',src:'유틸',why:'벌칙자 정하기',script:'룰렛을 돌려 벌칙을 정해요! 두구두구… 👇',switches:['순한 벌칙','센 벌칙'],type:'roulette',pool:['애교 3종 세트','성대모사 하나','옆사람 칭찬 10초','유행어 외치기','아이돌 댄스 한 소절','웃긴 표정 5초']},
+  bomb:{name:'시한폭탄',phase:'finale',energy:5,dur:5,place:['room'],mode:'solo',src:'신서유기',why:'긴장감 최고조',script:'폰을 폭탄처럼 돌려요! 답하고 넘기기, <b>터질 때 들고 있으면 벌칙</b> 💣',switches:['시간 줄이기'],type:'simple'},
+};
+const PHASE={opening:{ko:'오프닝',color:'#34C759',ratio:.12},icebreak:{ko:'아이스브레이킹',color:'#FFCC00',ratio:.28},main:{ko:'메인',color:'#FF3B30',ratio:.45},finale:{ko:'피날레',color:'#AF52DE',ratio:.15}};
+const EC={2:'#34C759',3:'#FFCC00',4:'#FF9500',5:'#FF3B30'};
+let S={place:null,people:40,mode:'team',time:60,step:1,cue:[],curGame:0,scoreA:0,scoreB:0,poolIdx:{}};
+let saved=[];
+
+function go(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
+function vib(ms){if(navigator.vibrate)navigator.vibrate(ms);}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');vib(12);clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1500);}
+
+function startWizard(){S.step=1;S.place=null;go('wizard');renderWiz();}
+function renderWiz(){
+  ['p1','p2','p3'].forEach((p,i)=>document.getElementById(p).classList.toggle('on',i<S.step));
+  const b=document.getElementById('wizBody'),nb=document.getElementById('wizNext');
+  if(S.step===1){
+    b.innerHTML=`<div class="stepq">STEP 1 / 3</div><div class="stept">어디서 하나요?</div>
+      ${optHtml('bus','🚌','이동 중 · 버스','앉아서 하는 게임 위주')}
+      ${optHtml('room','🏠','방 · 소규모','가장 다양한 게임')}
+      ${optHtml('hall','🎤','대강당 · 넓은 곳','대규모·활동적 게임')}`;
+    nb.textContent='다음';nb.disabled=!S.place;
+  }else if(S.step===2){
+    b.innerHTML=`<div class="stepq">STEP 2 / 3</div><div class="stept">몇 명이서 하나요?</div>
+      <div style="display:flex;gap:10px;margin-bottom:18px">
+        <button class="chip ${S.mode==='solo'?'sel':''}" onclick="setMode('solo')">개인전</button>
+        <button class="chip ${S.mode==='team'?'sel':''}" onclick="setMode('team')">팀 대항전</button></div>
+      <div class="slider-wrap"><div class="slider-row"><span class="rangelbl">4</span>
+        <input type="range" min="4" max="100" value="${S.people}" oninput="setPeople(this.value)"><span class="rangelbl">100</span></div>
+        <div class="slider-val"><span id="pplVal">${S.people}</span>명</div></div>`;
+    nb.textContent='다음';nb.disabled=false;
+  }else{
+    b.innerHTML=`<div class="stepq">STEP 3 / 3</div><div class="stept">얼마나 하나요?</div>
+      <div class="chips">${timeChip(30)}${timeChip(60)}${timeChip(90)}${timeChip(120)}</div>
+      <div style="margin-top:28px;background:var(--card);border-radius:16px;padding:20px;box-shadow:var(--sh-sm)">
+        <div style="font-size:13px;color:var(--txt2);margin-bottom:12px">이렇게 만들어드려요</div>
+        <div style="font-size:15px;font-weight:600;line-height:1.7">📍 ${placeKo(S.place)} · 👥 ${S.people}명 ${S.mode==='team'?'팀전':'개인전'} · ⏱ ${S.time}분</div></div>`;
+    nb.textContent='큐시트 만들기';nb.disabled=false;
+  }
+}
+function optHtml(v,ic,t,s){return `<button class="opt ${S.place===v?'sel':''}" onclick="setPlace('${v}')"><span class="oi">${ic}</span><span><span class="ot">${t}</span><span class="os">${s}</span></span><span class="ck">✓</span></button>`;}
+function timeChip(m){return `<button class="chip ${S.time===m?'sel':''}" onclick="setTime(${m})">${m}분</button>`;}
+function placeKo(p){return {bus:'이동 중·버스',room:'방·소규모',hall:'대강당'}[p];}
+function setPlace(v){S.place=v;vib(12);renderWiz();}
+function setMode(m){S.mode=m;vib(12);renderWiz();}
+function setPeople(v){S.people=+v;document.getElementById('pplVal').textContent=v;}
+function setTime(m){S.time=m;vib(12);renderWiz();}
+function wizBack(){if(S.step>1){S.step--;renderWiz();}else go('home');}
+function wizNextStep(){if(S.step<3){S.step++;renderWiz();}else generateCue();}
+
+function generateCue(){
+  go('cuesheet');
+  document.getElementById('cueBody').innerHTML=`<div class="genload"><div class="spinner"></div><div class="gt">게임을 조합하고 있어요</div><div class="gs">장소·인원·시간에 맞춰 기승전결을 짜는 중</div></div>`;
+  setTimeout(buildCue,1400);
+}
+function buildCue(){
+  let avail=Object.entries(GAMES).filter(([k,g])=>g.place.includes(S.place)&&(g.mode==='both'||g.mode===S.mode));
+  const order=['opening','icebreak','main','finale'];let cue=[];
+  order.forEach(ph=>{
+    const slotTime=Math.round(S.time*PHASE[ph].ratio);
+    let cand=shuffle(avail.filter(([k,g])=>g.phase===ph).sort((a,b)=>a[1].energy-b[1].energy));
+    let acc=0;
+    for(const [k,g] of cand){if(acc>=slotTime&&cue.some(c=>c.phase===ph))break;if(cue.find(c=>c.key===k))continue;cue.push({key:k,...g});acc+=g.dur;if(acc>=slotTime)break;}
+  });
+  if(!cue.some(c=>c.phase==='main')){const m=avail.find(([k,g])=>g.phase==='main');if(m)cue.push({key:m[0],...m[1]});}
+  S.cue=cue;renderCue();
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function renderCue(){
+  const total=S.cue.reduce((s,g)=>s+g.dur,0);
+  let bars=S.cue.map(g=>`<div class="b" style="height:${g.energy/5*100}%;background:${EC[g.energy]}"></div>`).join('');
+  let cards=S.cue.map((g,i)=>`<div class="qc"><div class="num">${i+1}</div><div class="qb"><div class="qt"><span class="dot" style="background:${EC[g.energy]}"></span><span class="qn">${g.name}</span>${g.share?'<span class="sbadge">공유각</span>':''}<span class="qtm">${g.dur}분</span></div><div class="qw">${g.why} · <span style="color:${PHASE[g.phase].color}">${PHASE[g.phase].ko}</span></div></div><button class="swap" onclick="swapGame(${i})">⇄</button></div>`).join('');
+  document.getElementById('cueBody').innerHTML=`
+    <div class="top"><button class="back" onclick="go('home')">‹</button><div style="font-weight:700;font-size:16px">완성된 큐시트</div></div>
+    <div class="doneh">완성! ${total}분 큐시트 🎉</div>
+    <div class="dones">${placeKo(S.place)} · ${S.people}명 ${S.mode==='team'?'팀전':'개인전'} 기준</div>
+    <div class="curve">${bars}</div><div class="curvelbl">가볍게 시작해 점점 고조 →</div>
+    ${cards}
+    <div class="btnrow"><button class="b2 bsub" onclick="saveCue()">저장</button><button class="b2 bgo" onclick="startPlay()">진행 시작 ▶</button></div>`;
+}
+function swapGame(i){
+  const g=S.cue[i];
+  const alt=shuffle(Object.entries(GAMES).filter(([k,gg])=>gg.phase===g.phase&&k!==g.key&&gg.place.includes(S.place)&&(gg.mode==='both'||gg.mode===S.mode)&&!S.cue.find(c=>c.key===k)));
+  if(!alt.length){toast('교체할 다른 게임이 없어요');return;}
+  S.cue[i]={key:alt[0][0],...alt[0][1]};vib(12);renderCue();toast('게임을 교체했어요');
+}
+function saveCue(){const total=S.cue.reduce((s,g)=>s+g.dur,0);saved.unshift({place:S.place,mode:S.mode,cue:JSON.parse(JSON.stringify(S.cue)),sub:`${total}분 · ${S.mode==='team'?'팀전':'개인전'} · ${S.cue.length}개 게임`});renderSaved();toast('큐시트를 저장했어요 📁');}
+function renderSaved(){const el=document.getElementById('savedList');if(!saved.length){el.innerHTML=`<div class="empty">아직 만든 큐시트가 없어요.<br>첫 큐시트를 만들어보세요.</div>`;return;}el.innerHTML=saved.map((s,i)=>`<div class="saved" onclick="loadSaved(${i})"><div class="ic">${s.place==='hall'?'🎤':s.place==='bus'?'🚌':'🏠'}</div><div><div class="st">${placeKo(s.place)} 큐시트</div><div class="ss">${s.sub}</div></div><div class="cv">›</div></div>`).join('');}
+function loadSaved(i){const s=saved[i];S.cue=JSON.parse(JSON.stringify(s.cue));S.place=s.place;S.mode=s.mode;go('cuesheet');renderCue();}
+
+let timerInt=null,timeLeft=0;
+function startPlay(){S.curGame=0;S.scoreA=0;S.scoreB=0;S.poolIdx={};go('play');renderPlay();}
+function renderPlay(){
+  const g=S.cue[S.curGame];clearInterval(timerInt);timeLeft=g.dur*60;
+  const isLast=S.curGame===S.cue.length-1;
+  document.getElementById('playBody').innerHTML=`
+    <div class="phead"><span class="pstep">${S.curGame+1}/${S.cue.length}</span><span class="pgname">${g.name}</span><span class="ptimer" id="ptimer">${fmt(timeLeft)}</span><button class="sos" onclick="sos()">🚑</button></div>
+    <div class="prompter"><div class="plabel">📢 진행 대본 · ${g.src} 검증</div><div class="script">${g.script}</div>${renderPanel(g)}<div class="switches">${g.switches.map(s=>`<button class="sw" onclick="toast('멘트를 바꿨어요')">${s}</button>`).join('')}</div></div>
+    <div class="sboard">
+      <button class="sb c" onclick="sfx('딩동댕 🔔',[10])"><span class="i">🔔</span>정답</button>
+      <button class="sb w" onclick="sfx('땡 ❌',[40])"><span class="i">❌</span>오답</button>
+      <button class="sb t" onclick="sfx('두구두구…',[10,30,10,30])"><span class="i">🥁</span>긴장</button>
+      <button class="sb h" onclick="sfx('와아 🎉',[8,8,8])"><span class="i">🎉</span>환호</button></div>
+    ${S.mode==='team'?`<div class="score">
+      <div class="tm a"><div class="tn">A팀</div><div class="ts" id="tsA">${S.scoreA}</div><div class="tb"><button class="tbtn" onclick="score('A',-10)">−10</button><button class="tbtn" onclick="score('A',10)">+10</button></div></div>
+      <div class="tm b"><div class="tn">B팀</div><div class="ts" id="tsB">${S.scoreB}</div><div class="tb"><button class="tbtn" onclick="score('B',-10)">−10</button><button class="tbtn" onclick="score('B',10)">+10</button></div></div></div>`:''}
+    <div class="pnav">${S.curGame>0?`<button class="pprev" onclick="prevGame()">‹</button>`:''}${isLast?`<button class="pdone" onclick="finishPlay()">🏁 마무리하고 결과보기</button>`:`<button class="pnext" onclick="nextGame()">다음 게임 →</button>`}</div>`;
+  startTimer();
+}
+function renderPanel(g){
+  if(['balance','category','question','word','quiz','roulette'].includes(g.type)){
+    if(!(g.key in S.poolIdx))S.poolIdx[g.key]=0;
+    const item=g.pool[S.poolIdx[g.key]];
+    if(g.type==='quiz')return `<div class="panel"><div class="pq">${item.q}</div><div class="pa" id="ans">답을 생각해보세요…</div><div class="panel-btns"><button class="prim" onclick="showAns('${item.a}')">정답 공개</button><button onclick="nextPool('${g.key}')">다음 문제 →</button></div></div>`;
+    const label=typeof item==='string'?item:item.q;
+    return `<div class="panel"><div class="pq">${label}</div><div class="panel-btns">${g.type==='roulette'?`<button class="prim" onclick="spinPool('${g.key}')">🎰 돌리기</button>`:''}<button onclick="nextPool('${g.key}')">다음 →</button></div></div>`;
+  }
+  return '';
+}
+function showAns(a){document.getElementById('ans').textContent='✅ '+a;vib(10);}
+function nextPool(k){const g=GAMES[k];S.poolIdx[k]=(S.poolIdx[k]+1)%g.pool.length;vib(8);document.querySelector('.prompter .panel').outerHTML=renderPanel(S.cue[S.curGame]);}
+function spinPool(k){const g=GAMES[k];S.poolIdx[k]=Math.floor(Math.random()*g.pool.length);vib([10,30,10,50]);document.querySelector('.prompter .panel').outerHTML=renderPanel(S.cue[S.curGame]);}
+function fmt(s){return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0');}
+function startTimer(){timerInt=setInterval(()=>{if(timeLeft>0){timeLeft--;const t=document.getElementById('ptimer');if(t){t.textContent=fmt(timeLeft);if(timeLeft<=10)t.classList.add('warn');}if(timeLeft===10)vib([100]);}},1000);}
+function sfx(msg,pattern){toast(msg);vib(pattern);}
+function score(team,d){const key=team==='A'?'scoreA':'scoreB';S[key]=Math.max(0,S[key]+d);const e=document.getElementById(team==='A'?'tsA':'tsB');e.textContent=S[key];e.parentElement.classList.add('flash');setTimeout(()=>e.parentElement.classList.remove('flash'),300);vib(d>0?[10]:[30]);}
+function sos(){toast('🚑 구급상자 · 넌센스로 시간 때우기');vib([10,20,10]);}
+function nextGame(){if(S.curGame<S.cue.length-1){S.curGame++;vib(12);renderPlay();}}
+function prevGame(){if(S.curGame>0){S.curGame--;vib(12);renderPlay();}}
+function finishPlay(){clearInterval(timerInt);go('share');
+  document.getElementById('shareHash').textContent=`#${placeKo(S.place).split('·')[0]} #레크마스터`;
+  const cf=document.getElementById('cf');cf.innerHTML='';const cols=['#fff','#FFCC00','#5AC8FA','#34C759'];
+  for(let i=0;i<26;i++){const d=document.createElement('div');d.style.cssText=`position:absolute;width:7px;height:7px;background:${cols[i%4]};border-radius:2px;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${.5+Math.random()*.5};transform:rotate(${Math.random()*360}deg)`;cf.appendChild(d);}
+  vib([10,30,10,30,60]);}
+renderSaved();
+</script>
+</body>
+</html>

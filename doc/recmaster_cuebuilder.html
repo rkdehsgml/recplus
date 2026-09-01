@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>큐시트 빌더 — 레크마스터</title>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+:root{
+  --bg:#F5F5F7;--card:#fff;--card2:#FBFBFD;--fill:#F0F0F3;--fill2:#E8E8ED;
+  --blue:#0071E3;--blueH:#0077ED;--blueSoft:#E8F1FD;
+  --green:#34C759;--orange:#FF9500;--red:#FF3B30;--purple:#AF52DE;--yellow:#FFCC00;
+  --txt:#1D1D1F;--txt2:#6E6E73;--txt3:#8E8E93;--line:rgba(0,0,0,.08);--line2:rgba(0,0,0,.05);
+  --font:'Pretendard',-apple-system,BlinkMacSystemFont,sans-serif;
+  --sh-sm:0 1px 3px rgba(0,0,0,.04),0 1px 2px rgba(0,0,0,.06);
+  --sh:0 4px 16px rgba(0,0,0,.06),0 1px 3px rgba(0,0,0,.04);
+  --sh-lg:0 12px 40px rgba(0,0,0,.12),0 2px 8px rgba(0,0,0,.05);
+  --r:18px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--txt);font-family:var(--font);font-size:15px;-webkit-font-smoothing:antialiased;letter-spacing:-.01em}
+button,input,select{font-family:var(--font)}
+button{cursor:pointer;border:none;color:inherit;background:none}
+::-webkit-scrollbar{width:11px;height:11px}::-webkit-scrollbar-thumb{background:rgba(0,0,0,.15);border-radius:11px;border:3px solid transparent;background-clip:content-box}
+h1,h2,h3{letter-spacing:-.02em;font-weight:700}
+.wrap{max-width:1100px;margin:0 auto;padding:36px 32px 60px}
+.head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:8px}
+.head h1{font-size:30px;letter-spacing:-.03em}
+.head .sub{font-size:14.5px;color:var(--txt2);margin-top:6px}
+.head .actions{display:flex;gap:8px}
+.btn{padding:10px 18px;border-radius:980px;font-weight:600;font-size:14px;transition:.18s;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
+.btn:active{transform:scale(.96)}
+.btn-pri{background:var(--blue);color:#fff}.btn-pri:hover{background:var(--blueH)}
+.btn-sec{background:var(--fill);color:var(--txt)}.btn-sec:hover{background:var(--fill2)}
+.btn-ghost{background:transparent;border:1px solid var(--line);color:var(--txt)}.btn-ghost:hover{background:var(--fill)}
+.btn-soft{background:var(--blueSoft);color:var(--blue)}
+.btn-sm{padding:7px 13px;font-size:13px}
+
+/* ===== TARGET BAR (핵심 신규) ===== */
+.target{background:var(--card);border-radius:var(--r);padding:20px 24px;box-shadow:var(--sh-sm);margin:24px 0;display:flex;align-items:center;gap:24px;flex-wrap:wrap}
+.target .field{display:flex;align-items:center;gap:10px}
+.target label{font-size:13.5px;font-weight:600;color:var(--txt2)}
+.target select{background:var(--fill);border:none;border-radius:10px;padding:9px 14px;font-size:14px;font-weight:600;color:var(--txt);cursor:pointer}
+.target .goal-input{display:flex;align-items:center;gap:6px;background:var(--fill);border-radius:10px;padding:4px 6px}
+.target .goal-input button{width:32px;height:32px;border-radius:8px;background:var(--card);font-size:18px;font-weight:700;color:var(--blue);box-shadow:var(--sh-sm)}
+.target .goal-input .val{font-size:16px;font-weight:700;min-width:52px;text-align:center}
+.target .autobtn{margin-left:auto}
+
+/* progress toward goal */
+.gauge{flex:1 1 100%;margin-top:4px}
+.gauge-bar{height:10px;background:var(--fill2);border-radius:10px;overflow:hidden;position:relative}
+.gauge-fill{height:100%;border-radius:10px;transition:width .5s cubic-bezier(.16,1,.3,1),background .3s}
+.gauge-info{display:flex;justify-content:space-between;margin-top:8px;font-size:13px}
+.gauge-info .cur{font-weight:700}
+.gauge-info .status{font-weight:600}
+.st-under{color:var(--orange)}.st-good{color:var(--green)}.st-over{color:var(--red)}
+
+.cols{display:grid;grid-template-columns:1fr 1.15fr;gap:24px;align-items:start}
+.card{background:var(--card);border-radius:var(--r);padding:22px;box-shadow:var(--sh-sm)}
+.card h3{font-size:16.5px;margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card h3 .cnt{margin-left:auto;font-size:13px;color:var(--txt2);font-weight:500}
+
+/* library side */
+.tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap}
+.tab{padding:7px 14px;border-radius:980px;background:var(--fill);font-size:13px;font-weight:500;transition:.15s}
+.tab.on{background:var(--txt);color:#fff}
+.libitem{display:flex;align-items:center;gap:12px;padding:11px;border-radius:13px;transition:.15s}
+.libitem:hover{background:var(--fill)}
+.libitem .ic{width:40px;height:40px;border-radius:11px;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.libitem .t{font-size:14px;font-weight:600}.libitem .s{font-size:12px;color:var(--txt2);margin-top:1px}
+.libitem .add{margin-left:auto}
+.liblist{max-height:520px;overflow-y:auto;margin:0 -6px}
+
+/* cuesheet side */
+.curve{display:flex;align-items:flex-end;gap:5px;height:52px;background:var(--fill);border-radius:12px;padding:10px;margin-bottom:6px}
+.curve .b{flex:1;border-radius:5px 5px 2px 2px;min-height:8px;transition:height .4s cubic-bezier(.16,1,.3,1)}
+.curvelbl{font-size:11.5px;color:var(--txt3);text-align:center;margin-bottom:16px}
+.cuelist{min-height:120px}
+.cue-card{display:flex;align-items:center;gap:12px;background:var(--card2);border:1px solid var(--line);border-radius:14px;padding:13px;margin-bottom:10px;transition:.15s;cursor:grab}
+.cue-card:active{cursor:grabbing}
+.cue-card.dragging{opacity:.4;box-shadow:var(--sh-lg)}
+.cue-card.dragover{border-color:var(--blue);box-shadow:0 0 0 3px var(--blueSoft)}
+.cue-card .grip{color:var(--txt3);font-size:17px;cursor:grab;flex-shrink:0;letter-spacing:-2px}
+.cue-card .num{width:24px;height:24px;border-radius:8px;background:var(--fill);display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex-shrink:0}
+.cue-card .cb{flex:1;min-width:0}
+.cue-card .ct{display:flex;align-items:center;gap:7px;flex-wrap:wrap}
+.dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.cue-card .cn{font-size:14.5px;font-weight:600}
+.cue-card .cw{font-size:12px;color:var(--txt2);margin-top:2px}
+.cue-card .dur-edit{display:flex;align-items:center;gap:3px;background:var(--fill);border-radius:9px;padding:3px}
+.cue-card .dur-edit button{width:26px;height:26px;border-radius:7px;font-size:15px;font-weight:700;color:var(--blue)}
+.cue-card .dur-edit .dv{font-size:12.5px;font-weight:700;min-width:34px;text-align:center}
+.cue-card .rm{color:var(--txt3);font-size:16px;padding:4px;flex-shrink:0}
+.cue-card .rm:hover{color:var(--red)}
+.empty{text-align:center;padding:44px 20px;color:var(--txt2);font-size:13.5px;line-height:1.7;border:1.5px dashed var(--line);border-radius:14px}
+.phase-divider{display:flex;align-items:center;gap:8px;margin:14px 0 8px;font-size:11.5px;font-weight:700;color:var(--txt3)}
+.phase-divider::after{content:'';flex:1;height:1px;background:var(--line2)}
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(20px);background:rgba(30,30,32,.92);backdrop-filter:blur(20px);color:#fff;padding:13px 22px;border-radius:980px;font-size:14px;font-weight:500;opacity:0;transition:.35s cubic-bezier(.16,1,.3,1);z-index:200;box-shadow:var(--sh-lg)}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+@media(max-width:820px){.wrap{padding:24px 18px 60px}.cols{grid-template-columns:1fr}.target{gap:14px}.target .autobtn{margin-left:0;width:100%}.head{flex-direction:column;align-items:flex-start;gap:12px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="head">
+    <div><h1>큐시트 빌더</h1><div class="sub">게임을 담고, 순서를 드래그로 바꾸고, 목표 시간에 맞춰 자동 배분하세요</div></div>
+    <div class="actions">
+      <button class="btn btn-ghost" onclick="toast('PPT로 추출했어요 · 대형화면용')">📊 PPT</button>
+      <button class="btn btn-ghost" onclick="toast('PDF 큐시트를 저장했어요')">📄 PDF</button>
+      <button class="btn btn-pri" onclick="toast('모바일 진행용 QR을 생성했어요')">📱 모바일로 보내기</button>
+    </div>
+  </div>
+
+  <!-- TARGET / AUTO-DISTRIBUTE BAR -->
+  <div class="target">
+    <div class="field"><label>장소</label>
+      <select id="selPlace" onchange="renderLib()"><option value="all">전체</option><option value="bus">🚌 버스</option><option value="room" selected>🏠 방·소규모</option><option value="hall">🎤 대강당</option></select></div>
+    <div class="field"><label>구성</label>
+      <select id="selMode" onchange="renderLib()"><option value="both">팀/개인</option><option value="team" selected>팀전</option><option value="solo">개인전</option></select></div>
+    <div class="field"><label>목표 시간</label>
+      <div class="goal-input"><button onclick="setGoal(-10)">−</button><span class="val" id="goalVal">60분</span><button onclick="setGoal(10)">＋</button></div></div>
+    <button class="btn btn-pri autobtn" onclick="autoDistribute()">✨ 목표 시간에 자동 배분</button>
+    <!-- gauge -->
+    <div class="gauge">
+      <div class="gauge-bar"><div class="gauge-fill" id="gaugeFill" style="width:0%;background:var(--orange)"></div></div>
+      <div class="gauge-info"><span class="cur" id="curTime">현재 0분</span><span class="status" id="gaugeStatus"></span></div>
+    </div>
+  </div>
+
+  <div class="cols">
+    <!-- LEFT: library -->
+    <div class="card">
+      <h3>🎮 게임 담기 <span class="cnt" id="libCnt"></span></h3>
+      <div class="tabs">
+        <button class="tab on" onclick="filterLib('all',this)">전체</button>
+        <button class="tab" onclick="filterLib('opening',this)">오프닝</button>
+        <button class="tab" onclick="filterLib('icebreak',this)">아브</button>
+        <button class="tab" onclick="filterLib('main',this)">메인</button>
+        <button class="tab" onclick="filterLib('finale',this)">피날레</button>
+      </div>
+      <div class="liblist" id="libList"></div>
+    </div>
+
+    <!-- RIGHT: cuesheet -->
+    <div class="card">
+      <h3>📋 내 큐시트 <span class="cnt" id="cueCnt">0개</span></h3>
+      <div class="curve" id="curve"></div>
+      <div class="curvelbl">텐션 흐름 · 가볍게 시작해 점점 고조</div>
+      <div class="cuelist" id="cueList"></div>
+    </div>
+  </div>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const GAMES=[
+  {k:'chungazame',name:'청개구리 가위바위보',phase:'opening',energy:2,dur:5,place:['room','hall'],mode:'both',src:'지락실',why:'가볍게 몸풀기'},
+  {k:'nunchi',name:'눈치 게임',phase:'opening',energy:2,dur:5,place:['room','hall'],mode:'solo',src:'국민게임',why:'룰 초간단'},
+  {k:'game369',name:'369 게임',phase:'opening',energy:3,dur:5,place:['bus','room'],mode:'solo',src:'국민게임',why:'버스에서 최고'},
+  {k:'balance',name:'밸런스 게임',phase:'icebreak',energy:3,dur:15,place:['bus','room','hall'],mode:'both',src:'전예능',why:'대화 유발 최강'},
+  {k:'ieomal',name:'이어 말하기',phase:'icebreak',energy:3,dur:10,place:['bus','room'],mode:'both',src:'신서유기',why:'준비물 0'},
+  {k:'manyak',name:'만약에',phase:'icebreak',energy:2,dur:10,place:['bus','room'],mode:'both',src:'토크국민',why:'가벼운 상상 토크'},
+  {k:'sonbyeongho',name:'손병호 게임',phase:'icebreak',energy:3,dur:10,place:['room'],mode:'solo',src:'국민게임',why:'서로 알아가기'},
+  {k:'choseong',name:'카테고리 초성 퀴즈',phase:'main',energy:4,dur:20,place:['bus','room','hall'],mode:'both',src:'지락실',why:'지락실 시그니처'},
+  {k:'inmul',name:'인물 퀴즈',phase:'main',energy:4,dur:15,place:['room','hall'],mode:'both',src:'신서유기',why:'유서깊은 게임'},
+  {k:'mommal',name:'몸으로 말해요',phase:'main',energy:4,dur:15,place:['room','hall'],mode:'team',src:'지락실',why:'세계적 검증'},
+  {k:'speed',name:'스피드 퀴즈',phase:'main',energy:4,dur:15,place:['room','hall'],mode:'team',src:'특기대회',why:'팀 대결'},
+  {k:'simjeon',name:'이심전심',phase:'main',energy:3,dur:15,place:['room','hall'],mode:'team',src:'가족오락관',why:'팀 궁합'},
+  {k:'randomdance',name:'랜덤 플레이 댄스',phase:'finale',energy:5,dur:10,place:['room','hall'],mode:'both',src:'지락실',why:'영상 공유 바이럴',share:true},
+  {k:'roulette',name:'벌칙 룰렛',phase:'finale',energy:4,dur:5,place:['room','hall'],mode:'both',src:'유틸',why:'벌칙자 정하기'},
+  {k:'bomb',name:'시한폭탄',phase:'finale',energy:5,dur:5,place:['room'],mode:'solo',src:'신서유기',why:'긴장감 최고조'},
+];
+const PHASE={opening:{ko:'오프닝',c:'#34C759',ratio:.12},icebreak:{ko:'아이스브레이킹',c:'#FFCC00',ratio:.28},main:{ko:'메인',c:'#FF3B30',ratio:.45},finale:{ko:'피날레',c:'#AF52DE',ratio:.15}};
+const EC={2:'#34C759',3:'#FFCC00',4:'#FF9500',5:'#FF3B30'};
+const ORDER=['opening','icebreak','main','finale'];
+let cue=[]; // {k,name,phase,energy,dur(custom),...}
+let goal=60,libFilter='all';
+
+function vib(x){if(navigator.vibrate)navigator.vibrate(x)}
+function toast(m){const t=document.getElementById('toast');t.textContent=m;t.classList.add('show');clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove('show'),1500);}
+function place(){return document.getElementById('selPlace').value;}
+function mode(){return document.getElementById('selMode').value;}
+
+function availGames(){return GAMES.filter(g=>(place()==='all'||g.place.includes(place()))&&(mode()==='both'||g.mode==='both'||g.mode===mode()));}
+
+function renderLib(){
+  const list=document.getElementById('libList');
+  let games=availGames().filter(g=>libFilter==='all'||g.phase===libFilter);
+  document.getElementById('libCnt').textContent=games.length+'개 사용 가능';
+  list.innerHTML=games.map(g=>{const inCue=cue.find(c=>c.k===g.k);
+    return `<div class="libitem"><div class="ic">${phaseIcon(g.phase)}</div><div><div class="t">${g.name}</div><div class="s">${PHASE[g.phase].ko} · ${g.dur}분 · ${g.src}</div></div><div class="add"><button class="btn btn-sm ${inCue?'btn-soft':'btn-sec'}" onclick="toggle('${g.k}')">${inCue?'담김 ✓':'＋ 담기'}</button></div></div>`;
+  }).join('')||`<div class="empty">이 조건에 맞는 게임이 없어요.<br>장소·구성을 바꿔보세요.</div>`;
+}
+function phaseIcon(p){return {opening:'🌅',icebreak:'💬',main:'🔥',finale:'🎉'}[p];}
+function filterLib(f,el){libFilter=f;document.querySelectorAll('.tab').forEach(x=>x.classList.remove('on'));el.classList.add('on');renderLib();}
+
+function toggle(k){
+  const i=cue.findIndex(c=>c.k===k);
+  if(i>=0)cue.splice(i,1);
+  else{const g=GAMES.find(x=>x.k===k);cue.push({...g});sortCue();}
+  vib(10);renderAll();
+}
+function sortCue(){cue.sort((a,b)=>ORDER.indexOf(a.phase)-ORDER.indexOf(b.phase));}
+function totalTime(){return cue.reduce((s,c)=>s+c.dur,0);}
+
+function renderAll(){renderLib();renderCue();renderGauge();}
+
+function renderCue(){
+  const list=document.getElementById('cueList');
+  document.getElementById('cueCnt').textContent=cue.length+'개';
+  const curve=document.getElementById('curve');
+  if(!cue.length){list.innerHTML=`<div class="empty">왼쪽에서 게임을 담아보세요.<br>또는 <b>✨ 자동 배분</b>으로 한 번에 채우세요.</div>`;curve.innerHTML='';return;}
+  curve.innerHTML=cue.map(c=>`<div class="b" style="height:${c.energy/5*100}%;background:${EC[c.energy]}"></div>`).join('');
+  let html='';let lastPhase=null;
+  cue.forEach((c,i)=>{
+    if(c.phase!==lastPhase){html+=`<div class="phase-divider">${PHASE[c.phase].ko}</div>`;lastPhase=c.phase;}
+    html+=`<div class="cue-card" draggable="true" data-i="${i}"
+      ondragstart="dragStart(event,${i})" ondragover="dragOver(event,${i})" ondragleave="dragLeave(event)" ondrop="drop(event,${i})" ondragend="dragEnd(event)">
+      <span class="grip">⣿</span><div class="num">${i+1}</div>
+      <div class="cb"><div class="ct"><span class="dot" style="background:${EC[c.energy]}"></span><span class="cn">${c.name}</span>${c.share?'<span style="font-size:10px;font-weight:600;color:var(--purple);background:#F4EBFC;padding:2px 7px;border-radius:980px">공유각</span>':''}</div><div class="cw">${c.why} · ${c.src}</div></div>
+      <div class="dur-edit"><button onclick="chDur(${i},-5)">−</button><span class="dv">${c.dur}분</span><button onclick="chDur(${i},5)">＋</button></div>
+      <button class="rm" onclick="toggle('${c.k}')">✕</button></div>`;
+  });
+  list.innerHTML=html;
+}
+function chDur(i,d){cue[i].dur=Math.max(5,cue[i].dur+d);vib(8);renderCue();renderGauge();}
+
+/* ===== GAUGE (목표 대비) ===== */
+function renderGauge(){
+  const cur=totalTime();
+  document.getElementById('curTime').textContent=`현재 ${cur}분`;
+  const pct=Math.min(100,cur/goal*100);
+  const fill=document.getElementById('gaugeFill');
+  const st=document.getElementById('gaugeStatus');
+  fill.style.width=pct+'%';
+  const diff=cur-goal;
+  let color,txt,cls;
+  if(cur===0){color='var(--fill2)';txt='';cls='';}
+  else if(diff< -8){color='var(--orange)';txt=`목표까지 ${goal-cur}분 부족`;cls='st-under';}
+  else if(diff>8){color='var(--red)';txt=`목표보다 ${diff}분 초과`;cls='st-over';}
+  else{color='var(--green)';txt='✓ 목표 시간에 딱 맞아요';cls='st-good';}
+  fill.style.background=color;
+  st.textContent=txt;st.className='status '+cls;
+}
+function setGoal(d){goal=Math.max(20,goal+d);document.getElementById('goalVal').textContent=goal+'분';renderGauge();}
+
+/* ===== AUTO DISTRIBUTE (목표시간 자동배분) ===== */
+function autoDistribute(){
+  const avail=availGames();
+  let newCue=[];
+  ORDER.forEach(ph=>{
+    const slot=Math.round(goal*PHASE[ph].ratio);
+    let cand=shuffle(avail.filter(g=>g.phase===ph).sort((a,b)=>a.energy-b.energy));
+    let acc=0;
+    for(const g of cand){
+      if(acc>=slot&&newCue.some(c=>c.phase===ph))break;
+      if(newCue.find(c=>c.k===g.k))continue;
+      newCue.push({...g});acc+=g.dur;
+      if(acc>=slot)break;
+    }
+  });
+  if(!newCue.length){toast('조건에 맞는 게임이 없어요');return;}
+  // fine-tune: 목표에 근접하도록 각 게임 시간 미세조정
+  let cur=newCue.reduce((s,c)=>s+c.dur,0);
+  let guard=0;
+  while(Math.abs(cur-goal)>4&&guard<40){
+    if(cur<goal){const m=newCue.filter(c=>c.phase==='main'||c.phase==='icebreak');if(m.length)m[guard%m.length].dur+=5;else break;}
+    else{const big=newCue.filter(c=>c.dur>5).sort((a,b)=>b.dur-a.dur);if(big.length)big[0].dur-=5;else break;}
+    cur=newCue.reduce((s,c)=>s+c.dur,0);guard++;
+  }
+  cue=newCue;sortCue();vib([10,20,10]);renderAll();
+  toast(`✨ ${goal}분에 맞춰 ${cue.length}개 게임을 배분했어요`);
+}
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+
+/* ===== DRAG & DROP 순서변경 ===== */
+let dragIdx=null;
+function dragStart(e,i){dragIdx=i;e.currentTarget.classList.add('dragging');e.dataTransfer.effectAllowed='move';}
+function dragOver(e,i){e.preventDefault();const c=e.currentTarget;if(!c.classList.contains('dragging'))c.classList.add('dragover');}
+function dragLeave(e){e.currentTarget.classList.remove('dragover');}
+function drop(e,i){
+  e.preventDefault();
+  document.querySelectorAll('.cue-card').forEach(c=>c.classList.remove('dragover'));
+  if(dragIdx===null||dragIdx===i)return;
+  const moved=cue.splice(dragIdx,1)[0];
+  cue.splice(i,0,moved);
+  vib(12);renderCue();renderGauge();
+  // 순서를 바꾸면 phase 정렬은 유지하지 않음(사용자 의도 존중) → divider는 현재 순서 기준으로만 표시
+}
+function dragEnd(e){e.currentTarget.classList.remove('dragging');document.querySelectorAll('.cue-card').forEach(c=>c.classList.remove('dragover'));dragIdx=null;}
+
+/* init */
+renderAll();
+</script>
+</body>
+</html>

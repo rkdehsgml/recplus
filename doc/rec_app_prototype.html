@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>레크 진행 앱 프로토타입</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A0F; --surface:#16161F; --surface2:#1E1E2A; --surface3:#26263A;
+    --yellow:#FFE14D; --red:#FF4D6D; --purple:#6C5CE7; --mint:#4DFFA6;
+    --txt:#FFFFFF; --txt2:#A0A0B0; --line:rgba(255,255,255,.08);
+    --font:'Pretendard',-apple-system,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  body{background:#000;font-family:var(--font);display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px;gap:24px;flex-wrap:wrap}
+  /* phone frame */
+  .phone{width:340px;height:720px;background:var(--bg);border-radius:44px;overflow:hidden;position:relative;box-shadow:0 0 0 11px #1a1a22,0 0 0 13px #2a2a35,0 30px 80px rgba(0,0,0,.7);flex-shrink:0}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:120px;height:26px;background:#000;border-radius:0 0 18px 18px;z-index:100}
+  .screen{width:100%;height:100%;overflow-y:auto;overflow-x:hidden;position:relative;scrollbar-width:none}
+  .screen::-webkit-scrollbar{display:none}
+  .pad{padding:44px 20px 90px}
+  .label{position:absolute;bottom:14px;left:0;right:0;text-align:center;color:#555;font-size:12px;font-weight:600;letter-spacing:.5px}
+  .status{display:flex;justify-content:space-between;padding:6px 22px 0;font-size:13px;font-weight:600;color:var(--txt)}
+
+  h1{font-size:15px;color:var(--txt2);font-weight:600}
+  .greet{font-size:26px;font-weight:800;line-height:1.25;margin:6px 0 22px;letter-spacing:-.5px}
+  .greet .em{background:linear-gradient(90deg,var(--purple),#8f7cff);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  /* primary CTA */
+  .cta-main{background:linear-gradient(135deg,var(--purple),#8a76ff);border:none;color:#fff;font-family:var(--font);font-size:18px;font-weight:800;padding:20px;border-radius:20px;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;box-shadow:0 10px 30px rgba(108,92,231,.45);cursor:pointer;transition:transform .15s,box-shadow .15s;letter-spacing:-.3px}
+  .cta-main:active{transform:scale(.97)}
+
+  .sec-title{font-size:16px;font-weight:800;margin:26px 0 12px;display:flex;align-items:center;gap:6px;letter-spacing:-.3px}
+  .sec-title .tag{font-size:10px;font-weight:700;color:var(--purple);border:1px solid var(--purple);padding:2px 7px;border-radius:20px;margin-left:auto;letter-spacing:0}
+
+  /* trending horizontal */
+  .hscroll{display:flex;gap:12px;overflow-x:auto;margin:0 -20px;padding:0 20px 4px;scrollbar-width:none}
+  .hscroll::-webkit-scrollbar{display:none}
+  .gcard{min-width:130px;background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:14px;position:relative;overflow:hidden}
+  .gcard .rank{font-size:11px;font-weight:700;color:var(--yellow)}
+  .gcard .gname{font-size:16px;font-weight:800;margin:6px 0 3px;letter-spacing:-.3px}
+  .gcard .gmeta{font-size:11px;color:var(--txt2)}
+  .gcard .glow{position:absolute;top:-30px;right:-30px;width:70px;height:70px;border-radius:50%;filter:blur(30px);opacity:.5}
+
+  /* saved list */
+  .saved{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:15px 16px;display:flex;align-items:center;gap:12px;margin-bottom:10px}
+  .saved .ic{width:38px;height:38px;border-radius:11px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:18px}
+  .saved .st{font-size:15px;font-weight:700}
+  .saved .ss{font-size:12px;color:var(--txt2);margin-top:2px}
+  .saved .chev{margin-left:auto;color:var(--txt2)}
+
+  /* ===== setup wizard ===== */
+  .prog{display:flex;gap:6px;margin-bottom:28px}
+  .prog span{height:4px;flex:1;background:var(--surface3);border-radius:4px;overflow:hidden}
+  .prog span.on{background:var(--purple)}
+  .step-q{font-size:13px;color:var(--txt2);font-weight:600;margin-bottom:4px}
+  .step-t{font-size:24px;font-weight:800;margin-bottom:24px;letter-spacing:-.5px}
+  .opt{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:20px;display:flex;align-items:center;gap:14px;margin-bottom:12px;cursor:pointer;transition:.15s}
+  .opt:active{transform:scale(.98)}
+  .opt.sel{border-color:var(--purple);background:rgba(108,92,231,.12)}
+  .opt .oic{font-size:26px}
+  .opt .ot{font-size:17px;font-weight:700}
+  .opt .os{font-size:12px;color:var(--txt2);margin-top:2px}
+  .opt .chk{margin-left:auto;color:var(--purple);opacity:0;font-weight:800}
+  .opt.sel .chk{opacity:1}
+
+  /* ===== cuesheet ===== */
+  .done-h{font-size:23px;font-weight:800;margin-bottom:4px;letter-spacing:-.5px}
+  .done-s{font-size:13px;color:var(--txt2);margin-bottom:18px}
+  .curve{display:flex;align-items:flex-end;gap:5px;height:44px;background:var(--surface);border-radius:14px;padding:10px 12px;margin-bottom:18px}
+  .curve .bar{flex:1;border-radius:4px 4px 2px 2px;opacity:.9}
+  .qc{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:10px;display:flex;align-items:center;gap:13px;position:relative}
+  .qc .num{width:26px;height:26px;border-radius:9px;background:var(--surface3);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;flex-shrink:0}
+  .qc .qbody{flex:1;min-width:0}
+  .qc .qtop{display:flex;align-items:center;gap:7px}
+  .qc .qn{font-size:16px;font-weight:800;letter-spacing:-.3px}
+  .qc .qtime{font-size:12px;color:var(--txt2);margin-left:auto}
+  .qc .qwhy{font-size:12px;color:var(--txt2);margin-top:3px}
+  .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+  .qc .drag{color:#555;font-size:16px}
+  .share-badge{font-size:9px;font-weight:800;color:var(--purple);background:rgba(108,92,231,.18);padding:2px 6px;border-radius:6px}
+
+  .btnrow{display:flex;gap:10px;margin-top:16px}
+  .btn{flex:1;padding:16px;border-radius:16px;border:none;font-family:var(--font);font-size:15px;font-weight:800;cursor:pointer;transition:.15s;letter-spacing:-.3px}
+  .btn:active{transform:scale(.97)}
+  .btn-go{background:var(--yellow);color:#0A0A0F;box-shadow:0 8px 24px rgba(255,225,77,.3)}
+  .btn-sub{background:var(--surface3);color:var(--txt)}
+
+  /* ===== dashboard ===== */
+  .dash{padding:44px 16px 20px;height:100%;display:flex;flex-direction:column}
+  .d-head{display:flex;align-items:center;margin-bottom:14px}
+  .d-gname{font-size:20px;font-weight:800;letter-spacing:-.5px}
+  .d-timer{margin-left:auto;font-size:22px;font-weight:800;color:var(--yellow);font-variant-numeric:tabular-nums}
+  .sos{width:40px;height:40px;border-radius:12px;background:rgba(255,77,109,.15);border:1px solid rgba(255,77,109,.3);display:flex;align-items:center;justify-content:center;font-size:19px;margin-left:10px;cursor:pointer}
+  .prompter{background:var(--surface);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:12px;flex:1;display:flex;flex-direction:column}
+  .prompter .script{font-size:21px;font-weight:700;line-height:1.5;letter-spacing:-.3px}
+  .prompter .switches{display:flex;gap:8px;margin-top:auto;padding-top:14px}
+  .prompter .sw{font-size:12px;font-weight:700;color:var(--txt2);background:var(--surface3);padding:8px 12px;border-radius:10px;cursor:pointer}
+  .soundboard{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:8px;margin-bottom:12px}
+  .sb{aspect-ratio:1;border-radius:16px;border:none;font-family:var(--font);font-size:12px;font-weight:800;color:#0A0A0F;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:transform .1s;letter-spacing:-.3px}
+  .sb:active{transform:scale(.9)}
+  .sb .sbi{font-size:20px}
+  .sb.correct{background:var(--yellow);box-shadow:0 6px 18px rgba(255,225,77,.35)}
+  .sb.wrong{background:var(--red);color:#fff;box-shadow:0 6px 18px rgba(255,77,109,.35)}
+  .sb.tense{background:var(--purple);color:#fff}
+  .sb.cheer{background:var(--mint);box-shadow:0 6px 18px rgba(77,255,166,.3)}
+  .scoreboard{display:flex;gap:10px;margin-bottom:12px}
+  .team{flex:1;background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:12px;text-align:center}
+  .team .tn{font-size:13px;font-weight:700;color:var(--txt2)}
+  .team .tsc{font-size:30px;font-weight:800;margin:4px 0;font-variant-numeric:tabular-nums}
+  .team .tbtns{display:flex;gap:6px}
+  .team .tb{flex:1;padding:8px;border-radius:9px;border:none;font-family:var(--font);font-weight:800;font-size:13px;cursor:pointer;background:var(--surface3);color:var(--txt)}
+  .team .tb:active{transform:scale(.92)}
+  .team.a{border-color:rgba(255,225,77,.3)} .team.a .tsc{color:var(--yellow)}
+  .team.b{border-color:rgba(108,92,231,.4)} .team.b .tsc{color:#8f7cff}
+  .next{padding:16px;border-radius:16px;background:linear-gradient(135deg,var(--purple),#8a76ff);border:none;color:#fff;font-family:var(--font);font-size:16px;font-weight:800;cursor:pointer;letter-spacing:-.3px}
+  .next:active{transform:scale(.97)}
+
+  /* ===== share ===== */
+  .share-wrap{padding:44px 20px 30px;display:flex;flex-direction:column;height:100%;justify-content:center;align-items:center}
+  .story{width:100%;aspect-ratio:9/16;max-height:480px;border-radius:24px;background:linear-gradient(160deg,#1a1440,#3a1a4a 60%,#4a1a2a);position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;border:1px solid rgba(255,255,255,.1)}
+  .story .conf{position:absolute;inset:0;pointer-events:none}
+  .story .trophy{font-size:52px;margin-bottom:10px;filter:drop-shadow(0 0 20px rgba(255,225,77,.6))}
+  .story .mvp-l{font-size:13px;font-weight:700;color:var(--yellow);letter-spacing:2px}
+  .story .mvp-n{font-size:32px;font-weight:900;margin:6px 0;letter-spacing:-1px;text-shadow:0 2px 20px rgba(0,0,0,.5)}
+  .story .win{font-size:15px;font-weight:700;color:#fff;background:rgba(255,225,77,.2);padding:6px 16px;border-radius:20px;border:1px solid rgba(255,225,77,.4)}
+  .story .pen{font-size:13px;color:var(--txt2);margin-top:18px}
+  .story .pen b{color:var(--red)}
+  .story .hash{position:absolute;bottom:20px;font-size:14px;font-weight:800;color:rgba(255,255,255,.9)}
+  .share-btns{display:flex;gap:10px;width:100%;margin-top:18px}
+
+  /* nav dots */
+  .nav{position:fixed;bottom:18px;left:50%;transform:translateX(-50%);display:flex;gap:8px;background:rgba(20,20,28,.9);padding:10px 16px;border-radius:30px;z-index:200;backdrop-filter:blur(10px);border:1px solid var(--line)}
+  .nav button{width:9px;height:9px;border-radius:50%;border:none;background:#444;cursor:pointer;transition:.2s;padding:0}
+  .nav button.on{background:var(--purple);width:22px;border-radius:5px}
+  .toast{position:absolute;bottom:100px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--surface3);color:#fff;padding:12px 20px;border-radius:14px;font-size:13px;font-weight:700;opacity:0;transition:.3s;pointer-events:none;white-space:nowrap;z-index:150;border:1px solid var(--line)}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media(max-width:1500px){.phone{transform:scale(.92)}}
+</style>
+</head>
+<body>
+
+<!-- ============ 1. HOME ============ -->
+<div class="phone">
+  <div class="notch"></div>
+  <div class="screen"><div class="status"><span>9:41</span><span>●●● 🔋</span></div>
+    <div class="pad">
+      <h1>안녕하세요 👋</h1>
+      <div class="greet">오늘은 어떤<br><span class="em">모임</span>인가요?</div>
+      <button class="cta-main" onclick="toast(this,'셋업 마법사로 →')">✨ 새 큐시트 만들기</button>
+
+      <div class="sec-title">🔥 지금 뜨는 게임 <span class="tag">이번주 새터</span></div>
+      <div class="hscroll">
+        <div class="gcard"><div class="glow" style="background:var(--red)"></div><div class="rank">🥇 1위</div><div class="gname">수호대작전</div><div class="gmeta">팀전 · 15분</div></div>
+        <div class="gcard"><div class="glow" style="background:var(--purple)"></div><div class="rank">🥈 2위</div><div class="gname">N행시 배틀</div><div class="gmeta">전체 · 10분</div></div>
+        <div class="gcard"><div class="glow" style="background:var(--mint)"></div><div class="rank">🥉 3위</div><div class="gname">거울 댄스</div><div class="gmeta">전체 · 10분</div></div>
+      </div>
+
+      <div class="sec-title">📁 저장된 큐시트</div>
+      <div class="saved" onclick="toast(this,'큐시트 열기')"><div class="ic">🎓</div><div><div class="st">25 컴공 새터</div><div class="ss">60분 · 팀전 · 5개 게임</div></div><div class="chev">›</div></div>
+      <div class="saved" onclick="toast(this,'큐시트 열기')"><div class="ic">🏕️</div><div><div class="st">동아리 여름 MT</div><div class="ss">90분 · 개인전 · 7개 게임</div></div><div class="chev">›</div></div>
+    </div>
+    <div class="toast">준비!</div>
+  </div>
+  <div class="label">① 홈 — 지금 뜨는 게임 + 저장된 큐시트</div>
+</div>
+
+<!-- ============ 2. SETUP ============ -->
+<div class="phone">
+  <div class="notch"></div>
+  <div class="screen"><div class="status"><span>9:41</span><span>●●● 🔋</span></div>
+    <div class="pad">
+      <div class="prog"><span class="on"></span><span class="on"></span><span></span></div>
+      <div class="step-q">STEP 2 / 3</div>
+      <div class="step-t">몇 명이서 하나요?</div>
+
+      <div class="opt" onclick="pick(this)"><div class="oic">👤</div><div><div class="ot">개인전 · 소규모</div><div class="os">5~15명 · 서바이벌</div></div><div class="chk">✓</div></div>
+      <div class="opt sel" onclick="pick(this)"><div class="oic">👥</div><div><div class="ot">팀 대항전</div><div class="os">16~50명 · A/B/C팀</div></div><div class="chk">✓</div></div>
+      <div class="opt" onclick="pick(this)"><div class="oic">🏟️</div><div><div class="ot">대규모</div><div class="os">50명+ · 대강당</div></div><div class="chk">✓</div></div>
+
+      <div style="margin-top:24px" class="step-q">인원 수</div>
+      <div style="display:flex;align-items:center;gap:12px;background:var(--surface);border-radius:16px;padding:16px;margin-top:8px">
+        <span style="font-size:13px;color:var(--txt2)">5</span>
+        <div style="flex:1;height:6px;background:var(--surface3);border-radius:6px;position:relative"><div style="position:absolute;left:0;top:0;bottom:0;width:38%;background:var(--purple);border-radius:6px"></div><div style="position:absolute;left:38%;top:50%;transform:translate(-50%,-50%);width:22px;height:22px;background:#fff;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,.4)"></div></div>
+        <span style="font-size:13px;color:var(--txt2)">100</span>
+      </div>
+      <div style="text-align:center;font-size:28px;font-weight:800;color:var(--purple);margin-top:12px">40명</div>
+
+      <div class="btnrow"><button class="btn btn-sub" onclick="toast(this,'← 이전')">이전</button><button class="btn btn-go" onclick="toast(this,'다음 → STEP 3')">다음</button></div>
+    </div>
+    <div class="toast">선택!</div>
+  </div>
+  <div class="label">② 셋업 마법사 — 3스텝, 한 손 조작</div>
+</div>
+
+<!-- ============ 3. CUESHEET ============ -->
+<div class="phone">
+  <div class="notch"></div>
+  <div class="screen"><div class="status"><span>9:41</span><span>●●● 🔋</span></div>
+    <div class="pad">
+      <div class="done-h">완성! 60분 큐시트 🎉</div>
+      <div class="done-s">팀전 · 40명 · 방·소규모 기준으로 조립했어요</div>
+
+      <div class="curve">
+        <div class="bar" style="height:35%;background:var(--mint)"></div>
+        <div class="bar" style="height:55%;background:var(--yellow)"></div>
+        <div class="bar" style="height:75%;background:var(--yellow)"></div>
+        <div class="bar" style="height:100%;background:var(--red)"></div>
+        <div class="bar" style="height:60%;background:var(--purple)"></div>
+      </div>
+
+      <div class="qc"><div class="num">1</div><div class="qbody"><div class="qtop"><span class="dot" style="background:var(--mint)"></span><span class="qn">리듬 초성</span><span class="qtime">5분</span></div><div class="qwhy">가볍게 시선 집중 · 워밍업</div></div><div class="drag">⋮⋮</div></div>
+      <div class="qc"><div class="num">2</div><div class="qbody"><div class="qtop"><span class="dot" style="background:var(--yellow)"></span><span class="qn">밸런스 게임</span><span class="qtime">15분</span></div><div class="qwhy">자연스러운 대화 유도 · 아이스브레이킹</div></div><div class="drag">⋮⋮</div></div>
+      <div class="qc"><div class="num">3</div><div class="qbody"><div class="qtop"><span class="dot" style="background:var(--red)"></span><span class="qn">수호대작전</span><span class="qtime">25분</span></div><div class="qwhy">본격 승부 · 텐션 최고조</div></div><div class="drag">⋮⋮</div></div>
+      <div class="qc"><div class="num">4</div><div class="qbody"><div class="qtop"><span class="dot" style="background:var(--purple)"></span><span class="qn">거울 댄스</span><span class="qtime">10분</span><span class="share-badge">공유각</span></div><div class="qwhy">피날레 + 단체 인증샷</div></div><div class="drag">⋮⋮</div></div>
+
+      <div class="btnrow"><button class="btn btn-sub" onclick="toast(this,'PDF·이미지 추출')">자료 추출</button><button class="btn btn-go" onclick="toast(this,'진행 시작 ▶')">진행 시작 ▶</button></div>
+    </div>
+    <div class="toast">시작!</div>
+  </div>
+  <div class="label">③ 큐시트 — energy 곡선 + 추천 이유(제품의 심장)</div>
+</div>
+
+<!-- ============ 4. DASHBOARD ============ -->
+<div class="phone">
+  <div class="notch"></div>
+  <div class="screen">
+    <div class="dash">
+      <div class="d-head"><span class="d-gname">수호대작전</span><span class="d-timer" id="tmr">12:34</span><div class="sos" onclick="toast(this,'🚑 구급상자 열기')">🚑</div></div>
+      <div class="prompter">
+        <div class="script">"자, 각자 받은 간식을 <span style="color:var(--yellow)">15분 동안</span> 지키세요! 뺏기면 상대가 먹습니다 😈"</div>
+        <div class="switches"><span class="sw" onclick="toast(this,'멘트 전환')">😐 반응 없을 때</span><span class="sw" onclick="toast(this,'멘트 전환')">📊 점수차 날 때</span></div>
+      </div>
+      <div class="soundboard">
+        <button class="sb correct" onclick="toast(this,'딩동댕 🔔')"><span class="sbi">🔔</span>정답</button>
+        <button class="sb wrong" onclick="toast(this,'땡 ❌')"><span class="sbi">❌</span>오답</button>
+        <button class="sb tense" onclick="toast(this,'두구두구...')"><span class="sbi">🥁</span>긴장</button>
+        <button class="sb cheer" onclick="toast(this,'와아아 🎉')"><span class="sbi">🎉</span>환호</button>
+      </div>
+      <div class="scoreboard">
+        <div class="team a"><div class="tn">A팀</div><div class="tsc" id="sa">30</div><div class="tbtns"><button class="tb" onclick="sc('sa',-10)">−10</button><button class="tb" onclick="sc('sa',10)">+10</button></div></div>
+        <div class="team b"><div class="tn">B팀</div><div class="tsc" id="sb">20</div><div class="tbtns"><button class="tb" onclick="sc('sb',-10)">−10</button><button class="tb" onclick="sc('sb',10)">+10</button></div></div>
+      </div>
+      <button class="next" onclick="toast(this,'다음: 거울 댄스 →')">다음 게임 →</button>
+    </div>
+    <div class="toast">🔔</div>
+  </div>
+  <div class="label">④ MC 대시보드 — 엄지존 조작 + 사운드보드</div>
+</div>
+
+<!-- ============ 5. SHARE ============ -->
+<div class="phone">
+  <div class="notch"></div>
+  <div class="screen"><div class="status"><span>9:41</span><span>●●● 🔋</span></div>
+    <div class="share-wrap">
+      <div class="story">
+        <div class="conf" id="conf"></div>
+        <div class="trophy">🏆</div>
+        <div class="mvp-l">TODAY'S MVP</div>
+        <div class="mvp-n">민준</div>
+        <div class="win">🥇 최종 우승!</div>
+        <div class="pen">오늘의 벌칙자 · <b>지훈</b></div>
+        <div class="hash">#25컴공새터 #레크마스터</div>
+      </div>
+      <div class="share-btns"><button class="btn btn-sub" onclick="toast(this,'이미지 저장')">저장</button><button class="btn btn-go" style="background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff" onclick="toast(this,'인스타 스토리 공유 →')">📸 스토리 공유</button></div>
+      <div style="font-size:12px;color:var(--txt2);margin-top:14px;text-align:center;line-height:1.5">참가자들이 이 카드를 보고<br>앱을 알게 됩니다 — 바이럴 고리</div>
+    </div>
+    <div class="toast">공유!</div>
+  </div>
+  <div class="label">⑤ 결과 공유 — 9:16 스토리 카드(바이럴 엔진)</div>
+</div>
+
+<script>
+  function toast(el,msg){
+    const sc=el.closest('.screen'); const t=sc.querySelector('.toast');
+    t.textContent=msg; t.classList.add('show');
+    if(navigator.vibrate)navigator.vibrate(15);
+    clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1400);
+  }
+  function pick(el){ el.parentElement.querySelectorAll('.opt').forEach(o=>o.classList.remove('sel')); el.classList.add('sel'); if(navigator.vibrate)navigator.vibrate(15); }
+  function sc(id,d){ const e=document.getElementById(id); let v=parseInt(e.textContent)+d; if(v<0)v=0; e.textContent=v; if(navigator.vibrate)navigator.vibrate(d>0?[10]:[30]);
+    e.style.transform='scale(1.25)'; setTimeout(()=>e.style.transform='scale(1)',150);}
+  // live timer
+  let t=754; setInterval(()=>{ if(t>0)t--; const m=String(Math.floor(t/60)).padStart(2,'0'),s=String(t%60).padStart(2,'0'); const el=document.getElementById('tmr'); if(el)el.textContent=m+':'+s; },1000);
+  // confetti dots on story
+  const conf=document.getElementById('conf');
+  if(conf){const cols=['#FFE14D','#FF4D6D','#6C5CE7','#4DFFA6'];for(let i=0;i<24;i++){const d=document.createElement('div');const c=cols[i%4];d.style.cssText=`position:absolute;width:7px;height:7px;background:${c};border-radius:2px;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${.4+Math.random()*.5};transform:rotate(${Math.random()*360}deg)`;conf.appendChild(d);} }
+</script>
+</body>
+</html>
