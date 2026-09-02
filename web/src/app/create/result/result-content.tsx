@@ -3,10 +3,10 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { games } from "@/data/games";
 import { recommendGames, type RecommendationInput } from "@/engine/recommend";
 import { loadCustomGames } from "@/lib/custom-games";
 import { places, type GameDefinition, type Place } from "@/lib/game-types";
+import { useGameCatalog } from "@/lib/use-game-catalog";
 import type { EventTeam } from "@/engine/recommend";
 import EditableCue from "./editable-cue";
 import styles from "./page.module.css";
@@ -32,9 +32,12 @@ function teamsFromParam(value: string | null): EventTeam[] | undefined {
 
 export default function ResultContent() {
   const params = useSearchParams();
+  const { games: catalog } = useGameCatalog();
   const [customGames, setCustomGames] = useState<GameDefinition[]>([]);
   const place = validPlace(params.get("place"));
-  const people = Number(params.get("people")) || 20;
+  const peopleParam = params.get("people");
+  const peopleValue = Number(peopleParam);
+  const people = peopleParam === null || peopleParam === "" || !Number.isFinite(peopleValue) ? 20 : Math.max(0, peopleValue);
   const mode = params.get("mode") === "personal" ? "personal" : "team";
   const targetMinutes = Number(params.get("time")) || 90;
   const teams = mode === "team" ? teamsFromParam(params.get("teams")) : undefined;
@@ -45,7 +48,7 @@ export default function ResultContent() {
   }, []);
 
   const input = useMemo<RecommendationInput>(() => ({ place, people, mode, targetMinutes, ...(teams ? { teams } : {}) }), [mode, people, place, targetMinutes, teams]);
-  const cue = useMemo(() => recommendGames([...customGames, ...games], input), [customGames, input]);
+  const cue = useMemo(() => recommendGames([...customGames, ...catalog], input), [catalog, customGames, input]);
   const cueKey = cue.map((game) => `${game.id}:${game.allocatedDuration}`).join("|");
 
   return (

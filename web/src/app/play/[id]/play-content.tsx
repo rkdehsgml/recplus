@@ -1,14 +1,17 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
-import { games } from "@/data/games";
-import type { SavedCueSheet } from "@/lib/cuesheets";
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { RecommendedGame } from "@/engine/recommend";
+import { getCueSheet, type SavedCueSheet } from "@/lib/cuesheets";
 import { loadCustomGames } from "@/lib/custom-games";
 import { loadCloudCueSheet } from "@/lib/event-plan-store";
 import { createItemOrders, gameItemsFor, orderedGameItems, type ItemOrderByGame } from "@/lib/game-catalog";
+import type { GameDefinition } from "@/lib/game-types";
 import { currentItemsFor, loadItemPacks } from "@/lib/item-packs";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import { isSupabaseConfigured } from "@/lib/supabase/config";
+import { useGameCatalog } from "@/lib/use-game-catalog";
 import {
   clearPlaySession,
   loadPlaySession,
@@ -46,15 +49,38 @@ function playerNumber(player: PersonalScore) {
   return Number(player.id.replace("player-", "")) || 0;
 }
 
-/** 저장 당시의 문항 스냅샷 대신 지금의 문제팩을 씁니다. 문항을 추가하면 저장해둔 큐시트에도 바로 반영돼요. */
-function withCurrentItems(cue: SavedCueSheet): SavedCueSheet {
-  const packs = loadItemPacks();
-  const catalog = [...loadCustomGames(), ...games];
+function teamNamesForCue(cue: SavedCueSheet) {
+  const names = cue.teams?.map((team, index) => team.name.trim() || `${index + 1}조`) ?? [];
+  return names.length >= 2 ? names : ["A팀", "B팀"];
+}
 
-  return { ...cue, games: cue.games.map((game) => ({ ...game, items: currentItemsFor(game, packs, catalog) })) };
+function teamScoresForSession(savedScores: number[] | undefined, teamCount: number) {
+  return Array.from({ length: teamCount }, (_, index) => Math.max(0, savedScores?.[index] ?? 0));
+}
+
+/** 저장한 큐시트도 공식 게임의 최신 룰·문항을 쓰되, 진행자가 편집한 순서와 시간은 보존합니다. */
+function withCurrentCatalog(cue: SavedCueSheet, officialGames: GameDefinition[]): SavedCueSheet {
+  const packs = loadItemPacks();
+  const catalog = [...loadCustomGames(), ...officialGames];
+
+  return {
+    ...cue,
+    games: cue.games.map((game): RecommendedGame => {
+      const latest = catalog.find((candidate) => candidate.id === game.id) ?? game;
+
+      return {
+        ...latest,
+        allocatedDuration: game.allocatedDuration,
+        reason: game.reason,
+        items: currentItemsFor(latest, packs, catalog),
+      };
+    }),
+  };
 }
 
 export default function PlayContent({ id }: { id: string }) {
+  const { games: catalog } = useGameCatalog();
+  const catalogRef = useRef(catalog);
   const [cue, setCue] = useState<SavedCueSheet | null>();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(0);
@@ -68,16 +94,18 @@ export default function PlayContent({ id }: { id: string }) {
   const [answerVisible, setAnswerVisible] = useState(false);
   const [gameProgress, setGameProgress] = useState<GameProgress[]>([]);
   const [restoredAt, setRestoredAt] = useState<string | null>(null);
-  const [authRequired, setAuthRequired] = useState(false);
+
+  useEffect(() => {
+    catalogRef.current = catalog;
+  }, [catalog]);
 
   useEffect(() => {
     let active = true;
-    const supabase = createSupabaseBrowserClient();
 
-    function loadPlan(stored: SavedCueSheet | null) {
+    function loadPlan(stored: SavedCueSheet | null | undefined) {
       if (!active) return;
       const session = loadPlaySession(id);
-      const saved = stored ? withCurrentItems(stored) : null;
+      const saved = stored ? withCurrentCatalog(stored, catalogRef.current) : null;
 
       setCue(saved);
       if (!saved || !saved.games.length) return;
@@ -89,36 +117,43 @@ export default function PlayContent({ id }: { id: string }) {
       setCurrentIndex(currentGameIndex);
       setSecondsLeft(Math.min(Math.max(session?.secondsLeft ?? maxSeconds, 0), maxSeconds));
       setPromptIndex(Math.min(Math.max(session?.promptIndex ?? 0, 0), Math.max(gameItemsFor(currentGame).length - 1, 0)));
-      setScores([session?.scores[0] ?? 0, session?.scores[1] ?? 0]);
+      setScores(teamScoresForSession(session?.scores, teamNamesForCue(saved).length));
       setPersonalScores(personalScoresForSession(session?.personalScores, saved.people));
       setGameProgress(saved.games.map((_, index) => session?.gameProgress[index] ?? "pending"));
       setItemOrders(createItemOrders(saved.games, session?.itemOrders));
       setRestoredAt(session?.updatedAt ?? null);
     }
 
-    async function loadForSignedInUser() {
-      const { data, error } = await supabase.auth.getUser();
-      if (!active) return;
-
-      if (error || !data.user) {
-        setAuthRequired(true);
-        loadPlan(null);
-        return;
-      }
-
-      setAuthRequired(false);
-      const cloud = await loadCloudCueSheet(id);
-      loadPlan(cloud);
+    if (!isSupabaseConfigured()) {
+      window.queueMicrotask(() => loadPlan(getCueSheet(id)));
+      return () => {
+        active = false;
+      };
     }
 
-    void loadForSignedInUser();
-    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (!session?.user) {
-        setAuthRequired(true);
-        loadPlan(null);
+    const supabase = createSupabaseBrowserClient();
+
+    async function loadPlanForCurrentUser() {
+      const { data, error } = await supabase.auth.getUser();
+      if (!active) return;
+      const local = getCueSheet(id);
+
+      if (error || !data.user) {
+        loadPlan(local);
         return;
       }
-      void loadForSignedInUser();
+
+      const cloud = await loadCloudCueSheet(id);
+      loadPlan(cloud ?? local);
+    }
+
+    void loadPlanForCurrentUser();
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (!session?.user) {
+        loadPlan(getCueSheet(id));
+        return;
+      }
+      void loadPlanForCurrentUser();
     });
 
     return () => {
@@ -147,14 +182,17 @@ export default function PlayContent({ id }: { id: string }) {
     savePlaySession(id, { currentIndex, secondsLeft, promptIndex, scores, personalScores, gameProgress, itemOrders });
   }, [cue, currentIndex, secondsLeft, promptIndex, scores, personalScores, gameProgress, itemOrders, id]);
 
-  const game = cue?.games[currentIndex];
+  const currentCue = useMemo(() => cue ? withCurrentCatalog(cue, catalog) : cue, [catalog, cue]);
+  const game = currentCue?.games[currentIndex];
   const orderedItems = useMemo(() => game ? orderedGameItems(game, itemOrders[game.id]) : [], [game, itemOrders]);
-  const progress = useMemo(() => cue?.games.length ? ((currentIndex + 1) / cue.games.length) * 100 : 0, [cue, currentIndex]);
+  const progress = useMemo(() => currentCue?.games.length ? ((currentIndex + 1) / currentCue.games.length) * 100 : 0, [currentCue, currentIndex]);
+  const teamNames = currentCue?.mode === "team" ? teamNamesForCue(currentCue) : [];
+  const teamScores = teamNames.map((_, index) => scores[index] ?? 0);
 
   function goTo(index: number) {
-    if (!cue || index < 0 || index >= cue.games.length) return;
+    if (!currentCue || index < 0 || index >= currentCue.games.length) return;
     setCurrentIndex(index);
-    setSecondsLeft(cue.games[index].allocatedDuration * 60);
+    setSecondsLeft(currentCue.games[index].allocatedDuration * 60);
     setRunning(false);
     setPromptIndex(0);
     setAnswerVisible(false);
@@ -165,13 +203,13 @@ export default function PlayContent({ id }: { id: string }) {
   }
 
   function moveToNext(progress: GameProgress) {
-    if (!cue) return;
+    if (!currentCue) return;
     updateCurrentGameProgress(progress);
     goTo(currentIndex + 1);
   }
 
   function finishSession() {
-    if (!cue) return;
+    if (!currentCue) return;
 
     const nextProgress = gameProgress.map((value, index) => index === currentIndex ? "completed" : value);
     setGameProgress(nextProgress);
@@ -179,19 +217,19 @@ export default function PlayContent({ id }: { id: string }) {
   }
 
   function restartSession() {
-    if (!cue || !window.confirm("현재 진행 기록과 점수를 지우고 처음부터 시작할까요?")) return;
+    if (!currentCue || !window.confirm("현재 진행 기록과 점수를 지우고 처음부터 시작할까요?")) return;
 
     clearPlaySession(id);
     setCurrentIndex(0);
-    setSecondsLeft((cue.games[0]?.allocatedDuration ?? 0) * 60);
+    setSecondsLeft((currentCue.games[0]?.allocatedDuration ?? 0) * 60);
     setPromptIndex(0);
-    setItemOrders(createItemOrders(cue.games));
+    setItemOrders(createItemOrders(currentCue.games));
     setAnswerVisible(false);
-    setScores([0, 0]);
-    setPersonalScores(createPersonalScores(cue.people));
+    setScores(teamScoresForSession(undefined, teamNamesForCue(currentCue).length));
+    setPersonalScores(createPersonalScores(currentCue.people));
     setSelectedPlayerId("player-1");
     setEditingNames(false);
-    setGameProgress(cue.games.map(() => "pending"));
+    setGameProgress(currentCue.games.map(() => "pending"));
     setRunning(false);
     setRestoredAt(null);
   }
@@ -233,8 +271,8 @@ export default function PlayContent({ id }: { id: string }) {
     setAnswerVisible(false);
   }
 
-  if (cue === undefined) return <main className={styles.state}>진행 화면을 준비하고 있어요…</main>;
-  if (!cue || !game) return <main className={styles.state}><h1>{authRequired ? "로그인이 필요해요." : "큐시트를 찾지 못했어요."}</h1><p>{authRequired ? "행사 플랜과 진행 화면은 로그인한 계정에서만 열 수 있어요." : "이 계정에 저장된 큐시트인지 확인해주세요."}</p><Link href={authRequired ? "/login" : "/cuesheets"}>{authRequired ? "로그인하기" : "저장한 큐시트 보기"}</Link></main>;
+  if (currentCue === undefined) return <main className={styles.state}>진행 화면을 준비하고 있어요…</main>;
+  if (!currentCue || !game) return <main className={styles.state}><h1>큐시트를 찾지 못했어요.</h1><p>이 기기에 저장한 행사인지, 로그인한 계정의 행사인지 확인해주세요.</p><Link href="/cuesheets">저장한 큐시트 보기</Link></main>;
 
   const item = orderedItems[promptIndex];
   const completedCount = gameProgress.filter((progress) => progress === "completed").length;
@@ -247,9 +285,9 @@ export default function PlayContent({ id }: { id: string }) {
   return (
     <main className={styles.page}>
       <header className={styles.header}>
-        <div><Link href="/cuesheets">← 나가기</Link><span>{cue.name}</span></div>
+        <div><Link href="/cuesheets">← 나가기</Link><span>{currentCue.name}</span></div>
         <div className={styles.headerActions}>
-          <span>{currentIndex + 1} / {cue.games.length}</span>
+          <span>{currentIndex + 1} / {currentCue.games.length}</span>
           <button onClick={restartSession}>처음부터</button>
         </div>
       </header>
@@ -277,8 +315,8 @@ export default function PlayContent({ id }: { id: string }) {
             : <button className={styles.revealAnswer} onClick={() => setAnswerVisible(true)}>정답 확인</button>)}
           {orderedItems.length > 1 && <button onClick={nextItem}>다음 카드 →</button>}
         </article>}
-        {cue.mode === "team" && <article className={styles.scoreboard}><span>점수판</span><div>{scores.map((value, team) => <div key={team}><b>{team === 0 ? "A팀" : "B팀"}</b><strong>{value}</strong><nav><button onClick={() => score(team, -10)}>−10</button><button onClick={() => score(team, 10)}>＋10</button></nav></div>)}</div></article>}
-        {cue.mode === "personal" && selectedPlayer && <article className={styles.personalScoreboard}>
+        {currentCue.mode === "team" && <article className={styles.scoreboard}><span>점수판</span><div>{teamScores.map((value, team) => <div key={team}><b>{teamNames[team]}</b><strong>{value}</strong><nav><button onClick={() => score(team, -10)}>−10</button><button onClick={() => score(team, 10)}>＋10</button></nav></div>)}</div></article>}
+        {currentCue.mode === "personal" && selectedPlayer && <article className={styles.personalScoreboard}>
           <div className={styles.personalScoreHeading}><span>개인 점수판</span><button onClick={() => setEditingNames((current) => !current)}>{editingNames ? "이름 편집 완료" : "이름 편집"}</button></div>
           <div className={styles.personalScoreControl}>
             <label>
@@ -297,7 +335,7 @@ export default function PlayContent({ id }: { id: string }) {
       <footer className={styles.controls}>
         <button onClick={() => goTo(currentIndex - 1)} disabled={currentIndex === 0}>← 이전 게임</button>
         <div><span>현재 게임</span><strong>{game.name}</strong></div>
-        {currentIndex === cue.games.length - 1 ? <Link href="/cuesheets" onClick={finishSession}>진행 마치기</Link> : <div className={styles.nextActions}><button className={styles.skip} onClick={() => moveToNext("skipped")}>건너뛰기</button><button className={styles.next} onClick={() => moveToNext("completed")}>다음 게임 →</button></div>}
+        {currentIndex === currentCue.games.length - 1 ? <Link href="/cuesheets" onClick={finishSession}>진행 마치기</Link> : <div className={styles.nextActions}><button className={styles.skip} onClick={() => moveToNext("skipped")}>건너뛰기</button><button className={styles.next} onClick={() => moveToNext("completed")}>다음 게임 →</button></div>}
       </footer>
     </main>
   );

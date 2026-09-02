@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">레크플러스</title>
+  <defs>
+    <linearGradient id="background" x1="70" y1="40" x2="450" y2="480" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1f7ae0"/>
+      <stop offset="1" stop-color="#12304e"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="116" fill="url(#background)"/>
+  <circle cx="390" cy="122" r="54" fill="#8bc7ff" opacity=".92"/>
+  <path fill="#fff" d="M136 113h119c71 0 119 40 119 104 0 42-22 75-60 92l77 93H287l-66-80h-15v80h-70V113Zm70 58v94h42c34 0 55-17 55-47 0-30-21-47-55-47h-42Z"/>
+</svg>

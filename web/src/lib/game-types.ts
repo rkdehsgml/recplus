@@ -2,6 +2,8 @@ export const archetypes = ["QUIZ", "TALK", "SURVIVAL", "PERFORM", "PICK", "BOMB"
 export const phases = ["opening", "icebreak", "main", "finale"] as const;
 export const places = ["room", "restaurant", "hall", "bus", "outdoor"] as const;
 export const eventContexts = ["mt", "orientation", "bus", "workshop", "dinner"] as const;
+export const gameOrigins = ["variety", "classic", "original"] as const;
+export const gameSeries = ["new-journey", "earth-arcade"] as const;
 
 export type Archetype = (typeof archetypes)[number];
 export type Phase = (typeof phases)[number];
@@ -10,6 +12,8 @@ export type PlayMode = "team" | "personal" | "both";
 export type GameItemKind = "prompt" | "quiz" | "host-only";
 export type EventContext = (typeof eventContexts)[number];
 export type GameDifficulty = "easy" | "moderate" | "advanced";
+export type GameOrigin = (typeof gameOrigins)[number];
+export type GameSeries = (typeof gameSeries)[number];
 
 /**
  * 게임 상세와 추천 필터에 쓰는 현장 운영 정보입니다.
@@ -49,6 +53,10 @@ export type GameDefinition = {
   description: string;
   hostScript: string;
   ruleSteps: [string, string, string];
+  /** 게임의 출발점. 예전 localStorage 데이터에는 없을 수 있습니다. */
+  origin?: GameOrigin;
+  /** 방송 프로그램에서 확인한 게임 포맷. 하나의 게임이 여러 컬렉션에 속할 수 있습니다. */
+  series?: GameSeries[];
   profile?: GameProfile;
   /** DB 또는 임시 시드에서 결합된 콘텐츠 풀 */
   items?: GameItem[];
@@ -95,3 +103,41 @@ export const difficultyLabels: Record<GameDifficulty, string> = {
   moderate: "보통",
   advanced: "진행 숙련 필요",
 };
+
+export const gameOriginLabels: Record<GameOrigin, string> = {
+  variety: "예능 포맷",
+  classic: "고전 레크",
+  original: "새로운 변형",
+};
+
+export const gameOriginDescriptions: Record<GameOrigin, string> = {
+  variety: "익숙한 예능 포맷을 현장에 맞게 꺼내 쓸 수 있어요.",
+  classic: "세대와 장소를 가리지 않는 기본 레크 게임이에요.",
+  original: "운영자가 새롭게 만든 방식으로 분위기를 바꿔보세요.",
+};
+
+export const gameSeriesLabels: Record<GameSeries, string> = {
+  "new-journey": "신서유기",
+  "earth-arcade": "뿅뿅 지구오락실",
+};
+
+export const gameSeriesDescriptions: Record<GameSeries, string> = {
+  "new-journey": "미션의 긴장감과 말맛이 살아 있는 신서유기 게임들",
+  "earth-arcade": "빠른 템포와 승부욕을 끌어올리는 지구오락실 게임들",
+};
+
+/**
+ * 이전에 저장된 로컬 게임과 origin 컬럼 도입 전 DB 행도 안전하게 읽습니다.
+ * 사용자가 직접 만든 게임은 별도 분류가 없으면 새 변형으로 보여줍니다.
+ */
+export function gameOriginFor(game: Pick<GameDefinition, "origin" | "source">): GameOrigin {
+  return game.origin && gameOrigins.includes(game.origin)
+    ? game.origin
+    : game.source === "custom" ? "original" : "classic";
+}
+
+/** DB·localStorage에서 오래되거나 알 수 없는 프로그램 값이 와도 안전하게 무시합니다. */
+export function gameSeriesFor(game: Pick<GameDefinition, "series">): GameSeries[] {
+  if (!Array.isArray(game.series)) return [];
+  return game.series.filter((series): series is GameSeries => gameSeries.includes(series));
+}

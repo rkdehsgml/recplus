@@ -2,18 +2,19 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { games } from "@/data/games";
 import { itemTargetFor } from "@/data/item-targets";
 import { loadCustomGames } from "@/lib/custom-games";
 import { gameContextLabel, gamePeopleLabel, gameTeamLabel } from "@/lib/game-discovery";
 import { gameItemsFor } from "@/lib/game-catalog";
 import { addedItemsFor, loadItemPacks, type ItemPacksByGame } from "@/lib/item-packs";
-import { archetypeLabels, difficultyLabels, placeLabels, type GameDefinition } from "@/lib/game-types";
+import { archetypeLabels, difficultyLabels, gameOriginFor, gameOriginLabels, gameSeriesLabels, placeLabels, type GameDefinition } from "@/lib/game-types";
+import { useGameCatalog } from "@/lib/use-game-catalog";
 import styles from "./page.module.css";
 
 const icons = { QUIZ: "🧠", TALK: "💬", SURVIVAL: "⚡", PERFORM: "🎭", PICK: "🎰", BOMB: "💣" } as const;
 
 export default function GameDetailContent({ id }: { id: string }) {
+  const { games: catalog } = useGameCatalog();
   const [customGames, setCustomGames] = useState<GameDefinition[]>([]);
   const [packs, setPacks] = useState<ItemPacksByGame>({});
 
@@ -25,11 +26,11 @@ export default function GameDetailContent({ id }: { id: string }) {
     return () => window.cancelAnimationFrame(frame);
   }, []);
 
-  const game = useMemo(() => games.find((item) => item.id === id) ?? customGames.find((item) => item.id === id), [customGames, id]);
+  const game = useMemo(() => catalog.find((item) => item.id === id) ?? customGames.find((item) => item.id === id), [catalog, customGames, id]);
   const relatedGames = useMemo(() => {
     if (!game?.profile) return [];
-    return games.filter((item) => item.id !== game.id && item.profile?.contexts.some((context) => game.profile?.contexts.includes(context))).slice(0, 3);
-  }, [game]);
+    return catalog.filter((item) => item.id !== game.id && item.profile?.contexts.some((context) => game.profile?.contexts.includes(context))).slice(0, 3);
+  }, [catalog, game]);
 
   if (!game) {
     return <main className={styles.empty}><span>✦</span><h1>게임을 찾지 못했어요.</h1><p>게임 라이브러리에서 다시 찾아주세요.</p><Link href="/games">게임 라이브러리 보기</Link></main>;
@@ -42,11 +43,11 @@ export default function GameDetailContent({ id }: { id: string }) {
 
   return (
     <main className={styles.page}>
-      <Link className={styles.breadcrumb} href="/games">← 게임 둘러보기</Link>
+      <Link className={styles.breadcrumb} href="/games">← 게임 라이브러리</Link>
       <section className={styles.hero}>
         <div className={styles.heroIcon}>{icons[game.archetype]}</div>
         <div className={styles.heroCopy}>
-          <div className={styles.badges}><span>{archetypeLabels[game.archetype]}</span>{game.source === "custom" && <span>내 게임</span>}</div>
+          <div className={styles.badges}>{game.series?.map((series) => <span key={series}>{gameSeriesLabels[series]}</span>)}<span>{gameOriginLabels[gameOriginFor(game)]}</span><span>{archetypeLabels[game.archetype]}</span>{game.source === "custom" && <span>내 게임</span>}</div>
           <h1>{game.name}</h1>
           <p>{game.description}</p>
           {profile && <div className={styles.contexts}>{profile.contexts.map((context) => <span key={context}>{gameContextLabel(context)}</span>)}</div>}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { validatePassword } from "@/lib/auth/password-policy";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import styles from "./page.module.css";
 
@@ -41,8 +42,9 @@ export default function AccountContent() {
     setError("");
     setMessage("");
 
-    if (password.length < 8) {
-      setError("비밀번호는 8자 이상으로 설정해주세요.");
+    const passwordError = validatePassword(password);
+    if (passwordError) {
+      setError(passwordError);
       return;
     }
 
@@ -107,11 +109,11 @@ export default function AccountContent() {
             <form className={styles.form} onSubmit={updatePassword}>
               <label>
                 새 비밀번호
-                <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} minLength={8} autoComplete="new-password" placeholder="8자 이상 입력" required />
+                <input type="password" value={password} onChange={(event) => setPassword(event.target.value)} minLength={12} maxLength={128} autoComplete="new-password" placeholder="12자 이상, 3종류 이상 조합" required />
               </label>
               <label>
                 새 비밀번호 확인
-                <input type="password" value={confirmation} onChange={(event) => setConfirmation(event.target.value)} minLength={8} autoComplete="new-password" placeholder="비밀번호를 한 번 더 입력" required />
+                <input type="password" value={confirmation} onChange={(event) => setConfirmation(event.target.value)} minLength={12} maxLength={128} autoComplete="new-password" placeholder="비밀번호를 한 번 더 입력" required />
               </label>
               <button type="submit" disabled={saving}>{saving ? "저장 중…" : "비밀번호 저장"}</button>
             </form>

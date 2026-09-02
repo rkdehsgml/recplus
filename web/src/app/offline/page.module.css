@@ -1,0 +1,6 @@
+.page { display: grid; min-height: 100dvh; place-items: center; padding: 28px; background: #0a0a0f; color: #f5f5f7; }
+.card { width: min(100%, 470px); padding: clamp(28px, 8vw, 48px); border: 1px solid #303038; border-radius: 28px; background: #1b1b20; text-align: center; box-shadow: 0 24px 70px rgb(0 0 0 / 30%); }
+.card > span { display: grid; width: 62px; height: 62px; margin: 0 auto 20px; place-items: center; border-radius: 20px; color: #8bc7ff; background: #26384a; font-size: 27px; font-weight: 900; }
+.card h1 { margin: 0; font-size: clamp(25px, 7vw, 36px); letter-spacing: -.06em; }
+.card p { margin: 14px auto 0; color: #b7b7c0; font-size: 15px; line-height: 1.65; }
+.card a { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; margin-top: 25px; padding: 10px 18px; border-radius: 12px; color: #08111a; background: #8bc7ff; font-size: 14px; font-weight: 800; }

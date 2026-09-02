@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
-import { games } from "@/data/games";
 import { itemTargetFor } from "@/data/item-targets";
 import { loadCustomGames, updateCustomGame } from "@/lib/custom-games";
 import { gameItemsFor, itemKindFor } from "@/lib/game-catalog";
@@ -17,6 +16,7 @@ import {
   usesCategoryPrefix,
 } from "@/lib/item-packs";
 import { archetypeLabels, type GameDefinition, type GameItem, type GameItemKind } from "@/lib/game-types";
+import { useGameCatalog } from "@/lib/use-game-catalog";
 import styles from "./page.module.css";
 
 const icons = { QUIZ: "🧠", TALK: "💬", SURVIVAL: "⚡", PERFORM: "🎭", PICK: "🎰", BOMB: "💣" } as const;
@@ -29,6 +29,7 @@ const kindGuides: Record<GameItemKind, { label: string; guide: string; placehold
 };
 
 export default function ItemPackContent({ id }: { id: string }) {
+  const { games: catalog } = useGameCatalog();
   const [game, setGame] = useState<GameDefinition | null>();
   const [ownItems, setOwnItems] = useState<GameItem[]>([]);
   const [prompt, setPrompt] = useState("");
@@ -40,13 +41,13 @@ export default function ItemPackContent({ id }: { id: string }) {
 
   useEffect(() => {
     const frame = window.requestAnimationFrame(() => {
-      const found = games.find((item) => item.id === id) ?? loadCustomGames().find((item) => item.id === id) ?? null;
+      const found = catalog.find((item) => item.id === id) ?? loadCustomGames().find((item) => item.id === id) ?? null;
       setGame(found);
       if (!found) return;
       setOwnItems(found.source === "custom" ? gameItemsFor(found) : loadItemPacks()[found.id] ?? []);
     });
     return () => window.cancelAnimationFrame(frame);
-  }, [id]);
+  }, [catalog, id]);
 
   /** 공식 게임의 배포 문항은 읽기 전용입니다. 내 게임은 모든 문항이 진행자 소유예요. */
   const seedItems = useMemo(() => game?.source === "official" ? gameItemsFor(game) : [], [game]);

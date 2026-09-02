@@ -1,0 +1,33 @@
+:root {
+  /* 첨부된 레크플러스 카테고리 팔레트 원본. 임의로 밝기나 채도를 바꾸지 않습니다. */
+  --palette-performance-surface: #f3e8ff;
+  --palette-performance-text: #7e22ce;
+  --palette-performance-accent: #a855f7;
+
+  --palette-talk-surface: #f1f5f9;
+  --palette-talk-text: #475569;
+  --palette-talk-accent: #64748b;
+
+  --palette-speed-surface: #fef9c3;
+  --palette-speed-text: #a16207;
+  --palette-speed-accent: #eab308;
+
+  --palette-quiz-surface: #e0f2fe;
+  --palette-quiz-text: #0369a1;
+  --palette-quiz-accent: #0284c7;
+
+  --palette-active-surface: #dcfce7;
+  --palette-active-text: #15803d;
+  --palette-active-accent: #22c55e;
+
+  --palette-media-surface: #ffe4e6;
+  --palette-media-text: #be123c;
+  --palette-media-accent: #f43f5e;
+}
+
+[data-palette="performance"] { --category-surface: var(--palette-performance-surface); --category-text: var(--palette-performance-text); --category-accent: var(--palette-performance-accent); }
+[data-palette="talk"] { --category-surface: var(--palette-talk-surface); --category-text: var(--palette-talk-text); --category-accent: var(--palette-talk-accent); }
+[data-palette="speed"] { --category-surface: var(--palette-speed-surface); --category-text: var(--palette-speed-text); --category-accent: var(--palette-speed-accent); }
+[data-palette="quiz"] { --category-surface: var(--palette-quiz-surface); --category-text: var(--palette-quiz-text); --category-accent: var(--palette-quiz-accent); }
+[data-palette="active"] { --category-surface: var(--palette-active-surface); --category-text: var(--palette-active-text); --category-accent: var(--palette-active-accent); }
+[data-palette="media"] { --category-surface: var(--palette-media-surface); --category-text: var(--palette-media-text); --category-accent: var(--palette-media-accent); }

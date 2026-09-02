@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { validatePassword } from "@/lib/auth/password-policy";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import styles from "./page.module.css";
 
@@ -48,7 +49,7 @@ function loginErrorMessage(error: { code?: string; message: string; status?: num
   }
 
   if (error.code === "weak_password") {
-    return "비밀번호는 8자 이상으로 설정해주세요.";
+    return "비밀번호가 보안 요구 사항을 충족하지 않아요.";
   }
 
   return "로그인을 완료하지 못했어요. 잠시 후 다시 시도해주세요.";
@@ -92,6 +93,14 @@ export default function LoginForm({ initialError }: LoginFormProps) {
     event.preventDefault();
     setError("");
     setSentAction(null);
+
+    if (mode === "signup") {
+      const passwordError = validatePassword(password);
+      if (passwordError) {
+        setError(passwordError);
+        return;
+      }
+    }
 
     if (mode === "signup" && password !== passwordConfirmation) {
       setError("비밀번호 확인이 일치하지 않아요.");
@@ -196,9 +205,10 @@ export default function LoginForm({ initialError }: LoginFormProps) {
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
-              placeholder={mode === "signup" ? "8자 이상 입력" : "비밀번호 입력"}
+              placeholder={mode === "signup" ? "12자 이상, 3종류 이상 조합" : "비밀번호 입력"}
               autoComplete={mode === "signup" ? "new-password" : "current-password"}
-              minLength={mode === "signup" ? 8 : undefined}
+              minLength={mode === "signup" ? 12 : undefined}
+              maxLength={mode === "signup" ? 128 : undefined}
               required
             />
           </label>
@@ -212,7 +222,8 @@ export default function LoginForm({ initialError }: LoginFormProps) {
               onChange={(event) => setPasswordConfirmation(event.target.value)}
               placeholder="비밀번호를 한 번 더 입력"
               autoComplete="new-password"
-              minLength={8}
+              minLength={12}
+              maxLength={128}
               required
             />
           </label>

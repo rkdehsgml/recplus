@@ -1,0 +1,4 @@
+.itemActions { display: flex; gap: 8px; }
+.itemActions button { color: var(--blue) !important; }
+.itemActions button:last-child { color: #c1463d !important; }
+.itemActions button:disabled { cursor: default; opacity: .35; }

@@ -1,7 +1,7 @@
 import type { GameProfile } from "@/lib/game-types";
 
 /**
- * 기존 게임 15종의 현장 운영 정보입니다. 문항을 추가하지 않고,
+ * 기본 게임 카탈로그의 현장 운영 정보입니다. 문항을 추가하지 않고,
  * 게임 DB가 제공해야 할 탐색·판단 데이터를 먼저 분리합니다.
  */
 export const gameProfiles: Record<string, GameProfile> = {
@@ -20,4 +20,8 @@ export const gameProfiles: Record<string, GameProfile> = {
   "penalty-wheel": { people: { min: 4, max: 60 }, places: ["room", "restaurant", "hall", "bus"], contexts: ["mt", "orientation", "bus", "workshop", "dinner"], preparations: ["없음"], difficulty: "easy" },
   "time-bomb": { people: { min: 5, max: 40 }, places: ["room", "restaurant", "hall"], contexts: ["mt", "orientation", "workshop", "dinner"], preparations: ["없음"], difficulty: "moderate" },
   awards: { people: { min: 6, max: 80 }, places: ["room", "restaurant", "hall"], contexts: ["mt", "orientation", "workshop", "dinner"], preparations: ["없음"], difficulty: "easy" },
+  "silent-shout": { people: { min: 4, max: 40 }, recommendedTeams: { min: 2, max: 6 }, places: ["room", "hall"], contexts: ["mt", "orientation", "workshop"], preparations: ["음악을 들을 기기", "제시어"], difficulty: "moderate" },
+  hunminjeongeum: { people: { min: 4, max: 40 }, recommendedTeams: { min: 2, max: 6 }, places: ["room", "restaurant", "hall"], contexts: ["mt", "orientation", "workshop", "dinner"], preparations: ["제시어"], difficulty: "moderate" },
+  "music-quiz-2v2": { people: { min: 4, max: 40 }, recommendedTeams: { min: 2, max: 6 }, places: ["room", "hall"], contexts: ["mt", "orientation", "workshop"], preparations: ["음악 재생 기기", "스피커"], difficulty: "moderate" },
+  "snack-quiz": { people: { min: 4, max: 50 }, places: ["room", "restaurant", "hall"], contexts: ["mt", "orientation", "workshop", "dinner"], preparations: ["과자 포장 또는 사진"], difficulty: "easy" },
 };

@@ -23,8 +23,10 @@ export default function CreatePage() {
   const [step, setStep] = useState(1);
   const [place, setPlace] = useState<Place>("room");
   const [people, setPeople] = useState(20);
+  const [peopleInput, setPeopleInput] = useState("20");
   const [mode, setMode] = useState<Mode>("team");
   const [teamCount, setTeamCount] = useState(4);
+  const [teamCountInput, setTeamCountInput] = useState("4");
   const [teamNames, setTeamNames] = useState(["1조", "2조", "3조", "4조"]);
   const [time, setTime] = useState(90);
 
@@ -32,8 +34,21 @@ export default function CreatePage() {
   const next = () => setStep((current) => Math.min(current + 1, 3));
   const previous = () => setStep((current) => Math.max(current - 1, 1));
 
-  function setTeamTotal(value: number) {
-    const nextTotal = Math.min(12, Math.max(2, value || 2));
+  function updatePeople(value: string) {
+    if (!/^\d*$/.test(value)) return;
+    setPeopleInput(value);
+    setPeople(value === "" ? 0 : Number(value));
+  }
+
+  function selectPeople(value: number) {
+    setPeople(value);
+    setPeopleInput(String(value));
+  }
+
+  function updateTeamTotal(value: string) {
+    if (!/^\d*$/.test(value)) return;
+    const nextTotal = value === "" ? 0 : Number(value);
+    setTeamCountInput(value);
     setTeamCount(nextTotal);
     setTeamNames((current) => Array.from({ length: nextTotal }, (_, index) => current[index] || `${index + 1}조`));
   }
@@ -50,7 +65,16 @@ export default function CreatePage() {
 
   return (
     <main className={styles.page}>
-      <section className={styles.wizard}>
+      <div className={styles.workspace}>
+        <aside className={styles.desktopRail} aria-label="행사 준비 단계">
+          <div className={styles.railIntro}><p>EVENT BUILDER</p><h1>모임 정보를<br />먼저 맞춰볼까요?</h1><span>세 가지 정보만 고르면 바로 쓸 수 있는 행사 플랜을 만들어드려요.</span></div>
+          <nav className={styles.stepNav} aria-label="단계 이동">
+            {[{ id: 1, label: "장소", value: selectedPlace.title }, { id: 2, label: "인원·방식", value: `${people}명 · ${mode === "team" ? `${teamCount}조 팀전` : "개인전"}` }, { id: 3, label: "진행 시간", value: `${time}분` }].map((item) => <button className={step === item.id ? styles.stepNavActive : ""} type="button" onClick={() => setStep(item.id)} key={item.id}><i>{item.id}</i><span><strong>{item.label}</strong><small>{item.value}</small></span></button>)}
+          </nav>
+          <div className={styles.railTip}><span>✦</span><p>플랜은 만든 뒤에도 게임 순서와 시간을 자유롭게 바꿀 수 있어요.</p></div>
+        </aside>
+
+        <section className={styles.wizard}>
         <div className={styles.progress} aria-label={`${step} / 3 단계`}>
           {[1, 2, 3].map((item) => <span className={item <= step ? styles.active : ""} key={item} />)}
         </div>
@@ -79,18 +103,18 @@ export default function CreatePage() {
             <p className={styles.description}>정확한 인원과 팀 구성을 알려주면 더 현실적으로 골라드릴 수 있어요.</p>
             <div className={styles.choiceGroup}>
               <span className={styles.choiceLabel}>참가 인원</span>
-              <div className={styles.peopleInput}><input aria-label="참가 인원" type="number" min="2" max="300" value={people} onChange={(event) => setPeople(Math.min(300, Math.max(2, Number(event.target.value) || 2)))} /><span>명</span></div>
-              <div className={styles.chips}>{peopleOptions.map((item) => <button className={people === item ? styles.chipSelected : ""} key={item} onClick={() => setPeople(item)}>{item}명</button>)}</div>
+              <div className={styles.peopleInput}><input aria-label="참가 인원" type="number" min="0" inputMode="numeric" value={peopleInput} onChange={(event) => updatePeople(event.target.value)} /><span>명</span></div>
+              <div className={styles.chips}>{peopleOptions.map((item) => <button className={people === item ? styles.chipSelected : ""} key={item} onClick={() => selectPeople(item)}>{item}명</button>)}</div>
             </div>
             <div className={styles.choiceGroup}>
               <span className={styles.choiceLabel}>진행 방식</span>
               <div className={styles.modeCards}>
-                <button className={mode === "team" ? styles.modeSelected : ""} onClick={() => setMode("team")}><span>🏆</span><strong>팀전</strong><small>조별 점수로 더 신나게</small></button>
-                <button className={mode === "personal" ? styles.modeSelected : ""} onClick={() => setMode("personal")}><span>🙋</span><strong>개인전</strong><small>가볍고 빠르게 진행</small></button>
+                <button className={mode === "team" ? styles.modeSelected : ""} aria-pressed={mode === "team"} onClick={() => setMode("team")}><span>🏆</span><strong>팀전</strong><small>조별 점수로 더 신나게</small><b>{mode === "team" ? "선택됨" : "선택"}</b></button>
+                <button className={mode === "personal" ? styles.modeSelected : ""} aria-pressed={mode === "personal"} onClick={() => setMode("personal")}><span>🙋</span><strong>개인전</strong><small>가볍고 빠르게 진행</small><b>{mode === "personal" ? "선택됨" : "선택"}</b></button>
               </div>
             </div>
             {mode === "team" && <div className={styles.choiceGroup}>
-              <div className={styles.teamHeading}><span className={styles.choiceLabel}>조 구성</span><label><input aria-label="조 수" type="number" min="2" max="12" value={teamCount} onChange={(event) => setTeamTotal(Number(event.target.value))} /><span>조</span></label></div>
+              <div className={styles.teamHeading}><span className={styles.choiceLabel}>조 구성</span><label><input aria-label="조 수" type="number" min="0" inputMode="numeric" value={teamCountInput} onChange={(event) => updateTeamTotal(event.target.value)} /><span>조</span></label></div>
               <p className={styles.teamHint}>기본 조 이름은 지금 바꿀 수 있고, 구성원 배정은 나중에 추가할 수 있어요.</p>
               <div className={styles.teamNames}>{teamNames.map((name, index) => <label key={index}><span>{index + 1}</span><input value={name} onChange={(event) => updateTeamName(index, event.target.value)} placeholder={`${index + 1}조`} /></label>)}</div>
             </div>}
@@ -109,11 +133,12 @@ export default function CreatePage() {
             </div>
           </div>
         )}
-      </section>
+        </section>
+      </div>
 
       <footer className={styles.footer}>
-        {step > 1 ? <button className={styles.backButton} onClick={previous}>이전</button> : <span />}
-        {step < 3 ? <button className={styles.primaryButton} onClick={next}>다음 <span>→</span></button> : <button className={styles.primaryButton} onClick={createEventPlan}>행사 플랜 만들기 <span>→</span></button>}
+        {step > 1 ? <button className={styles.backButton} onClick={previous}><span aria-hidden="true">←</span> 이전 단계</button> : <span />}
+        {step < 3 ? <button className={styles.primaryButton} onClick={next}>다음 단계 <span aria-hidden="true">→</span></button> : <button className={styles.primaryButton} onClick={createEventPlan}>행사 플랜 만들기 <span aria-hidden="true">→</span></button>}
       </footer>
     </main>
   );

@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createCustomGameItems } from "@/lib/game-catalog";
 import { saveCustomGame } from "@/lib/custom-games";
-import { archetypeLabels, archetypes, phaseLabels, phases, placeLabels, places, type Archetype, type Phase, type Place, type PlayMode } from "@/lib/game-types";
+import { archetypeLabels, archetypes, gameOriginLabels, gameOrigins, phaseLabels, phases, placeLabels, places, type Archetype, type GameOrigin, type Phase, type Place, type PlayMode } from "@/lib/game-types";
 import styles from "./page.module.css";
 
 export default function NewGamePage() {
@@ -12,6 +12,7 @@ export default function NewGamePage() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [archetype, setArchetype] = useState<Archetype>("TALK");
+  const [origin, setOrigin] = useState<GameOrigin>("original");
   const [phase, setPhase] = useState<Phase>("main");
   const [duration, setDuration] = useState(10);
   const [mode, setMode] = useState<PlayMode>("both");
@@ -44,6 +45,7 @@ export default function NewGamePage() {
       id: gameId,
       name: name.trim(),
       archetype,
+      origin,
       phase,
       duration,
       places: selectedPlaces,
@@ -70,6 +72,7 @@ export default function NewGamePage() {
           <label>게임 이름<input value={name} onChange={(event) => setName(event.target.value)} placeholder="예: 우리 과 밸런스 게임" maxLength={40} /></label>
           <label>게임 설명<textarea value={description} onChange={(event) => setDescription(event.target.value)} placeholder="이 게임이 어떤 분위기에서 재미있는지 짧게 적어주세요." maxLength={150} /></label>
           <div className={styles.twoColumns}>
+            <label>게임 계보<select value={origin} onChange={(event) => setOrigin(event.target.value as GameOrigin)}>{gameOrigins.map((item) => <option key={item} value={item}>{gameOriginLabels[item]}</option>)}</select></label>
             <label>게임 유형<select value={archetype} onChange={(event) => setArchetype(event.target.value as Archetype)}>{archetypes.map((item) => <option key={item} value={item}>{archetypeLabels[item]}</option>)}</select></label>
             <label>추천 구간<select value={phase} onChange={(event) => setPhase(event.target.value as Phase)}>{phases.map((item) => <option key={item} value={item}>{phaseLabels[item]}</option>)}</select></label>
           </div>
