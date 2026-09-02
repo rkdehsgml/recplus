@@ -10,7 +10,6 @@ const navItems = [
   { href: "/", label: "홈" },
   { href: "/games", label: "게임 라이브러리" },
   { href: "/create", label: "행사 준비" },
-  { href: "/items", label: "문제팩" },
   { href: "/cuesheets", label: "내 행사" },
 ];
 
@@ -22,6 +21,7 @@ export default function SiteHeader() {
   const pathname = usePathname();
   const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [accountMenuOpen, setAccountMenuOpen] = useState(false);
   const [email, setEmail] = useState<string | null>(null);
   const [isAdmin, setIsAdmin] = useState(false);
   const [authReady, setAuthReady] = useState(false);
@@ -93,6 +93,7 @@ export default function SiteHeader() {
     setIsAdmin(false);
     setSigningOut(false);
     setMenuOpen(false);
+    setAccountMenuOpen(false);
 
     if (pathname.startsWith("/admin")) {
       router.replace("/");
@@ -109,7 +110,7 @@ export default function SiteHeader() {
   return (
     <header className={`${styles.header} ${scrolled ? styles.scrolled : ""} ${hidden ? styles.hidden : ""}`}>
       <div className={styles.inner}>
-        <Link className={styles.brand} href="/" onClick={() => setMenuOpen(false)} aria-label="레크플러스 홈">
+        <Link className={styles.brand} href="/" onClick={() => { setMenuOpen(false); setAccountMenuOpen(false); }} aria-label="레크플러스 홈">
           <span className={styles.brandMark}>R</span>
           <span>레크플러스</span>
         </Link>
@@ -131,23 +132,37 @@ export default function SiteHeader() {
               className={isCurrent(pathname, item.href) ? styles.current : ""}
               href={item.href}
               key={item.href}
-              onClick={() => setMenuOpen(false)}
+              onClick={() => { setMenuOpen(false); setAccountMenuOpen(false); }}
             >
               {item.label}
             </Link>
           ))}
-          <Link className={styles.createButton} href="/games/new" onClick={() => setMenuOpen(false)}>＋ 내 게임</Link>
+          <Link className={styles.createButton} href="/games/new" onClick={() => { setMenuOpen(false); setAccountMenuOpen(false); }}>＋ 내 게임</Link>
           {authReady ? (
             email ? (
-              <>
-                {isAdmin && <Link className={styles.accountButton} href="/admin" onClick={() => setMenuOpen(false)}>관리</Link>}
-                <Link className={styles.accountButton} href="/account" onClick={() => setMenuOpen(false)}>계정</Link>
-                <button className={styles.signOutButton} type="button" onClick={signOut} disabled={signingOut} title={email}>
-                  {signingOut ? "로그아웃 중" : "로그아웃"}
+              <div className={styles.accountMenu}>
+                <button
+                  className={styles.accountTrigger}
+                  type="button"
+                  aria-expanded={accountMenuOpen}
+                  aria-haspopup="menu"
+                  aria-label="계정 메뉴"
+                  onClick={() => setAccountMenuOpen((current) => !current)}
+                >
+                  <span>{email.slice(0, 1).toUpperCase()}</span>
+                  <b>계정</b>
                 </button>
-              </>
+                {accountMenuOpen && (
+                  <div className={styles.accountPanel} role="menu">
+                    <p title={email}>{email}</p>
+                    {isAdmin && <Link href="/admin" role="menuitem" onClick={() => { setMenuOpen(false); setAccountMenuOpen(false); }}>콘텐츠 관리</Link>}
+                    <Link href="/account" role="menuitem" onClick={() => { setMenuOpen(false); setAccountMenuOpen(false); }}>계정 설정</Link>
+                    <button type="button" role="menuitem" onClick={signOut} disabled={signingOut}>{signingOut ? "로그아웃 중…" : "로그아웃"}</button>
+                  </div>
+                )}
+              </div>
             ) : (
-              pathname !== "/login" && <Link className={styles.signInButton} href="/login" onClick={() => setMenuOpen(false)}>로그인</Link>
+              pathname !== "/login" && <Link className={styles.signInButton} href="/login" onClick={() => { setMenuOpen(false); setAccountMenuOpen(false); }}>로그인</Link>
             )
           ) : <span className={styles.authLoading} aria-label="로그인 상태 확인 중" />}
         </nav>

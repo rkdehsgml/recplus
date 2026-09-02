@@ -19,7 +19,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
         <ul className={styles.benefits}>
           <li><span>✓</span> 저장한 행사 플랜을 모든 기기에서 이어보기</li>
           <li><span>✓</span> 로그인한 계정만 내 플랜에 접근</li>
-          <li><span>✓</span> Google·카카오 계정으로 빠르게 시작</li>
+          <li><span>✓</span> 이메일과 비밀번호로 안전하게 로그인</li>
         </ul>
         <p className={styles.securityNote}><span>✦</span> 소셜 계정의 비밀번호는 레크플러스에 전달되지 않아요.</p>
       </section>

@@ -75,7 +75,7 @@ export default function GameDetailContent({ id }: { id: string }) {
             {items.length > 0
               ? <div className={styles.itemList}>{items.slice(0, 3).map((item, index) => <div key={item.id}><span>{index + 1}</span><p>{item.prompt}</p>{item.kind === "quiz" && <small>정답은 진행자 화면에서 확인</small>}{item.kind === "host-only" && <small>진행자 전용 제시어</small>}</div>)}</div>
               : <p className={styles.packEmpty}>아직 등록된 문항이 없어요. 진행 중에 꺼내 쓸 문항을 채워두세요.</p>}
-            <Link className={styles.packLink} href={`/games/${game.id}/items`}>문제팩 관리 <span>→</span></Link>
+            <Link className={styles.packLink} href={`/games/${game.id}/items`}>문항 세트 보기 <span>→</span></Link>
           </article>
         </section>
 

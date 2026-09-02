@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { validatePassword } from "@/lib/auth/password-policy";
@@ -11,23 +12,9 @@ type LoginFormProps = {
 };
 
 type EmailMode = "password" | "signup" | "magic";
-type SocialProvider = "google" | "kakao";
 type SentAction = "magic" | "signup" | "reset" | null;
 
-function GoogleIcon() {
-  return (
-    <svg aria-hidden="true" viewBox="0 0 24 24">
-      <path fill="#4285F4" d="M21.35 12.23c0-.72-.06-1.4-.2-2.05H12v3.88h5.23a4.47 4.47 0 0 1-1.94 2.93v2.51h3.14c1.84-1.7 2.92-4.2 2.92-7.27Z" />
-      <path fill="#34A853" d="M12 21.72c2.62 0 4.82-.87 6.43-2.35l-3.14-2.51c-.87.58-1.98.93-3.29.93-2.52 0-4.66-1.7-5.42-4v2.6H3.33v2.6A9.72 9.72 0 0 0 12 21.72Z" />
-      <path fill="#FBBC05" d="M6.58 13.79a5.84 5.84 0 0 1 0-3.58v-2.6H3.33a9.72 9.72 0 0 0 0 8.78l3.25-2.6Z" />
-      <path fill="#EA4335" d="M12 6.2c1.42 0 2.69.49 3.69 1.44l2.76-2.76C16.82 3.36 14.62 2.28 12 2.28a9.72 9.72 0 0 0-8.67 5.33l3.25 2.6c.76-2.3 2.9-4 5.42-4Z" />
-    </svg>
-  );
-}
-
-function KakaoIcon() {
-  return <span className={styles.kakaoIcon} aria-hidden="true">K</span>;
-}
+const CONSENT_VERSION = "2026-09-03";
 
 function loginErrorMessage(error: { code?: string; message: string; status?: number }) {
   const text = error.message.toLowerCase();
@@ -64,29 +51,13 @@ export default function LoginForm({ initialError }: LoginFormProps) {
   const [error, setError] = useState(initialError ?? "");
   const [sentAction, setSentAction] = useState<SentAction>(null);
   const [submitting, setSubmitting] = useState(false);
-  const [socialLoading, setSocialLoading] = useState<SocialProvider | null>(null);
+  const [agreedToTerms, setAgreedToTerms] = useState(false);
+  const [agreedToPrivacy, setAgreedToPrivacy] = useState(false);
 
   function selectMode(nextMode: EmailMode) {
     setMode(nextMode);
     setError("");
     setSentAction(null);
-  }
-
-  async function signInWithSocial(provider: SocialProvider) {
-    setError("");
-    setSentAction(null);
-    setSocialLoading(provider);
-
-    const supabase = createSupabaseBrowserClient();
-    const { error: socialError } = await supabase.auth.signInWithOAuth({
-      provider,
-      options: { redirectTo: `${window.location.origin}/auth/callback` },
-    });
-
-    if (socialError) {
-      setSocialLoading(null);
-      setError(`${provider === "google" ? "Google" : "카카오"} 로그인을 시작하지 못했어요. 잠시 후 다시 시도해주세요.`);
-    }
   }
 
   async function submit(event: React.FormEvent<HTMLFormElement>) {
@@ -107,16 +78,34 @@ export default function LoginForm({ initialError }: LoginFormProps) {
       return;
     }
 
+    if (mode === "signup" && (!agreedToTerms || !agreedToPrivacy)) {
+      setError("서비스 이용약관과 개인정보 처리방침에 모두 동의해주세요.");
+      return;
+    }
+
     setSubmitting(true);
 
     const supabase = createSupabaseBrowserClient();
     const emailAddress = email.trim();
     const redirectTo = `${window.location.origin}/auth/callback`;
+    const consentedAt = new Date().toISOString();
     const response = mode === "magic"
       ? await supabase.auth.signInWithOtp({ email: emailAddress, options: { emailRedirectTo: redirectTo } })
       : mode === "password"
         ? await supabase.auth.signInWithPassword({ email: emailAddress, password })
-        : await supabase.auth.signUp({ email: emailAddress, password, options: { emailRedirectTo: redirectTo } });
+        : await supabase.auth.signUp({
+          email: emailAddress,
+          password,
+          options: {
+            emailRedirectTo: redirectTo,
+            data: {
+              privacy_agreed_at: consentedAt,
+              privacy_version: CONSENT_VERSION,
+              terms_agreed_at: consentedAt,
+              terms_version: CONSENT_VERSION,
+            },
+          },
+        });
 
     setSubmitting(false);
 
@@ -168,19 +157,6 @@ export default function LoginForm({ initialError }: LoginFormProps) {
 
   return (
     <div className={styles.authFlow}>
-      <div className={styles.socialActions}>
-        <button className={styles.googleButton} type="button" onClick={() => signInWithSocial("google")} disabled={Boolean(socialLoading)}>
-          <GoogleIcon />
-          {socialLoading === "google" ? "Google로 이동 중…" : "Google로 계속하기"}
-        </button>
-        <button className={styles.kakaoButton} type="button" onClick={() => signInWithSocial("kakao")} disabled={Boolean(socialLoading)}>
-          <KakaoIcon />
-          {socialLoading === "kakao" ? "카카오로 이동 중…" : "카카오로 계속하기"}
-        </button>
-      </div>
-
-      <div className={styles.divider}><span>또는 이메일로 계속</span></div>
-
       <form className={styles.form} onSubmit={submit}>
         <div className={styles.emailHeading}>
           <span>{copy.badge}</span>
@@ -229,7 +205,22 @@ export default function LoginForm({ initialError }: LoginFormProps) {
           </label>
         )}
 
-        <button className={styles.submitButton} type="submit" disabled={submitting || Boolean(socialLoading)}>
+        {mode === "signup" && (
+          <fieldset className={styles.consents}>
+            <legend>가입 동의</legend>
+            <label>
+              <input type="checkbox" checked={agreedToTerms} onChange={(event) => setAgreedToTerms(event.target.checked)} required />
+              <span><b>[필수]</b> <Link href="/terms" target="_blank">서비스 이용약관</Link>에 동의합니다.</span>
+            </label>
+            <label>
+              <input type="checkbox" checked={agreedToPrivacy} onChange={(event) => setAgreedToPrivacy(event.target.checked)} required />
+              <span><b>[필수]</b> <Link href="/privacy" target="_blank">개인정보 처리방침</Link>에 동의합니다.</span>
+            </label>
+            <p>커뮤니티 게임 공유 동의는 공유 기능을 신청할 때 별도로 받습니다.</p>
+          </fieldset>
+        )}
+
+        <button className={styles.submitButton} type="submit" disabled={submitting}>
           {submitting ? "처리 중…" : `${copy.button} →`}
         </button>
       </form>

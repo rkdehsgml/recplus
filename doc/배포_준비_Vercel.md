@@ -12,7 +12,7 @@
 | 인증 | Supabase Auth + `src/proxy.ts`(구 middleware)로 세션 쿠키 갱신, `/auth/callback`에서 코드 교환 |
 | 데이터 | localStorage 6개 모듈(큐시트·커스텀게임·문제팩·진행세션·카탈로그) + Supabase 클라우드 동기화(행사 플랜, 게임 DB) |
 | PWA | `manifest.ts` + `public/sw.js` + `/offline` — HTTPS 필요, Vercel에서 정상 동작 |
-| 타입 검사 | `tsc --noEmit` 통과 확인 |
+| 빌드 | `next build` 프로덕션 빌드 성공 확인 (2026-09-02, 정적 9 / 동적 12 라우트) |
 | 미커밋 변경 | 24개 파일 수정 + doc 5개 신규 (2026-09-02 기준) |
 
 > Vercel은 GitHub의 커밋을 빌드한다. 지금 상태로 연결하면 **최신 UI 작업이 반영되지 않은 예전 버전**이 배포된다. 커밋·푸시가 첫 단계다.
@@ -84,3 +84,20 @@
 ## 참고
 - Vercel Hobby 플랜 약관: https://vercel.com/docs/plans/hobby
 - Supabase 프로젝트 일시정지: https://supabase.com/docs/guides/platform/free-project-pausing
+
+## 5. 도메인 (2026-09-02 추가)
+
+친구에게 링크를 보내는 데 커스텀 도메인은 필수가 아니다. Vercel에 배포하면 즉시 `https://recplus-xxxx.vercel.app` 주소가 생기고, 그 주소로 바로 들어올 수 있다. HTTPS도 자동이라 PWA(홈 화면 추가·오프라인)도 그대로 동작한다.
+
+커스텀 도메인을 붙일 때:
+1. 등록기관에서 도메인 구입 (가비아/후이즈 국내, Cloudflare Registrar·Namecheap 해외 — `.com` 연 2만원 안팎)
+2. Vercel 프로젝트 > Settings > Domains에 도메인 추가
+3. Vercel이 알려주는 A 레코드(`76.76.21.21`) 또는 CNAME(`cname.vercel-dns.com`)을 등록기관 DNS에 입력
+4. 전파 후 인증서 자동 발급 (보통 수분~1시간)
+5. **도메인을 바꾸면 Supabase Auth의 Site URL·Redirect URL과 Google/Kakao 콘솔의 등록 주소도 함께 갱신해야 한다.** 이걸 놓치면 로그인만 깨진다.
+
+## 6. 친구 초대 시 알아둘 동작
+
+- 로그인 없이도 접근 가능: `/` `/games` `/games/[id]` `/create` `/create/result` `/items` `/play/[id]`
+- 로그인 필요: `/cuesheets`(저장한 행사 플랜 조회는 클라우드 전용), `/account`, `/admin`
+- 즉, 비로그인 친구는 **한 세션 안에서 추천받고 바로 진행까지는 되지만, 저장한 플랜을 나중에 다시 꺼내지는 못한다.** 테스트를 부탁할 거면 로그인부터 시키는 편이 흐름이 자연스럽다.
