@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useMemo, useState, type DragEvent } from "react";
 import { createPortal } from "react-dom";
 import type { RecommendedGame, RecommendationInput } from "@/engine/recommend";
 import { saveCueSheet } from "@/lib/cuesheets";
@@ -34,6 +34,8 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
   const [onlyMatchingGames, setOnlyMatchingGames] = useState(false);
   const [selectedPhase, setSelectedPhase] = useState<"all" | Phase>("all");
   const [gameQuery, setGameQuery] = useState("");
+  const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
+  const [dropIndex, setDropIndex] = useState<number | null>(null);
   const total = useMemo(() => cue.reduce((sum, game) => sum + game.allocatedDuration, 0), [cue]);
   const addableGames = useMemo(() => {
     const selectedIds = new Set(cue.map((game) => game.id));
@@ -46,15 +48,29 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
       .sort((left, right) => Number(fitsCurrentConditions(right, input)) - Number(fitsCurrentConditions(left, input)) || left.name.localeCompare(right.name, "ko"));
   }, [cue, gameQuery, games, input, onlyMatchingGames, selectedPhase]);
 
-  function move(index: number, direction: -1 | 1) {
-    const nextIndex = index + direction;
-    if (nextIndex < 0 || nextIndex >= cue.length) return;
+  function moveGame(fromIndex: number, toIndex: number) {
+    if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || fromIndex >= cue.length || toIndex >= cue.length) return;
     setCue((current) => {
       const next = [...current];
-      [next[index], next[nextIndex]] = [next[nextIndex], next[index]];
+      const [movedGame] = next.splice(fromIndex, 1);
+      next.splice(toIndex, 0, movedGame);
       return next;
     });
     setSavedId(null);
+  }
+
+  function handleDragStart(event: DragEvent<HTMLElement>, index: number) {
+    event.dataTransfer.effectAllowed = "move";
+    event.dataTransfer.setData("text/plain", String(index));
+    setDraggedIndex(index);
+  }
+
+  function handleDrop(event: DragEvent<HTMLElement>, index: number) {
+    event.preventDefault();
+    const sourceIndex = draggedIndex ?? Number(event.dataTransfer.getData("text/plain"));
+    if (Number.isInteger(sourceIndex)) moveGame(sourceIndex, index);
+    setDraggedIndex(null);
+    setDropIndex(null);
   }
 
   function changeMinutes(index: number, amount: -5 | 5) {
@@ -115,15 +131,31 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
       </section>
 
       <section className={styles.flow}>
-        <div><strong>분위기 흐름</strong><span>게임을 위아래로 옮기고, 각 게임 시간을 5분 단위로 조절하세요.</span></div>
+        <div><strong>분위기 흐름</strong><span>카드를 끌어 순서를 바꾸고, 각 게임 시간을 5분 단위로 조절하세요.</span></div>
         <div className={styles.energy} aria-label="게임별 에너지 흐름">{cue.map((game, index) => <i key={`${game.id}-${index}`} style={{ height: `${game.energy * 18}%` }} />)}</div>
       </section>
 
       {cue.length ? (
         <section className={styles.list}>
+          <div className={styles.reorderGuide}>
+            <span className={styles.reorderIcon} aria-hidden="true">⠿</span>
+            <div><strong>게임 순서 바꾸기</strong><span>카드 왼쪽의 <b>순서 변경</b> 손잡이를 잡아 원하는 위치로 끌어 놓으세요.</span></div>
+            <span className={styles.reorderHint} aria-hidden="true">드래그 ↓</span>
+          </div>
           {cue.map((game, index) => (
-            <article className={styles.game} key={`${game.id}-${index}`}>
-              <span className={styles.number}>{index + 1}</span>
+            <article
+              className={`${styles.game} ${draggedIndex === index ? styles.dragging : ""} ${dropIndex === index && draggedIndex !== index ? styles.dragTarget : ""}`}
+              key={`${game.id}-${index}`}
+              onDragOver={(event) => { event.preventDefault(); event.dataTransfer.dropEffect = "move"; setDropIndex(index); }}
+              onDragLeave={() => setDropIndex((current) => current === index ? null : current)}
+              onDrop={(event) => handleDrop(event, index)}
+            >
+              <div className={styles.sequenceRail}>
+                <span className={styles.number}><small>순서</small><b>{index + 1}</b></span>
+                <button className={styles.dragHandle} type="button" draggable aria-label={`${game.name} 순서 변경. 이 손잡이를 끌어 이동하세요.`} onDragStart={(event) => handleDragStart(event, index)} onDragEnd={() => { setDraggedIndex(null); setDropIndex(null); }}>
+                  <span aria-hidden="true">⠿</span><em>순서 변경</em>
+                </button>
+              </div>
               <div className={styles.gameBody}>
                 <div className={styles.gameTitle}><span>{phaseLabels[game.phase]}</span>{game.source === "custom" && <b>내 게임</b>}</div>
                 <h2>{game.name}</h2>
@@ -131,11 +163,8 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
                 <div className={styles.script}><strong>진행 한마디</strong>{game.hostScript}</div>
               </div>
               <div className={styles.gameControls} aria-label={`${game.name} 편집`}>
-                <div className={styles.orderControls}>
-                  <button onClick={() => move(index, -1)} disabled={index === 0} aria-label="위로 이동">↑</button>
-                  <button onClick={() => move(index, 1)} disabled={index === cue.length - 1} aria-label="아래로 이동">↓</button>
-                </div>
                 <div className={styles.timeControls}>
+                  <span>진행 시간</span>
                   <button onClick={() => changeMinutes(index, -5)} disabled={game.allocatedDuration <= 5} aria-label="5분 줄이기">−</button>
                   <strong>{game.allocatedDuration}분</strong>
                   <button onClick={() => changeMinutes(index, 5)} aria-label="5분 늘리기">＋</button>

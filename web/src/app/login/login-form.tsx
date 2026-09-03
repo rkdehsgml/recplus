@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { validatePassword } from "@/lib/auth/password-policy";
+import { getAuthCallbackUrl } from "@/lib/auth/redirect";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import styles from "./page.module.css";
 
@@ -87,7 +88,7 @@ export default function LoginForm({ initialError }: LoginFormProps) {
 
     const supabase = createSupabaseBrowserClient();
     const emailAddress = email.trim();
-    const redirectTo = `${window.location.origin}/auth/callback`;
+    const redirectTo = getAuthCallbackUrl(window.location.origin);
     const consentedAt = new Date().toISOString();
     const response = mode === "magic"
       ? await supabase.auth.signInWithOtp({ email: emailAddress, options: { emailRedirectTo: redirectTo } })
@@ -136,7 +137,7 @@ export default function LoginForm({ initialError }: LoginFormProps) {
 
     const supabase = createSupabaseBrowserClient();
     const { error: resetError } = await supabase.auth.resetPasswordForEmail(emailAddress, {
-      redirectTo: `${window.location.origin}/auth/callback?next=/account`,
+      redirectTo: getAuthCallbackUrl(window.location.origin, "/account"),
     });
 
     setSubmitting(false);
