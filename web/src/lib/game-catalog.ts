@@ -40,18 +40,19 @@ export function attachGameItems(games: GameDefinition[], items: GameItem[]): Gam
   return games.map((game) => ({ ...game, items: itemsByGameId.get(game.id) ?? game.items ?? [] }));
 }
 
-export function createCustomGameItems(gameId: string, values: string[], archetype: Archetype): GameItem[] {
-  const kind = itemKindFor(archetype);
+export function createCustomGameItems(gameId: string, values: Array<{ answer: string; prompt: string }>, archetype: Archetype): GameItem[] {
+  const defaultKind = itemKindFor(archetype);
 
   return values.map((value, index) => {
-    const [rawPrompt, ...rawAnswer] = value.split("→");
-    const answer = kind === "quiz" ? rawAnswer.join("→").trim() : undefined;
+    const prompt = value.prompt.trim();
+    const answer = value.answer.trim();
+    const kind = answer ? "quiz" : defaultKind;
 
     return {
       id: `${gameId}-item-${index + 1}`,
       gameId,
       kind,
-      prompt: rawPrompt.trim(),
+      prompt,
       ...(answer ? { answer } : {}),
     };
   });

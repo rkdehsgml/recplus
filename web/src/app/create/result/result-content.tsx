@@ -54,7 +54,7 @@ export default function ResultContent() {
   return (
     <main className={styles.page}>
       <div className={styles.contextAction}><Link href="/create">← 조건 수정</Link></div>
-      <EditableCue key={cueKey} initialCue={cue} input={input} />
+      <EditableCue key={cueKey} initialCue={cue} input={input} games={[...customGames, ...catalog]} />
     </main>
   );
 }

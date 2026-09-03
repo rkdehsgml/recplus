@@ -2,24 +2,49 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import type { RecommendedGame, RecommendationInput } from "@/engine/recommend";
 import { saveCueSheet } from "@/lib/cuesheets";
 import { saveCueSheetToCloud } from "@/lib/event-plan-store";
-import { phaseLabels, placeLabels } from "@/lib/game-types";
+import { phaseLabels, placeLabels, type GameDefinition, type Phase } from "@/lib/game-types";
 import styles from "./page.module.css";
 
 type EditableCueProps = {
+  games: GameDefinition[];
   initialCue: RecommendedGame[];
   input: RecommendationInput;
 };
 
-export default function EditableCue({ initialCue, input }: EditableCueProps) {
+function fitsCurrentConditions(game: GameDefinition, input: RecommendationInput) {
+  const people = game.profile?.people;
+  const teams = game.profile?.recommendedTeams;
+  return game.places.includes(input.place)
+    && (game.mode === "both" || game.mode === input.mode)
+    && (!people || (input.people >= people.min && (people.max === undefined || input.people <= people.max)))
+    && (!input.teams?.length || !teams || (input.teams.length >= teams.min && input.teams.length <= teams.max));
+}
+
+export default function EditableCue({ games, initialCue, input }: EditableCueProps) {
   const [cue, setCue] = useState(initialCue);
   const [name, setName] = useState(`${placeLabels[input.place]} ${input.targetMinutes}분 행사 플랜`);
   const [savedId, setSavedId] = useState<string | null>(null);
   const [saveMessage, setSaveMessage] = useState("");
   const [saving, setSaving] = useState(false);
+  const [pickerOpen, setPickerOpen] = useState(false);
+  const [onlyMatchingGames, setOnlyMatchingGames] = useState(false);
+  const [selectedPhase, setSelectedPhase] = useState<"all" | Phase>("all");
+  const [gameQuery, setGameQuery] = useState("");
   const total = useMemo(() => cue.reduce((sum, game) => sum + game.allocatedDuration, 0), [cue]);
+  const addableGames = useMemo(() => {
+    const selectedIds = new Set(cue.map((game) => game.id));
+    const query = gameQuery.trim().toLocaleLowerCase("ko-KR");
+    return games
+      .filter((game) => !selectedIds.has(game.id))
+      .filter((game) => !onlyMatchingGames || fitsCurrentConditions(game, input))
+      .filter((game) => selectedPhase === "all" || game.phase === selectedPhase)
+      .filter((game) => !query || `${game.name} ${game.description}`.toLocaleLowerCase("ko-KR").includes(query))
+      .sort((left, right) => Number(fitsCurrentConditions(right, input)) - Number(fitsCurrentConditions(left, input)) || left.name.localeCompare(right.name, "ko"));
+  }, [cue, gameQuery, games, input, onlyMatchingGames, selectedPhase]);
 
   function move(index: number, direction: -1 | 1) {
     const nextIndex = index + direction;
@@ -41,6 +66,15 @@ export default function EditableCue({ initialCue, input }: EditableCueProps) {
 
   function remove(index: number) {
     setCue((current) => current.filter((_, gameIndex) => gameIndex !== index));
+    setSavedId(null);
+  }
+
+  function addGame(game: GameDefinition) {
+    setCue((current) => [...current, {
+      ...game,
+      allocatedDuration: Math.max(5, game.duration),
+      reason: "조건을 확인한 뒤 직접 큐시트에 추가한 게임이에요.",
+    }]);
     setSavedId(null);
   }
 
@@ -112,8 +146,31 @@ export default function EditableCue({ initialCue, input }: EditableCueProps) {
           ))}
         </section>
       ) : (
-        <section className={styles.emptyCue}><h2>큐시트가 비어 있어요.</h2><p>조건을 다시 골라 새 큐시트를 만들어주세요.</p></section>
+        <section className={styles.emptyCue}><h2>큐시트가 비어 있어요.</h2><p>추천 조건에 딱 맞는 게임이 없어도 라이브러리에서 직접 추가할 수 있어요.</p><button type="button" onClick={() => setPickerOpen(true)}>게임 추가하기</button></section>
       )}
+
+      {cue.length > 0 && <section className={styles.addBar}>
+        <div><strong>다른 게임도 섞어볼까요?</strong><span>라이브러리에서 검색해 큐시트에 바로 추가할 수 있어요.</span></div>
+        <button type="button" onClick={() => setPickerOpen(true)}>＋ 게임 추가</button>
+      </section>}
+
+      {pickerOpen && createPortal(<div className={styles.modalBackdrop} role="presentation" onMouseDown={() => setPickerOpen(false)}>
+        <section className={styles.gameModal} role="dialog" aria-modal="true" aria-label="라이브러리에서 게임 추가" onMouseDown={(event) => event.stopPropagation()}>
+          <div className={styles.modalHead}>
+            <div><p>GAME LIBRARY</p><h2>큐시트에 추가할 게임 찾기</h2><span>전체 라이브러리를 검색하고, 필요하면 현재 행사 조건에 맞는 게임만 골라보세요.</span></div>
+            <button type="button" onClick={() => setPickerOpen(false)} aria-label="게임 검색 닫기">×</button>
+          </div>
+          <div className={styles.modalTools}>
+            <input autoFocus value={gameQuery} onChange={(event) => setGameQuery(event.target.value)} placeholder="게임 이름 또는 설명으로 검색" aria-label="추가할 게임 검색" />
+            <button className={onlyMatchingGames ? styles.filterActive : ""} type="button" onClick={() => setOnlyMatchingGames((current) => !current)}>{onlyMatchingGames ? "조건 맞춤만 표시 중" : "조건 맞춤만 보기"}</button>
+          </div>
+          <div className={styles.phaseFilters} aria-label="게임 단계 필터">
+            {(["all", "opening", "icebreak", "main", "finale"] as const).map((phase) => <button className={selectedPhase === phase ? styles.filterActive : ""} key={phase} type="button" onClick={() => setSelectedPhase(phase)}>{phase === "all" ? "전체 단계" : phaseLabels[phase]}</button>)}
+          </div>
+          <p className={styles.modalCount}>{onlyMatchingGames ? "현재 행사 조건에 맞는 게임" : "전체 라이브러리"} {addableGames.length}개</p>
+          {addableGames.length ? <div className={styles.modalList}>{addableGames.map((game) => <article key={game.id}><div><span>{phaseLabels[game.phase]}</span>{game.source === "custom" && <b>내 게임</b>}</div><h3>{game.name}</h3><p>{game.description}</p><small>{game.duration}분 · {game.mode === "both" ? "팀·개인 가능" : game.mode === "team" ? "팀전" : "개인전"}</small><button type="button" onClick={() => addGame(game)}>큐시트에 추가</button></article>)}</div> : <div className={styles.modalEmpty}><strong>검색 조건에 맞는 게임이 없어요.</strong><span>검색어 또는 필터를 바꿔 다시 찾아보세요.</span><button type="button" onClick={() => { setGameQuery(""); setOnlyMatchingGames(false); setSelectedPhase("all"); }}>필터 초기화</button></div>}
+        </section>
+      </div>, document.body)}
 
       <section className={styles.savePanel}>
         <div><label htmlFor="cue-name">행사 플랜 이름</label><input id="cue-name" value={name} onChange={(event) => { setName(event.target.value); setSavedId(null); }} /></div>

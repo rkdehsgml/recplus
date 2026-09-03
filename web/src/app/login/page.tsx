@@ -12,7 +12,6 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <main className={styles.page}>
       <section className={styles.intro}>
-        <div className={styles.brandMark}>R</div>
         <p className={styles.eyebrow}>RECPLUS ACCOUNT</p>
         <h1>좋은 자리는<br /><em>바로 시작</em>할 수 있게.</h1>
         <p className={styles.description}>게임을 고르고, 행사 플랜을 저장하고, 현장에서 바로 꺼내 쓰는 경험을 하나의 계정으로 이어가세요.</p>

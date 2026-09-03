@@ -52,7 +52,7 @@ export type GameDefinition = {
   energy: 1 | 2 | 3 | 4 | 5;
   description: string;
   hostScript: string;
-  ruleSteps: [string, string, string];
+  ruleSteps: string[];
   /** 게임의 출발점. 예전 localStorage 데이터에는 없을 수 있습니다. */
   origin?: GameOrigin;
   /** 방송 프로그램에서 확인한 게임 포맷. 하나의 게임이 여러 컬렉션에 속할 수 있습니다. */

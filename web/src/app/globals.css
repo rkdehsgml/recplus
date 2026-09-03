@@ -3,14 +3,14 @@
 
 :root {
   --background: #f5f5f7;
-  --foreground: #1d1d1f;
+  --foreground: #202124;
   --blue: #0071e3;
   --blue-hover: #0077ed;
   --blue-soft: #e8f1fd;
   --surface: #ffffff;
   --surface-muted: #fbfbfd;
   --fill: #f0f0f3;
-  --muted: #6e6e73;
+  --muted: #5f6368;
   --line: rgb(0 0 0 / 8%);
   --glass: rgb(250 250 252 / 80%);
   --shadow-soft: 0 18px 55px rgb(0 50 100 / 8%);
@@ -25,8 +25,13 @@ body {
   margin: 0;
   background: var(--background);
   color: var(--foreground);
-  font-family: -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", sans-serif;
-  -webkit-font-smoothing: antialiased;
+  font-family: "Pretendard Variable", Pretendard, "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  font-size: 15px;
+  font-weight: 520;
+  line-height: 1.55;
+  letter-spacing: -.012em;
+  font-kerning: normal;
+  -webkit-font-smoothing: auto;
   background-image: radial-gradient(circle at 50% -20%, rgb(255 255 255 / 92%), transparent 42%);
 }
 
@@ -34,8 +39,11 @@ a { color: inherit; text-decoration: none; }
 
 button, a { -webkit-tap-highlight-color: transparent; }
 
-button, input, select, textarea { font: inherit; }
+button, input, select, textarea { font: inherit; letter-spacing: inherit; }
 button { min-width: 0; max-inline-size: 100%; line-height: 1.3; }
+
+:where(p, li, dt, dd, label, input, textarea, select, button) { text-wrap: pretty; }
+:where(h1, h2, h3) { text-wrap: balance; }
 
 :focus-visible { outline: 3px solid rgb(0 113 227 / 32%); outline-offset: 3px; }
 

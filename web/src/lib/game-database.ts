@@ -66,9 +66,8 @@ function stringArray(value: unknown): string[] {
   return Array.isArray(value) ? value.filter((item): item is string => typeof item === "string") : [];
 }
 
-function asRuleSteps(value: unknown): [string, string, string] {
-  const steps = stringArray(value).slice(0, 3);
-  return [steps[0] ?? "", steps[1] ?? "", steps[2] ?? ""];
+function asRuleSteps(value: unknown): string[] {
+  return stringArray(value).map((step) => step.trim()).filter(Boolean);
 }
 
 function mapItem(row: DatabaseGameItemRow): GameItem | null {

@@ -22,17 +22,17 @@
 .brandMark { display: grid; width: 27px; height: 27px; place-items: center; border-radius: 9px; color: white; background: linear-gradient(135deg, #0071e3, #55b7ff); box-shadow: 0 5px 13px rgb(0 113 227 / 22%); font-size: 13px; font-weight: 800; }
 
 .navigation { display: flex; min-width: 0; align-items: center; gap: 1px; }
-.navigation > a:not(.createButton) { position: relative; padding: 8px 9px; border-radius: 8px; color: #55555b; font-size: 11px; font-weight: 650; transition: color 160ms ease, background 160ms ease; }
+.navigation > a:not(.createButton) { position: relative; padding: 8px 10px; border-radius: 8px; color: #48494f; font-size: 12px; font-weight: 680; transition: color 160ms ease, background 160ms ease; }
 .navigation > a:not(.createButton):hover { color: var(--foreground); background: rgb(0 0 0 / 3%); }
 .navigation > .current { color: var(--foreground); }
 .navigation > .current::after { position: absolute; right: calc(50% - 2px); bottom: 2px; width: 4px; height: 4px; border-radius: 99px; background: var(--blue); content: ""; }
 
-.createButton { display: inline-flex; min-height: 34px; align-items: center; justify-content: center; margin-left: 7px; padding: 7px 12px; border-radius: 999px; color: white; background: var(--blue); box-shadow: 0 6px 14px rgb(0 113 227 / 18%); font-size: 11px; font-weight: 750; transition: background 160ms ease, transform 160ms ease; }
+.createButton { display: inline-flex; min-height: 36px; align-items: center; justify-content: center; margin-left: 7px; padding: 7px 13px; border-radius: 999px; color: white; background: var(--blue); box-shadow: 0 6px 14px rgb(0 113 227 / 18%); font-size: 12px; font-weight: 760; transition: background 160ms ease, transform 160ms ease; }
 .createButton:hover { background: var(--blue-hover); transform: translateY(-1px); }
-.signInButton { display: inline-flex; min-height: 34px; align-items: center; justify-content: center; margin-left: 3px; padding: 7px 10px; border: 1px solid rgb(0 0 0 / 7%); border-radius: 999px; color: var(--foreground); background: rgb(255 255 255 / 62%); font-size: 10px; font-weight: 700; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background 160ms ease; }
+.signInButton { display: inline-flex; min-height: 36px; align-items: center; justify-content: center; margin-left: 3px; padding: 7px 11px; border: 1px solid rgb(0 0 0 / 7%); border-radius: 999px; color: var(--foreground); background: rgb(255 255 255 / 62%); font-size: 12px; font-weight: 720; cursor: pointer; transition: border-color 160ms ease, color 160ms ease, background 160ms ease; }
 .signInButton:hover { border-color: rgb(0 113 227 / 24%); color: var(--blue); background: rgb(255 255 255 / 90%); }
 .accountMenu { position: relative; margin-left: 4px; }
-.accountTrigger { display: inline-flex; min-height: 34px; align-items: center; gap: 6px; padding: 4px 9px 4px 4px; border: 1px solid rgb(0 0 0 / 7%); border-radius: 999px; color: var(--foreground); background: rgb(255 255 255 / 62%); cursor: pointer; font: inherit; font-size: 10px; font-weight: 700; transition: border-color 160ms ease, color 160ms ease, background 160ms ease; }
+.accountTrigger { display: inline-flex; min-height: 36px; align-items: center; gap: 6px; padding: 4px 10px 4px 4px; border: 1px solid rgb(0 0 0 / 7%); border-radius: 999px; color: var(--foreground); background: rgb(255 255 255 / 62%); cursor: pointer; font: inherit; font-size: 12px; font-weight: 720; transition: border-color 160ms ease, color 160ms ease, background 160ms ease; }
 .accountTrigger:hover, .accountTrigger[aria-expanded="true"] { border-color: rgb(0 113 227 / 24%); color: var(--blue); background: rgb(255 255 255 / 90%); }
 .accountTrigger > span { display: grid; width: 25px; height: 25px; place-items: center; border-radius: 50%; color: white; background: linear-gradient(135deg, #0071e3, #55b7ff); font-size: 10px; font-weight: 800; }
 .accountPanel { position: absolute; z-index: 2; top: calc(100% + 8px); right: 0; display: grid; min-width: 182px; overflow: hidden; padding: 6px; border: 1px solid rgb(0 0 0 / 8%); border-radius: 14px; background: rgb(255 255 255 / 96%); box-shadow: 0 16px 38px rgb(20 45 70 / 15%); backdrop-filter: saturate(180%) blur(18px); }

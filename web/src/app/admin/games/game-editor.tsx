@@ -65,7 +65,7 @@ type EditableGameRow = {
 type GameEditorProps = { gameId?: string; mode: "create" | "edit" };
 
 function emptyItem(key: string): ItemDraft {
-  return { key, kind: "prompt", prompt: "", answer: "", hint: "" };
+  return { key, kind: "quiz", prompt: "", answer: "", hint: "" };
 }
 
 function asKnownValues<T extends string>(values: readonly T[], input: string[] | null | undefined, fallback: T[]): T[] {
@@ -139,7 +139,7 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
       setPeopleMax(game.people_max ?? Math.max(1, game.people_min ?? 1));
       setPreparations((game.preparations ?? []).join(", "));
       setHostScript(game.host_script);
-      setSteps([game.rule_steps?.[0] ?? "", game.rule_steps?.[1] ?? "", game.rule_steps?.[2] ?? ""]);
+      setSteps(game.rule_steps?.length ? game.rule_steps : ["", "", ""]);
       setItems((game.game_items ?? []).slice().sort((left, right) => left.position - right.position).map((item) => ({
         key: item.id,
         kind: item.kind,
@@ -196,7 +196,7 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
     if (name.trim().length < 2) return setError("게임 이름을 두 글자 이상 입력해주세요.");
     if (description.trim().length < 8) return setError("게임을 설명하는 문장을 조금 더 적어주세요.");
     if (!selectedPlaces.length || !selectedContexts.length) return setError("가능한 장소와 추천 상황을 각각 하나 이상 골라주세요.");
-    if (!hostScript.trim() || trimmedSteps.some((step) => !step)) return setError("진행 멘트와 세 단계 진행 순서를 모두 채워주세요.");
+    if (!hostScript.trim() || trimmedSteps.length < 3 || trimmedSteps.some((step) => !step)) return setError("진행 멘트와 세 단계 이상 진행 순서를 모두 채워주세요.");
     if (peopleMin < 1 || peopleMax < peopleMin) return setError("권장 인원 범위를 다시 확인해주세요.");
     if (preparedItems.some((item) => item.kind === "quiz" && !item.answer)) return setError("퀴즈 문항에는 정답을 입력해주세요.");
 
@@ -292,7 +292,7 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
         <section className={styles.section}>
           <h2>기본 정보</h2>
           <label>게임 이름<input value={name} onChange={(event) => setName(event.target.value)} placeholder="예: 팀 대항 초성 퀴즈" maxLength={100} /></label>
-          <label>게임 설명<textarea value={description} onChange={(event) => setDescription(event.target.value)} placeholder="어떤 자리에서 어떻게 즐기는 게임인지 짧게 적어주세요." maxLength={1000} /></label>
+          <label>게임 설명<textarea value={description} onChange={(event) => setDescription(event.target.value)} placeholder="누가, 어떤 상황에서, 무엇을 하며 즐기는 게임인지 적어주세요. 예: 팀별로 제한 시간 안에 초성을 보고 정답을 많이 맞히는 퀴즈예요." maxLength={1000} /></label>
           <div className={styles.columns}><label>게임 계보<select value={origin} onChange={(event) => setOrigin(event.target.value as GameOrigin)}>{gameOrigins.map((item) => <option key={item} value={item}>{gameOriginLabels[item]}</option>)}</select></label><label>게임 유형<select value={archetype} onChange={(event) => setArchetype(event.target.value as Archetype)}>{archetypes.map((item) => <option key={item} value={item}>{archetypeLabels[item]}</option>)}</select></label><label>추천 구간<select value={phase} onChange={(event) => setPhase(event.target.value as Phase)}>{phases.map((item) => <option key={item} value={item}>{phaseLabels[item]}</option>)}</select></label></div>
           <span className={styles.label}>프로그램 컬렉션 <small>방송에서 확인한 포맷일 때만 선택</small></span><div className={styles.chips}>{gameSeries.map((series) => <button className={selectedSeries.includes(series) ? styles.selected : ""} type="button" onClick={() => toggleSeries(series)} key={series}>{gameSeriesLabels[series]}</button>)}</div>
         </section>
@@ -310,8 +310,8 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
         <section className={styles.section}>
           <h2>진행 방법</h2>
           <label>진행자 첫 멘트<textarea value={hostScript} onChange={(event) => setHostScript(event.target.value)} placeholder="진행자가 그대로 읽을 수 있는 첫 안내 멘트를 적어주세요." maxLength={1000} /></label>
-          <p className={styles.hint}>참가자에게 보여줄 흐름을 세 단계로 정리해주세요.</p>
-          {steps.map((step, index) => <label className={styles.step} key={index}><b>{index + 1}</b><input value={step} onChange={(event) => updateStep(index, event.target.value)} placeholder={`${index + 1}단계 진행 방법`} maxLength={1000} /></label>)}
+          <div className={styles.sectionHead}><div><p>참가자에게 보여줄 흐름을 순서대로 적어주세요. 최소 3단계부터 필요한 만큼 늘릴 수 있어요.</p></div><button type="button" onClick={() => setSteps((current) => [...current, ""])}>＋ 단계 추가</button></div>
+          {steps.map((step, index) => <label className={`${styles.step} ${steps.length > 3 ? styles.stepExtended : ""}`} key={`${index}-${steps.length}`}><b>{index + 1}</b><input value={step} onChange={(event) => updateStep(index, event.target.value)} placeholder={`${index + 1}단계 진행 방법`} maxLength={1000} />{steps.length > 3 && <button type="button" className={editorStyles.removeStep} onClick={() => setSteps((current) => current.filter((_, stepIndex) => stepIndex !== index))}>삭제</button>}</label>)}
         </section>
 
         <section className={styles.section}>

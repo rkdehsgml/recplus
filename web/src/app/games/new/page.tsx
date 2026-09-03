@@ -7,6 +7,12 @@ import { saveCustomGame } from "@/lib/custom-games";
 import { archetypeLabels, archetypes, gameOriginLabels, gameOrigins, phaseLabels, phases, placeLabels, places, type Archetype, type GameOrigin, type Phase, type Place, type PlayMode } from "@/lib/game-types";
 import styles from "./page.module.css";
 
+type ItemDraft = { answer: string; key: string; prompt: string };
+
+function emptyItem(key: string): ItemDraft {
+  return { key, prompt: "", answer: "" };
+}
+
 export default function NewGamePage() {
   const router = useRouter();
   const [name, setName] = useState("");
@@ -18,7 +24,7 @@ export default function NewGamePage() {
   const [mode, setMode] = useState<PlayMode>("both");
   const [selectedPlaces, setSelectedPlaces] = useState<Place[]>(["room"]);
   const [steps, setSteps] = useState(["", "", ""]);
-  const [prompts, setPrompts] = useState("");
+  const [items, setItems] = useState<ItemDraft[]>([emptyItem("item-1")]);
   const [error, setError] = useState("");
 
   function togglePlace(place: Place) {
@@ -29,6 +35,10 @@ export default function NewGamePage() {
     setSteps((current) => current.map((step, stepIndex) => stepIndex === index ? value : step));
   }
 
+  function updateItem(key: string, patch: Partial<ItemDraft>) {
+    setItems((current) => current.map((item) => item.key === key ? { ...item, ...patch } : item));
+  }
+
   function submit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     const trimmedSteps = steps.map((step) => step.trim());
@@ -36,10 +46,11 @@ export default function NewGamePage() {
     if (name.trim().length < 2) return setError("게임 이름을 두 글자 이상 입력해주세요.");
     if (description.trim().length < 8) return setError("게임을 설명하는 문장을 조금 더 적어주세요.");
     if (!selectedPlaces.length) return setError("가능한 장소를 하나 이상 골라주세요.");
-    if (trimmedSteps.some((step) => !step)) return setError("진행 순서 세 칸을 모두 채워주세요.");
+    if (trimmedSteps.length < 3 || trimmedSteps.some((step) => !step)) return setError("진행 순서를 세 단계 이상 모두 채워주세요.");
 
     const gameId = `custom-${crypto.randomUUID()}`;
-    const itemValues = prompts.split("\n").map((item) => item.trim()).filter(Boolean);
+    const preparedItems = items.map((item) => ({ ...item, prompt: item.prompt.trim(), answer: item.answer.trim() })).filter((item) => item.prompt || item.answer);
+    if (preparedItems.some((item) => !item.prompt || !item.answer)) return setError("문제·제시어는 문제와 답을 한 세트로 입력해주세요.");
 
     saveCustomGame({
       id: gameId,
@@ -53,8 +64,8 @@ export default function NewGamePage() {
       energy: 3,
       description: description.trim(),
       hostScript: trimmedSteps[0],
-      ruleSteps: trimmedSteps as [string, string, string],
-      items: createCustomGameItems(gameId, itemValues, archetype),
+      ruleSteps: trimmedSteps,
+      items: createCustomGameItems(gameId, preparedItems, archetype),
       source: "custom",
       createdAt: new Date().toISOString(),
     });
@@ -70,7 +81,7 @@ export default function NewGamePage() {
         <section className={styles.section}>
           <h2>기본 정보</h2>
           <label>게임 이름<input value={name} onChange={(event) => setName(event.target.value)} placeholder="예: 우리 과 밸런스 게임" maxLength={40} /></label>
-          <label>게임 설명<textarea value={description} onChange={(event) => setDescription(event.target.value)} placeholder="이 게임이 어떤 분위기에서 재미있는지 짧게 적어주세요." maxLength={150} /></label>
+          <label>게임 설명<textarea value={description} onChange={(event) => setDescription(event.target.value)} placeholder="누가, 어떤 상황에서, 무엇을 하며 즐기는 게임인지 적어주세요. 예: 팀별로 제한 시간 안에 초성을 보고 정답을 많이 맞히는 퀴즈예요." maxLength={150} /></label>
           <div className={styles.twoColumns}>
             <label>게임 계보<select value={origin} onChange={(event) => setOrigin(event.target.value as GameOrigin)}>{gameOrigins.map((item) => <option key={item} value={item}>{gameOriginLabels[item]}</option>)}</select></label>
             <label>게임 유형<select value={archetype} onChange={(event) => setArchetype(event.target.value as Archetype)}>{archetypes.map((item) => <option key={item} value={item}>{archetypeLabels[item]}</option>)}</select></label>
@@ -89,15 +100,13 @@ export default function NewGamePage() {
         </section>
 
         <section className={styles.section}>
-          <h2>이렇게 진행하세요</h2>
-          <p className={styles.hint}>진행자가 그대로 읽거나 참고할 수 있는 세 단계예요.</p>
-          {steps.map((step, index) => <label className={styles.step} key={index}><b>{index + 1}</b><input value={step} onChange={(event) => updateStep(index, event.target.value)} placeholder={`${index + 1}단계 진행 방법`} maxLength={100} /></label>)}
+          <div className={styles.sectionHead}><div><h2>이렇게 진행하세요</h2><p>진행자가 그대로 읽거나 참고할 수 있게 순서대로 적어주세요. 최소 3단계부터 자유롭게 늘릴 수 있어요.</p></div><button type="button" onClick={() => setSteps((current) => [...current, ""])}>＋ 단계 추가</button></div>
+          {steps.map((step, index) => <label className={styles.step} key={index}><b>{index + 1}</b><input value={step} onChange={(event) => updateStep(index, event.target.value)} placeholder={`${index + 1}단계 진행 방법`} maxLength={100} />{steps.length > 3 && <button type="button" className={styles.removeStep} onClick={() => setSteps((current) => current.filter((_, stepIndex) => stepIndex !== index))}>삭제</button>}</label>)}
         </section>
 
         <section className={styles.section}>
-          <h2>문제·제시어 <small>선택</small></h2>
-          <p className={styles.hint}>한 줄에 하나씩 적어주세요. 퀴즈는 ‘문제 → 정답’ 형식으로 쓰면 진행자만 정답을 확인할 수 있어요.</p>
-          <textarea value={prompts} onChange={(event) => setPrompts(event.target.value)} placeholder={"예: [음식] ㄸㅂㅇ → 떡볶이\n예: 평생 치킨만 vs 평생 피자만"} rows={5} />
+          <div className={styles.sectionHead}><div><h2>문제·제시어 <small>선택</small></h2><p>문제와 답을 한 세트로 저장합니다. 답은 진행 화면에서 바로 보이지 않고 필요할 때만 확인할 수 있어요.</p></div><button type="button" onClick={() => setItems((current) => [...current, emptyItem(`item-${crypto.randomUUID()}`)])}>＋ 문항 추가</button></div>
+          <div className={styles.itemList}>{items.map((item, index) => <article className={styles.item} key={item.key}><div className={styles.itemTop}><strong>{index + 1}번 문항</strong>{items.length > 1 && <button type="button" onClick={() => setItems((current) => current.filter((currentItem) => currentItem.key !== item.key))}>삭제</button>}</div><label>문제·제시어<input value={item.prompt} onChange={(event) => updateItem(item.key, { prompt: event.target.value })} placeholder="예: [음식] ㄸㅂㅇ" maxLength={3000} /></label><label>답<input value={item.answer} onChange={(event) => updateItem(item.key, { answer: event.target.value })} placeholder="예: 떡볶이" maxLength={3000} /></label></article>)}</div>
         </section>
 
         {error && <p className={styles.error} role="alert">{error}</p>}
