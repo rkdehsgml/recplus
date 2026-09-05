@@ -191,12 +191,17 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
           </div>
           <div className={styles.modalTools}>
             <input autoFocus value={gameQuery} onChange={(event) => setGameQuery(event.target.value)} placeholder="게임 이름 또는 설명으로 검색" aria-label="추가할 게임 검색" />
-            <button className={onlyMatchingGames ? styles.filterActive : ""} type="button" onClick={() => setOnlyMatchingGames((current) => !current)}>{onlyMatchingGames ? "조건 맞춤만 표시 중" : "조건 맞춤만 보기"}</button>
           </div>
-          <div className={styles.phaseFilters} aria-label="게임 단계 필터">
-            {(["all", "opening", "icebreak", "main", "finale"] as const).map((phase) => <button className={selectedPhase === phase ? styles.filterActive : ""} key={phase} type="button" onClick={() => setSelectedPhase(phase)}>{phase === "all" ? "전체 단계" : phaseLabels[phase]}</button>)}
+          <div className={styles.modalFilters}>
+            <div className={styles.matchingControl}>
+              <div><strong>행사 조건 맞춤</strong><span>{input.people}명 · {input.mode === "team" ? "팀전" : "개인전"}</span></div>
+              <button className={onlyMatchingGames ? styles.matchSwitchActive : ""} type="button" role="switch" aria-checked={onlyMatchingGames} aria-label="행사 조건에 맞는 게임만 보기" onClick={() => setOnlyMatchingGames((current) => !current)}><i aria-hidden="true" /></button>
+            </div>
+            <div className={styles.phaseFilters} aria-label="게임 단계 필터">
+              {(["all", "opening", "icebreak", "main", "finale"] as const).map((phase) => <button className={selectedPhase === phase ? styles.filterActive : ""} key={phase} type="button" onClick={() => setSelectedPhase(phase)}>{phase === "all" ? "전체 단계" : phaseLabels[phase]}</button>)}
+            </div>
           </div>
-          <p className={styles.modalCount}>{onlyMatchingGames ? "현재 행사 조건에 맞는 게임" : "전체 라이브러리"} {addableGames.length}개</p>
+          <p className={styles.modalCount}>추가 가능한 게임 {addableGames.length}개{onlyMatchingGames && " · 현재 행사 조건 기준"}</p>
           {addableGames.length ? <div className={styles.modalList}>{addableGames.map((game) => <article key={game.id}><div><span>{phaseLabels[game.phase]}</span>{game.source === "custom" && <b>내 게임</b>}</div><h3>{game.name}</h3><p>{game.description}</p><small>{game.duration}분 · {game.mode === "both" ? "팀·개인 가능" : game.mode === "team" ? "팀전" : "개인전"}</small><button type="button" onClick={() => addGame(game)}>큐시트에 추가</button></article>)}</div> : <div className={styles.modalEmpty}><strong>검색 조건에 맞는 게임이 없어요.</strong><span>검색어 또는 필터를 바꿔 다시 찾아보세요.</span><button type="button" onClick={() => { setGameQuery(""); setOnlyMatchingGames(false); setSelectedPhase("all"); }}>필터 초기화</button></div>}
         </section>
       </div>, document.body)}

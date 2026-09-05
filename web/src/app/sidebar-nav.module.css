@@ -33,10 +33,10 @@
 
 @media (max-width: 720px) {
   .sidebar { position: static; }
-  .mobileToggle { display: flex; width: 100%; min-height: 56px; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 13px; border: 1px solid var(--line); border-radius: 12px; color: var(--foreground); background: #fff; box-shadow: 0 6px 18px rgb(16 24 40 / 5%); cursor: pointer; text-align: left; }
+  .mobileToggle { display: flex; width: 100%; min-height: 48px; align-items: center; justify-content: space-between; gap: 12px; padding: 8px 11px; border: 1px solid var(--line); border-radius: 11px; color: var(--foreground); background: #fff; box-shadow: 0 4px 12px rgb(16 24 40 / 4%); cursor: pointer; text-align: left; }
   .mobileToggle > span { display: grid; gap: 2px; min-width: 0; }
-  .mobileToggle small { color: var(--muted); font-size: 10px; }
-  .mobileToggle strong { overflow: hidden; font-size: 13px; text-overflow: ellipsis; white-space: nowrap; }
+  .mobileToggle small { color: var(--muted); font-size: 9px; }
+  .mobileToggle strong { overflow: hidden; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
   .mobileToggle > b { color: var(--blue); font-size: 11px; }
   .panel { display: none; width: auto; min-height: 0; margin-top: 8px; }
   .panel.mobileOpen { display: flex; animation: panelOpen 220ms var(--ease-out) both; }

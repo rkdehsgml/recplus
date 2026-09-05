@@ -174,12 +174,16 @@ export default function GamesContent({ initialContext, initialOrigin, initialSer
             <div><p>GAME LIBRARY</p><h1>{resultTitle}</h1><span>{collectionDescription}</span></div>
             <Link className={styles.planButton} href="/create">행사 플랜 만들기 <i aria-hidden="true">→</i></Link>
           </header>
-          <div className={styles.toolbar}>
-            <label className={styles.search}><span aria-hidden="true">⌕</span><input ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="게임 이름, 프로그램, 유형 검색" /><kbd>⌘ K</kbd></label>
-            <label className={styles.sort}>정렬<select value={sort} onChange={(event) => setSort(event.target.value as SortOption)}><option value="recommended">추천순</option><option value="shortest">짧은 시간순</option><option value="largest">많은 인원순</option></select></label>
-          </div>
-          <div className={styles.catalogHead}><p><b>{gameList.length}</b>개의 게임</p><span>빠른 조건</span></div>
-          <div className={styles.quickControls}><nav aria-label="빠른 게임 조건">{quickFilters.map((filter) => <button className={quickFilter === filter.id ? styles.quickActive : ""} aria-pressed={quickFilter === filter.id} onClick={() => setQuickFilter(filter.id)} key={filter.id}>{filter.label}</button>)}</nav>{hasActiveFilters && <button className={styles.resetButton} onClick={clearFilters}>초기화</button>}</div>
+          <section className={styles.discoveryControls} aria-label="게임 검색 및 정렬">
+            <div className={styles.resultToolbar}>
+              <p className={styles.resultCount}><b>{gameList.length}</b>개의 게임</p>
+              <div className={styles.toolbarActions}>
+                <label className={styles.search}><span aria-hidden="true">⌕</span><input ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="게임 이름, 프로그램, 유형 검색" /><kbd>⌘ K</kbd></label>
+                <label className={styles.sort}><span>정렬</span><select value={sort} onChange={(event) => setSort(event.target.value as SortOption)}><option value="recommended">추천순</option><option value="shortest">짧은 시간순</option><option value="largest">많은 인원순</option></select></label>
+              </div>
+            </div>
+            <div className={styles.quickControls}><span>빠른 조건</span><nav aria-label="빠른 게임 조건">{quickFilters.map((filter) => <button className={quickFilter === filter.id ? styles.quickActive : ""} aria-pressed={quickFilter === filter.id} onClick={() => setQuickFilter(filter.id)} key={filter.id}>{filter.label}</button>)}</nav>{hasActiveFilters && <button className={styles.resetButton} onClick={clearFilters}>초기화</button>}</div>
+          </section>
 
           {gameList.length ? <div className={styles.gameGrid} role="list">{gameList.map((game) => <article className={styles.gameCard} data-palette={gamePaletteFor(game.archetype)} role="listitem" key={game.id}><Link href={`/games/${game.id}`}><div className={styles.rowBadges}>{gameSeriesFor(game).map((item) => <i className={styles.seriesBadge} key={item}>{gameSeriesLabels[item]}</i>)}<i>{gameOriginLabels[gameOriginFor(game)]}</i></div><div className={styles.gameIcon} aria-hidden="true">{icons[game.archetype]}</div><h3>{game.name}</h3><p>{game.description}</p><div className={styles.cardMeta}><span>{gamePeopleLabel(game)}</span><span>{game.duration}분</span><span>{gameTeamLabel(game)}</span></div><footer><span>{game.profile ? difficultyLabels[game.profile.difficulty] : archetypeLabels[game.archetype]}</span><b>게임 보기 <i>→</i></b></footer></Link>{game.source === "custom" && <button className={styles.deleteButton} onClick={() => removeGame(game)}>삭제</button>}</article>)}</div> : <section className={styles.empty}><span>✦</span><h2>조건에 맞는 게임을 찾지 못했어요.</h2><p>컬렉션은 하나만 선택되고 있어요. 모임 상황이나 빠른 조건을 조금 넓혀보세요.</p><button onClick={clearFilters}>전체 게임 보기</button></section>}
         </section>
