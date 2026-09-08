@@ -6,6 +6,7 @@ import { cacheCueSheets, deleteCueSheet, loadCueSheets, type SavedCueSheet } fro
 import { deleteCueSheetFromCloud, loadCloudCueSheets, mergeCueSheets, syncLocalCueSheetsToCloud } from "@/lib/event-plan-store";
 import { placeLabels } from "@/lib/game-types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
+import ConfirmDialog from "../ui/confirm-dialog";
 import styles from "./page.module.css";
 
 function totalMinutes(cue: SavedCueSheet) {
@@ -17,6 +18,8 @@ export default function CueSheetsPage() {
   const [loaded, setLoaded] = useState(false);
   const [signedOut, setSignedOut] = useState(false);
   const [deleteError, setDeleteError] = useState("");
+  const [deleteTarget, setDeleteTarget] = useState<SavedCueSheet | null>(null);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     let active = true;
@@ -66,15 +69,19 @@ export default function CueSheetsPage() {
     };
   }, []);
 
-  async function remove(cue: SavedCueSheet) {
-    if (!window.confirm(`“${cue.name}” 행사 플랜을 삭제할까요?`)) return;
+  async function remove() {
+    if (!deleteTarget) return;
+    setDeleting(true);
     setDeleteError("");
-    const cloud = await deleteCueSheetFromCloud(cue.id);
+    const cloud = await deleteCueSheetFromCloud(deleteTarget.id);
     if (cloud === "failed") {
       setDeleteError("계정에 저장된 행사 플랜을 삭제하지 못했어요. 잠시 후 다시 시도해주세요.");
+      setDeleting(false);
       return;
     }
-    setCueSheets(deleteCueSheet(cue.id));
+    setCueSheets(deleteCueSheet(deleteTarget.id));
+    setDeleting(false);
+    setDeleteTarget(null);
   }
 
   return (
@@ -98,7 +105,7 @@ export default function CueSheetsPage() {
         <section className={styles.grid}>
           {cueSheets.map((cue) => (
             <article className={styles.card} key={cue.id}>
-              <div className={styles.cardTop}><span>{placeLabels[cue.place]}</span><button onClick={() => remove(cue)}>삭제</button></div>
+              <div className={styles.cardTop}><span>{placeLabels[cue.place]}</span><button onClick={() => setDeleteTarget(cue)} type="button">삭제</button></div>
               <h2>{cue.name}</h2>
               <p>{new Date(cue.createdAt).toLocaleDateString("ko-KR")} 저장</p>
               <div className={styles.meta}><span>👥 {cue.people}명</span><span>{cue.mode === "team" ? `🏆 ${cue.teams?.length ?? 2}조 팀전` : cue.mode === "personal" ? "🙋 개인전" : `🔀 ${cue.teams?.length ?? 2}조 + 개인 이벤트`}</span><span>🎮 {cue.games.length}게임</span></div>
@@ -112,6 +119,7 @@ export default function CueSheetsPage() {
       ) : (
         <section className={styles.loading}>행사 플랜을 불러오고 있어요…</section>
       )}
+      <ConfirmDialog cancelLabel="유지하기" confirmLabel="삭제하기" description={deleteTarget ? `“${deleteTarget.name}” 행사 플랜과 진행 기록을 삭제합니다. 삭제한 플랜은 되돌릴 수 없어요.` : ""} isConfirming={deleting} onCancel={() => { if (!deleting) setDeleteTarget(null); }} onConfirm={() => void remove()} open={Boolean(deleteTarget)} title="행사 플랜을 삭제할까요?" />
     </main>
   );
 }

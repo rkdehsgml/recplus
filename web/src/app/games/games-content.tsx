@@ -168,21 +168,21 @@ export default function GamesContent({ initialContext, initialOrigin, initialSer
           footer={<Link href="/games/new"><span aria-hidden="true">＋</span><strong>내 게임 추가</strong><small>자주 쓰는 진행 게임을 라이브러리에 저장하세요.</small></Link>}
         />
 
-        <section className={styles.catalog} aria-label="게임 목록">
-          <header className={styles.catalogHeader}>
-            <div><p>GAME LIBRARY</p><h1>{resultTitle}</h1><span>{collectionDescription}</span></div>
+          <section className={styles.catalog} aria-label="게임 목록">
+            <header className={styles.catalogHeader}>
+              <div><p>GAME LIBRARY</p><h1>{resultTitle}</h1><span>{collectionDescription}</span></div>
             <Link className={styles.planButton} href="/create">행사 플랜 만들기 <i aria-hidden="true">→</i></Link>
           </header>
-          <section className={styles.discoveryControls} aria-label="게임 검색 및 정렬">
+          <section className={styles.discoveryControls} aria-label="게임 검색 및 빠른 조건">
             <div className={styles.resultToolbar}>
-              <p className={styles.resultCount}><b>{gameList.length}</b>개의 게임</p>
-              <div className={styles.toolbarActions}>
-                <label className={styles.search}><span aria-hidden="true">⌕</span><input ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="게임 이름, 프로그램, 유형 검색" /><kbd>⌘ K</kbd></label>
-                <label className={styles.sort}><span>정렬</span><BrandSelect aria-label="게임 정렬" value={sort} onValueChange={setSort} options={[{ value: "recommended", label: "추천순" }, { value: "shortest", label: "짧은 시간순" }, { value: "largest", label: "많은 인원순" }] as const} variant="compact" /></label>
-              </div>
+              <label className={styles.search}><span aria-hidden="true">⌕</span><input ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="게임 이름, 프로그램, 유형 검색" /><kbd>⌘ K</kbd></label>
             </div>
             <div className={styles.quickControls}><span>빠른 조건</span><nav aria-label="빠른 게임 조건">{quickFilters.map((filter) => <button className={quickFilter === filter.id ? styles.quickActive : ""} aria-pressed={quickFilter === filter.id} onClick={() => setQuickFilter(filter.id)} key={filter.id}>{filter.label}</button>)}</nav>{hasActiveFilters && <button className={styles.resetButton} onClick={clearFilters}>초기화</button>}</div>
           </section>
+          <div className={styles.listHeader}>
+            <p className={styles.resultCount}><span>게임 목록</span><b>{gameList.length}</b>개</p>
+            <label className={styles.sort}><span>정렬</span><BrandSelect aria-label="게임 정렬" value={sort} onValueChange={setSort} options={[{ value: "recommended", label: "추천순" }, { value: "shortest", label: "짧은 시간순" }, { value: "largest", label: "많은 인원순" }] as const} variant="compact" /></label>
+          </div>
 
           {gameList.length ? <div className={styles.gameGrid} role="list">{gameList.map((game) => <article className={styles.gameCard} data-palette={gamePaletteFor(game.archetype)} role="listitem" key={game.id}><Link href={`/games/${game.id}`}><div className={styles.rowBadges}>{gameSeriesFor(game).map((item) => <i className={styles.seriesBadge} key={item}>{gameSeriesLabels[item]}</i>)}<i>{gameOriginLabels[gameOriginFor(game)]}</i></div><div className={styles.gameHeading}><div className={styles.gameIcon} aria-hidden="true">{icons[game.archetype]}</div><h3>{game.name}</h3></div><p>{game.description}</p><div className={styles.cardMeta}><span>{gamePeopleLabel(game)}</span><span>{game.duration}분</span><span>{gameTeamLabel(game)}</span></div><footer><span>{game.profile ? difficultyLabels[game.profile.difficulty] : archetypeLabels[game.archetype]}</span><b>게임 보기 <i>→</i></b></footer></Link>{game.source === "custom" && <button className={styles.deleteButton} onClick={() => removeGame(game)}>삭제</button>}</article>)}</div> : <section className={styles.empty}><span>✦</span><h2>조건에 맞는 게임을 찾지 못했어요.</h2><p>컬렉션은 하나만 선택되고 있어요. 모임 상황이나 빠른 조건을 조금 넓혀보세요.</p><button onClick={clearFilters}>전체 게임 보기</button></section>}
         </section>

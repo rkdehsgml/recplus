@@ -64,7 +64,7 @@
 .search input::placeholder { color: #8a8a90; }
 .search kbd { flex: none; padding: 3px 6px; border: 1px solid var(--line); border-radius: 6px; color: var(--muted); background: var(--fill); font: inherit; font-size: 10px; }
 
-.sort { display: flex; height: 38px; flex: none; align-items: center; gap: 6px; padding: 0 8px 0 10px; border: 1px solid var(--line); border-radius: 9px; color: #7a7b80; background: #fff; font-size: 10px; font-weight: 700; }
+.sort { display: flex; height: 34px; flex: none; align-items: center; gap: 2px; padding: 0 5px 0 8px; border: 1px solid var(--line); border-radius: 9px; color: #7a7b80; background: var(--surface-muted); font-size: 10px; font-weight: 700; }
 .sort select { max-width: 112px; border: 0; outline: 0; color: var(--foreground); background: transparent; font-size: 11px; font-weight: 720; }
 
 .libraryLayout {
@@ -78,17 +78,18 @@
 
 .catalogHeader { display: flex; min-height: 128px; align-items: flex-end; justify-content: space-between; gap: 24px; padding: 8px 0 22px; border-bottom: 1px solid var(--line); }
 .catalogHeader > div { min-width: 0; }
-.catalogHeader p { margin: 0 0 10px; color: var(--blue); font-size: 10px; font-weight: 800; letter-spacing: .14em; }
-.catalogHeader h1 { margin: 0; font-size: clamp(32px, 3.5vw, 46px); line-height: 1.04; letter-spacing: -.065em; }
-.catalogHeader span { display: block; max-width: 590px; margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.6; }
+.catalogHeader p { margin: 0 0 10px; color: var(--blue); font-size: 10px; font-weight: 760; letter-spacing: var(--tracking-label); }
+.catalogHeader h1 { margin: 0; font-size: clamp(32px, 3.5vw, 46px); font-weight: 760; line-height: 1.12; letter-spacing: var(--tracking-title); }
+.catalogHeader span { display: block; max-width: 590px; margin-top: 12px; color: var(--muted); font-size: 13px; line-height: 1.6; letter-spacing: var(--tracking-korean); }
 .planButton { display: inline-flex; min-height: 42px; flex: none; align-items: center; gap: 9px; padding: 9px 13px; border: 1px solid #bdddff; border-radius: 10px; color: #075eac; background: #f3f9ff; font-size: 12px; font-weight: 750; }
 .planButton i { font-size: 16px; font-style: normal; }
 
-.discoveryControls { margin: 18px 0 18px; padding: 13px 14px 12px; border: 1px solid rgb(0 0 0 / 6%); border-radius: 13px; background: rgb(255 255 255 / 68%); }
+.discoveryControls { margin: 16px 0 0; padding: 11px 12px 10px; border: 1px solid rgb(0 0 0 / 6%); border-radius: 13px; background: rgb(255 255 255 / 68%); }
 .resultToolbar { display: flex; align-items: center; justify-content: space-between; gap: 18px; }
-.resultCount { flex: none; margin: 0; color: var(--muted); font-size: 12px; font-weight: 650; }
-.resultCount b { margin-right: 3px; color: var(--foreground); font-size: 18px; letter-spacing: -.04em; }
-.toolbarActions { display: flex; min-width: 0; align-items: center; justify-content: flex-end; gap: 7px; }
+.resultCount { display: flex; align-items: baseline; gap: 3px; margin: 0; color: var(--muted); font-size: 11px; font-weight: 700; }
+.resultCount span { margin-right: 4px; color: #777980; font-size: 10px; }
+.resultCount b { color: var(--foreground); font-size: 17px; letter-spacing: -.025em; }
+.listHeader { display: flex; align-items: center; justify-content: space-between; min-height: 46px; margin-top: 7px; padding: 0 2px 0 3px; border-bottom: 1px solid var(--line); }
 
 .collectionHero {
   display: flex;
@@ -122,10 +123,11 @@
 .quickControls .quickActive { border-color: #bdddff; color: #075eac; background: #eaf4ff; }
 .quickControls .resetButton { margin-left: auto; border-color: transparent; color: var(--blue); background: transparent; }
 
-.gameGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.gameGrid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); align-items: stretch; gap: 14px; }
 
 .gameCard {
   position: relative;
+  display: flex;
   min-width: 0;
   overflow: hidden;
   border: 1px solid rgb(0 0 0 / 5%);
@@ -138,7 +140,7 @@
 .gameCard::before { position: absolute; top: 22px; right: 0; width: 4px; height: 48px; border-radius: 99px 0 0 99px; background: var(--category-accent); content: ""; }
 
 .gameCard:hover { border-color: rgb(0 113 227 / 17%); box-shadow: 0 18px 38px rgb(0 60 120 / 10%); transform: translateY(-4px); }
-.gameCard > a { display: flex; min-height: 248px; flex-direction: column; padding: 17px; }
+.gameCard > a { display: flex; min-height: 0; flex: 1; flex-direction: column; padding: 16px; }
 
 .rowBadges { display: flex; min-width: 0; flex-wrap: wrap; gap: 5px; min-height: 24px; padding-right: 50px; }
 .rowBadges > i { padding: 5px 8px; border-radius: 999px; color: #476575; background: #eef4f7; font-size: 9px; font-style: normal; font-weight: 750; }
@@ -146,13 +148,13 @@
 
 .gameHeading { display: flex; min-width: 0; align-items: center; gap: 11px; margin-top: 14px; }
 .gameIcon { display: grid; width: 39px; height: 39px; flex: none; place-items: center; border-radius: 12px; color: var(--category-text); background: var(--category-surface); font-size: 18px; }
-.gameCard h3 { min-width: 0; margin: 0; font-size: 20px; line-height: 1.15; letter-spacing: -.055em; }
-.gameCard > a > p { display: -webkit-box; min-height: 39px; overflow: hidden; margin: 12px 0 0; color: var(--muted); font-size: 12px; line-height: 1.6; -webkit-box-orient: vertical; -webkit-line-clamp: 2; }
+.gameCard h3 { min-width: 0; margin: 0; font-size: 20px; line-height: 1.2; letter-spacing: -.03em; }
+.gameCard > a > p { margin: 10px 0 auto; color: var(--muted); font-size: 12px; line-height: 1.6; letter-spacing: var(--tracking-korean); }
 
-.cardMeta { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 13px; }
-.cardMeta span { padding: 5px 7px; border-radius: 7px; color: #626268; background: var(--fill); font-size: 10px; font-weight: 650; }
-.gameCard footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: auto; padding-top: 13px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
-.gameCard footer b { color: var(--blue); font-size: 11px; }
+.cardMeta { display: flex; flex-wrap: wrap; gap: 4px; margin: 10px 0 8px; }
+.cardMeta span { padding: 5px 7px; border-radius: 7px; color: #626268; background: var(--fill); font-size: 10px; font-weight: 700; }
+.gameCard footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 0; padding-top: 10px; border-top: 1px solid var(--line); color: var(--muted); font-size: 10px; }
+.gameCard footer b { display: inline-flex; align-items: center; padding: 0; color: var(--blue); font-size: 11px; }
 .gameCard footer i { margin-left: 4px; font-size: 15px; font-style: normal; }
 
 .deleteButton { position: absolute; z-index: 2; top: 18px; right: 18px; min-height: 29px; padding: 5px 8px; border: 0; border-radius: 999px; color: #bd2f26; background: #fff0ee; cursor: pointer; font-size: 9px; font-weight: 750; }
@@ -169,26 +171,43 @@
 }
 
 @media (max-width: 680px) {
-  .page { width: min(100% - 32px, 580px); padding: 38px 0 76px; }
+  .page { width: min(100% - 24px, 580px); padding: 24px 0 60px; }
   .libraryLayout { display: grid; grid-template-columns: 1fr; }
-  .catalogHeader { min-height: 0; align-items: flex-start; flex-direction: row; padding: 22px 0 17px; }
-  .catalogHeader h1 { font-size: clamp(29px, 8.8vw, 38px); }
-  .catalogHeader p { margin-bottom: 6px; font-size: 9px; }
-  .catalogHeader span { max-width: 330px; margin-top: 8px; font-size: 12px; line-height: 1.5; }
-  .planButton { min-height: 36px; padding: 7px 9px; font-size: 0; }
-  .planButton i { font-size: 18px; }
-  .discoveryControls { margin: 13px 0 14px; padding: 11px; }
-  .resultToolbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 9px; }
-  .toolbarActions { display: contents; }
-  .resultCount { grid-column: 1; grid-row: 1; }
-  .sort { grid-column: 2; grid-row: 1; }
-  .search { width: 100%; height: 40px; grid-column: 1 / -1; grid-row: 2; }
-  .quickControls { margin-top: 9px; padding-top: 9px; }
-  .gameCard > a { min-height: 234px; padding: 16px; }
+  .catalogHeader { min-height: 0; align-items: flex-start; flex-direction: row; padding: 14px 0 11px; }
+  .catalogHeader h1 { font-size: clamp(29px, 8.8vw, 38px); line-height: 1.14; }
+  .catalogHeader p { margin-bottom: 6px; font-size: 9px; letter-spacing: .07em; }
+  .catalogHeader span { display: block; max-width: 100%; margin-top: 5px; font-size: 11px; line-height: 1.4; }
+  .planButton { min-height: 32px; align-self: center; padding: 6px 9px; border-color: transparent; border-radius: 8px; color: var(--blue); background: transparent; font-size: 11px; }
+  .planButton i { display: none; }
+  .discoveryControls { margin-top: 8px; padding: 8px; border-radius: 11px; }
+  .search { width: 100%; height: 38px; }
+  .search kbd { display: none; }
+  .quickControls { gap: 7px; margin-top: 7px; padding-top: 7px; }
+  .quickControls > span { font-size: 9px; }
+  .quickControls nav { gap: 4px; }
+  .quickControls button { min-height: 28px; padding: 5px 7px; font-size: 9px; }
+  .listHeader { min-height: 40px; margin-top: 3px; }
+  .sort { height: 30px; padding-left: 7px; }
+  .sort > span { font-size: 9px; }
+  .gameGrid { gap: 10px; }
+  .gameCard { border-radius: 14px; }
+  .gameCard::before { top: 43px; height: 32px; }
+  .gameCard > a { min-height: 164px; padding: 12px; }
+  .rowBadges { min-height: 19px; gap: 4px; padding-right: 38px; }
+  .rowBadges > i { padding: 4px 7px; font-size: 9px; }
+  .gameHeading { gap: 8px; margin-top: 8px; }
+  .gameIcon { width: 34px; height: 34px; border-radius: 10px; font-size: 16px; }
+  .gameCard h3 { font-size: 18px; }
+  .gameCard > a > p { margin: 7px 0 0; line-height: 1.45; }
+  .cardMeta { gap: 4px; margin: 8px 0; }
+  .cardMeta span { padding: 4px 6px; font-size: 9px; }
+  .gameCard footer { margin-top: 9px; padding-top: 0; border-top: 0; }
+  .gameCard footer b { min-height: 0; padding: 0; color: var(--blue); background: transparent; font-size: 11px; }
+  .gameCard footer i { font-size: 13px; }
 }
 
 @media (max-width: 390px) {
-  .page { width: calc(100% - 24px); }
+  .page { width: calc(100% - 20px); }
   .quickControls > span { display: none; }
   .quickControls .resetButton { margin-left: 3px; }
 }

@@ -15,11 +15,14 @@
   --glass: rgb(250 250 252 / 80%);
   --shadow-soft: 0 18px 55px rgb(0 50 100 / 8%);
   --ease-out: cubic-bezier(.22, 1, .36, 1);
+  --tracking-korean: -.012em;
+  --tracking-title: -.04em;
+  --tracking-label: .075em;
 }
 
 * { box-sizing: border-box; }
 
-html { background: var(--background); scroll-behavior: smooth; }
+html { background: var(--background); scroll-behavior: smooth; scrollbar-gutter: stable; }
 
 body {
   margin: 0;
@@ -29,7 +32,7 @@ body {
   font-size: 15px;
   font-weight: 520;
   line-height: 1.55;
-  letter-spacing: -.012em;
+  letter-spacing: var(--tracking-korean);
   font-kerning: normal;
   -webkit-font-smoothing: auto;
   background-image: radial-gradient(circle at 50% -20%, rgb(255 255 255 / 92%), transparent 42%);

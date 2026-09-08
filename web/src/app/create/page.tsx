@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import type { PlayMode } from "@/lib/game-types";
+import MobileStepFooter from "./mobile-step-footer";
 import styles from "./page.module.css";
 
 const places = [
@@ -136,10 +137,11 @@ export default function CreatePage() {
         </section>
       </div>
 
-      <footer className={styles.footer}>
+      <footer className={styles.desktopFooter}>
         {step > 1 ? <button className={styles.backButton} onClick={previous}><span aria-hidden="true">←</span> 이전 단계</button> : <span />}
         {step < 3 ? <button className={styles.primaryButton} onClick={next}>다음 단계 <span aria-hidden="true">→</span></button> : <button className={styles.primaryButton} onClick={createEventPlan}>행사 플랜 만들기 <span aria-hidden="true">→</span></button>}
       </footer>
+      <MobileStepFooter className={styles.mobileFooter} currentStep={step} onNext={next} onPrevious={previous} onSubmit={createEventPlan} />
     </main>
   );
 }
