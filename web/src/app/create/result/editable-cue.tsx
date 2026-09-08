@@ -3,8 +3,9 @@
 import Link from "next/link";
 import { useMemo, useState, type DragEvent } from "react";
 import { createPortal } from "react-dom";
-import type { RecommendedGame, RecommendationInput } from "@/engine/recommend";
-import { saveCueSheet } from "@/lib/cuesheets";
+import { arrangeByMoodFlow } from "@/engine/mood-flow";
+import { playModeFor, type RecommendedGame, type RecommendationInput } from "@/engine/recommend";
+import { saveCueSheet, updateCueSheet, type SavedCueSheet } from "@/lib/cuesheets";
 import { saveCueSheetToCloud } from "@/lib/event-plan-store";
 import { phaseLabels, placeLabels, type GameDefinition, type Phase } from "@/lib/game-types";
 import styles from "./page.module.css";
@@ -19,15 +20,22 @@ function fitsCurrentConditions(game: GameDefinition, input: RecommendationInput)
   const people = game.profile?.people;
   const teams = game.profile?.recommendedTeams;
   return game.places.includes(input.place)
-    && (game.mode === "both" || game.mode === input.mode)
+    && (input.mode === "both" || game.mode === "both" || game.mode === input.mode)
     && (!people || (input.people >= people.min && (people.max === undefined || input.people <= people.max)))
-    && (!input.teams?.length || !teams || (input.teams.length >= teams.min && input.teams.length <= teams.max));
+    && (game.mode === "personal" || !input.teams?.length || !teams || (input.teams.length >= teams.min && input.teams.length <= teams.max));
+}
+
+function eventModeLabel(input: RecommendationInput) {
+  if (input.mode === "team") return `🏆 ${input.teams?.length ?? 2}조 팀전`;
+  if (input.mode === "personal") return "🙋 개인전";
+  return `🔀 ${input.teams?.length ?? 2}조 팀전 + 개인 이벤트`;
 }
 
 export default function EditableCue({ games, initialCue, input }: EditableCueProps) {
   const [cue, setCue] = useState(initialCue);
   const [name, setName] = useState(`${placeLabels[input.place]} ${input.targetMinutes}분 행사 플랜`);
   const [savedId, setSavedId] = useState<string | null>(null);
+  const [persistedCue, setPersistedCue] = useState<SavedCueSheet | null>(null);
   const [saveMessage, setSaveMessage] = useState("");
   const [saving, setSaving] = useState(false);
   const [pickerOpen, setPickerOpen] = useState(false);
@@ -36,6 +44,7 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
   const [gameQuery, setGameQuery] = useState("");
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const [dropIndex, setDropIndex] = useState<number | null>(null);
+  const [sortMessage, setSortMessage] = useState("");
   const total = useMemo(() => cue.reduce((sum, game) => sum + game.allocatedDuration, 0), [cue]);
   const addableGames = useMemo(() => {
     const selectedIds = new Set(cue.map((game) => game.id));
@@ -90,16 +99,32 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
       ...game,
       allocatedDuration: Math.max(5, game.duration),
       reason: "조건을 확인한 뒤 직접 큐시트에 추가한 게임이에요.",
+      playMode: playModeFor(game, input.mode),
     }]);
     setSavedId(null);
+  }
+
+  function changePlayMode(index: number, playMode: "team" | "personal") {
+    setCue((current) => current.map((game, gameIndex) => gameIndex === index ? { ...game, playMode } : game));
+    setSavedId(null);
+  }
+
+  function arrangeCueByMood() {
+    if (cue.length < 2) return;
+    setCue((current) => arrangeByMoodFlow(current));
+    setSavedId(null);
+    setSortMessage("오프닝부터 피날레까지 분위기 흐름에 맞춰 정렬했어요.");
   }
 
   async function save() {
     if (!cue.length || !name.trim()) return;
     setSaving(true);
     setSaveMessage("");
-    const saved = saveCueSheet({ ...input, name: name.trim(), games: cue });
+    const saved = persistedCue
+      ? updateCueSheet({ ...persistedCue, ...input, name: name.trim(), games: cue })
+      : saveCueSheet({ ...input, name: name.trim(), games: cue });
     const cloud = await saveCueSheetToCloud(saved);
+    setPersistedCue(saved);
     setSavedId(saved.id);
     setSaving(false);
     setSaveMessage(
@@ -117,7 +142,7 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
         <p>YOUR EVENT PLAN</p>
         <h1>게임을 고르고 순서를 다듬어<br />행사를 준비하세요.</h1>
         <div className={styles.conditions}>
-          <span>📍 {placeLabels[input.place]}</span><span>👥 {input.people}명</span><span>{input.mode === "team" ? `🏆 ${input.teams?.length ?? 2}조 팀전` : "🙋 개인전"}</span>
+          <span>📍 {placeLabels[input.place]}</span><span>👥 {input.people}명</span><span>{eventModeLabel(input)}</span>
         </div>
         {input.teams?.length && <div className={styles.teamList}><span>조 이름</span>{input.teams.map((team) => <b key={team.id}>{team.name}</b>)}</div>}
       </section>
@@ -131,7 +156,7 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
       </section>
 
       <section className={styles.flow}>
-        <div><strong>분위기 흐름</strong><span>카드를 끌어 순서를 바꾸고, 각 게임 시간을 5분 단위로 조절하세요.</span></div>
+        <div className={styles.flowLead}><strong>분위기 흐름</strong><span>초반은 가볍게, 메인에서 끌어올리고 피날레로 마무리해요.</span><button type="button" onClick={arrangeCueByMood} disabled={cue.length < 2}>✦ 분위기 흐름대로 정렬</button>{sortMessage && <small role="status">{sortMessage}</small>}</div>
         <div className={styles.energy} aria-label="게임별 에너지 흐름">{cue.map((game, index) => <i key={`${game.id}-${index}`} style={{ height: `${game.energy * 18}%` }} />)}</div>
       </section>
 
@@ -139,7 +164,7 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
         <section className={styles.list}>
           <div className={styles.reorderGuide}>
             <span className={styles.reorderIcon} aria-hidden="true">⠿</span>
-            <div><strong>게임 순서 바꾸기</strong><span>카드 왼쪽의 <b>순서 변경</b> 손잡이를 잡아 원하는 위치로 끌어 놓으세요.</span></div>
+            <div><strong>게임 순서 바꾸기</strong><span>분위기 정렬 후에도 카드 왼쪽 손잡이로 원하는 위치에 직접 놓을 수 있어요.</span></div>
             <span className={styles.reorderHint} aria-hidden="true">드래그 ↓</span>
           </div>
           {cue.map((game, index) => (
@@ -157,10 +182,11 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
                 </button>
               </div>
               <div className={styles.gameBody}>
-                <div className={styles.gameTitle}><span>{phaseLabels[game.phase]}</span>{game.source === "custom" && <b>내 게임</b>}</div>
+                <div className={styles.gameTitle}><span>{phaseLabels[game.phase]}</span><em className={game.playMode === "team" ? styles.teamBadge : styles.personalBadge}>{game.playMode === "team" ? "🏆 팀전" : "🙋 개인전"}</em>{game.source === "custom" && <b>내 게임</b>}</div>
                 <h2>{game.name}</h2>
                 <p>{game.reason}</p>
                 <div className={styles.script}><strong>진행 한마디</strong>{game.hostScript}</div>
+                {game.mode === "both" && <div className={styles.playModeControl} aria-label={`${game.name} 진행 방식`}><span>이 게임은</span><button className={game.playMode === "team" ? styles.playModeActive : ""} type="button" onClick={() => changePlayMode(index, "team")}>팀전으로</button><button className={game.playMode === "personal" ? styles.playModeActive : ""} type="button" onClick={() => changePlayMode(index, "personal")}>개인전으로</button><span>진행</span></div>}
               </div>
               <div className={styles.gameControls} aria-label={`${game.name} 편집`}>
                 <div className={styles.timeControls}>
@@ -194,7 +220,7 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
           </div>
           <div className={styles.modalFilters}>
             <div className={styles.matchingControl}>
-              <div><strong>행사 조건 맞춤</strong><span>{input.people}명 · {input.mode === "team" ? "팀전" : "개인전"}</span></div>
+              <div><strong>행사 조건 맞춤</strong><span>{input.people}명 · {input.mode === "both" ? "팀·개인 혼합" : input.mode === "team" ? "팀전" : "개인전"}</span></div>
               <button className={onlyMatchingGames ? styles.matchSwitchActive : ""} type="button" role="switch" aria-checked={onlyMatchingGames} aria-label="행사 조건에 맞는 게임만 보기" onClick={() => setOnlyMatchingGames((current) => !current)}><i aria-hidden="true" /></button>
             </div>
             <div className={styles.phaseFilters} aria-label="게임 단계 필터">

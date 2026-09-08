@@ -3,3 +3,14 @@
 .itemActions button:last-child { color: #c1463d !important; }
 .itemActions button:disabled { cursor: default; opacity: .35; }
 .removeStep { padding: 6px 7px; border: 0; border-radius: 8px; color: #b42318; background: #fff0ef; cursor: pointer; font: inherit; font-size: 11px; font-weight: 700; }
+.reviewPanel { border-color: #cfe1f4 !important; background: #f7fbff !important; }
+.reviewPanel dl { display: grid; grid-template-columns: repeat(3, 1fr); gap: 9px; margin: 0 0 18px; }
+.reviewPanel dl div { padding: 11px; border-radius: 11px; background: white; }
+.reviewPanel dt { color: var(--muted); font-size: 11px; font-weight: 700; }
+.reviewPanel dd { margin: 5px 0 0; font-size: 12px; font-weight: 750; overflow-wrap: anywhere; }
+.reviewActions { display: flex; justify-content: flex-end; gap: 9px; margin-top: 18px; }
+.reviewActions button { min-height: 43px; padding: 9px 14px; border: 0; border-radius: 11px; cursor: pointer; font: inherit; font-size: 13px; font-weight: 750; }
+.reviewActions button:first-child { color: #b42318; background: #fff0ef; }
+.reviewActions button:last-child { color: white; background: var(--blue); }
+.reviewActions button:disabled { cursor: not-allowed; opacity: .5; }
+@media (max-width: 620px) { .reviewPanel dl { grid-template-columns: 1fr; }.reviewActions { align-items: stretch; flex-direction: column; }.reviewActions button { width: 100%; } }

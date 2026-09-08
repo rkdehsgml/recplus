@@ -2,12 +2,15 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
+import BrandSelect from "@/app/ui/brand-select";
 import SidebarNav, { type SidebarNavGroup } from "@/app/sidebar-nav";
-import { deleteCustomGame, loadCustomGames } from "@/lib/custom-games";
+import { deleteCustomGame } from "@/lib/custom-games";
+import { deleteCustomGameFromCloud } from "@/lib/custom-game-store";
 import { fitsEventContext, gameContextLabel, gamePeopleLabel, gameTeamLabel } from "@/lib/game-discovery";
 import { gamePaletteFor } from "@/lib/game-palette";
 import { archetypeLabels, difficultyLabels, eventContexts, gameOriginDescriptions, gameOriginFor, gameOriginLabels, gameOrigins, gameSeries, gameSeriesDescriptions, gameSeriesFor, gameSeriesLabels, type EventContext, type GameDefinition, type GameOrigin, type GameSeries } from "@/lib/game-types";
 import { useGameCatalog } from "@/lib/use-game-catalog";
+import { useCustomGames } from "@/lib/use-custom-games";
 import styles from "./page.module.css";
 
 const icons = { QUIZ: "🧠", TALK: "💬", SURVIVAL: "⚡", PERFORM: "🎭", PICK: "🎰", BOMB: "💣" } as const;
@@ -59,7 +62,7 @@ type GamesContentProps = { initialContext: "all" | EventContext; initialOrigin: 
 export default function GamesContent({ initialContext, initialOrigin, initialSeries }: GamesContentProps) {
   const { games: catalog } = useGameCatalog();
   const searchRef = useRef<HTMLInputElement>(null);
-  const [customGames, setCustomGames] = useState<GameDefinition[]>([]);
+  const { games: customGames, setGames: setCustomGames } = useCustomGames();
   const [series, setSeries] = useState<SeriesFilter>(initialSeries);
   const [origin, setOrigin] = useState<OriginFilter>(initialOrigin);
   const [context, setContext] = useState<"all" | EventContext>(initialContext);
@@ -68,11 +71,6 @@ export default function GamesContent({ initialContext, initialOrigin, initialSer
   const [quickFilter, setQuickFilter] = useState<QuickFilter>("all");
   const [sort, setSort] = useState<SortOption>("recommended");
   const [query, setQuery] = useState("");
-
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => setCustomGames(loadCustomGames()));
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
 
   useEffect(() => {
     function focusSearch(event: KeyboardEvent) {
@@ -85,7 +83,7 @@ export default function GamesContent({ initialContext, initialOrigin, initialSer
     return () => window.removeEventListener("keydown", focusSearch);
   }, []);
 
-  const allGames = useMemo(() => [...customGames, ...catalog], [catalog, customGames]);
+  const allGames = useMemo(() => [...new Map([...catalog, ...customGames].map((game) => [game.id, game])).values()], [catalog, customGames]);
   const seriesCounts = useMemo(() => Object.fromEntries(gameSeries.map((item) => [item, allGames.filter((game) => gameSeriesFor(game).includes(item)).length])) as Record<GameSeries, number>, [allGames]);
   const originCounts = useMemo(() => Object.fromEntries(gameOrigins.map((item) => [item, allGames.filter((game) => gameOriginFor(game) === item).length])) as Record<GameOrigin, number>, [allGames]);
 
@@ -152,9 +150,10 @@ export default function GamesContent({ initialContext, initialOrigin, initialSer
     setOrigin("all");
   }
 
-  function removeGame(game: GameDefinition) {
+  async function removeGame(game: GameDefinition) {
     if (!window.confirm(`“${game.name}”을 내 게임에서 삭제할까요?`)) return;
     setCustomGames(deleteCustomGame(game.id));
+    await deleteCustomGameFromCloud(game.id);
   }
 
   return (
@@ -179,13 +178,13 @@ export default function GamesContent({ initialContext, initialOrigin, initialSer
               <p className={styles.resultCount}><b>{gameList.length}</b>개의 게임</p>
               <div className={styles.toolbarActions}>
                 <label className={styles.search}><span aria-hidden="true">⌕</span><input ref={searchRef} value={query} onChange={(event) => setQuery(event.target.value)} placeholder="게임 이름, 프로그램, 유형 검색" /><kbd>⌘ K</kbd></label>
-                <label className={styles.sort}><span>정렬</span><select value={sort} onChange={(event) => setSort(event.target.value as SortOption)}><option value="recommended">추천순</option><option value="shortest">짧은 시간순</option><option value="largest">많은 인원순</option></select></label>
+                <label className={styles.sort}><span>정렬</span><BrandSelect aria-label="게임 정렬" value={sort} onValueChange={setSort} options={[{ value: "recommended", label: "추천순" }, { value: "shortest", label: "짧은 시간순" }, { value: "largest", label: "많은 인원순" }] as const} variant="compact" /></label>
               </div>
             </div>
             <div className={styles.quickControls}><span>빠른 조건</span><nav aria-label="빠른 게임 조건">{quickFilters.map((filter) => <button className={quickFilter === filter.id ? styles.quickActive : ""} aria-pressed={quickFilter === filter.id} onClick={() => setQuickFilter(filter.id)} key={filter.id}>{filter.label}</button>)}</nav>{hasActiveFilters && <button className={styles.resetButton} onClick={clearFilters}>초기화</button>}</div>
           </section>
 
-          {gameList.length ? <div className={styles.gameGrid} role="list">{gameList.map((game) => <article className={styles.gameCard} data-palette={gamePaletteFor(game.archetype)} role="listitem" key={game.id}><Link href={`/games/${game.id}`}><div className={styles.rowBadges}>{gameSeriesFor(game).map((item) => <i className={styles.seriesBadge} key={item}>{gameSeriesLabels[item]}</i>)}<i>{gameOriginLabels[gameOriginFor(game)]}</i></div><div className={styles.gameIcon} aria-hidden="true">{icons[game.archetype]}</div><h3>{game.name}</h3><p>{game.description}</p><div className={styles.cardMeta}><span>{gamePeopleLabel(game)}</span><span>{game.duration}분</span><span>{gameTeamLabel(game)}</span></div><footer><span>{game.profile ? difficultyLabels[game.profile.difficulty] : archetypeLabels[game.archetype]}</span><b>게임 보기 <i>→</i></b></footer></Link>{game.source === "custom" && <button className={styles.deleteButton} onClick={() => removeGame(game)}>삭제</button>}</article>)}</div> : <section className={styles.empty}><span>✦</span><h2>조건에 맞는 게임을 찾지 못했어요.</h2><p>컬렉션은 하나만 선택되고 있어요. 모임 상황이나 빠른 조건을 조금 넓혀보세요.</p><button onClick={clearFilters}>전체 게임 보기</button></section>}
+          {gameList.length ? <div className={styles.gameGrid} role="list">{gameList.map((game) => <article className={styles.gameCard} data-palette={gamePaletteFor(game.archetype)} role="listitem" key={game.id}><Link href={`/games/${game.id}`}><div className={styles.rowBadges}>{gameSeriesFor(game).map((item) => <i className={styles.seriesBadge} key={item}>{gameSeriesLabels[item]}</i>)}<i>{gameOriginLabels[gameOriginFor(game)]}</i></div><div className={styles.gameHeading}><div className={styles.gameIcon} aria-hidden="true">{icons[game.archetype]}</div><h3>{game.name}</h3></div><p>{game.description}</p><div className={styles.cardMeta}><span>{gamePeopleLabel(game)}</span><span>{game.duration}분</span><span>{gameTeamLabel(game)}</span></div><footer><span>{game.profile ? difficultyLabels[game.profile.difficulty] : archetypeLabels[game.archetype]}</span><b>게임 보기 <i>→</i></b></footer></Link>{game.source === "custom" && <button className={styles.deleteButton} onClick={() => removeGame(game)}>삭제</button>}</article>)}</div> : <section className={styles.empty}><span>✦</span><h2>조건에 맞는 게임을 찾지 못했어요.</h2><p>컬렉션은 하나만 선택되고 있어요. 모임 상황이나 빠른 조건을 조금 넓혀보세요.</p><button onClick={clearFilters}>전체 게임 보기</button></section>}
         </section>
       </div>
     </main>

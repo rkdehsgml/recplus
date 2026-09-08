@@ -64,6 +64,9 @@ export type GameDefinition = {
   prompts?: string[];
   source: "official" | "custom";
   createdAt?: string;
+  updatedAt?: string;
+  moderationStatus?: "archived" | "draft" | "pending_review" | "published" | "rejected";
+  reviewNote?: string;
 };
 
 export const archetypeLabels: Record<Archetype, string> = {

@@ -2,16 +2,19 @@
 
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
-import type { RecommendedGame } from "@/engine/recommend";
+import BrandSelect from "@/app/ui/brand-select";
+import { playModeFor, type RecommendedGame } from "@/engine/recommend";
 import { getCueSheet, type SavedCueSheet } from "@/lib/cuesheets";
-import { loadCustomGames } from "@/lib/custom-games";
 import { loadCloudCueSheet } from "@/lib/event-plan-store";
 import { createItemOrders, gameItemsFor, orderedGameItems, type ItemOrderByGame } from "@/lib/game-catalog";
 import type { GameDefinition } from "@/lib/game-types";
-import { currentItemsFor, loadItemPacks } from "@/lib/item-packs";
+import { currentItemsFor, type ItemPacksByGame } from "@/lib/item-packs";
+import { clearCloudPlaySession, loadCloudPlaySession, savePlaySessionToCloud } from "@/lib/play-session-store";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import { isSupabaseConfigured } from "@/lib/supabase/config";
 import { useGameCatalog } from "@/lib/use-game-catalog";
+import { useCustomGames } from "@/lib/use-custom-games";
+import { useItemPacks } from "@/lib/use-item-packs";
 import {
   clearPlaySession,
   loadPlaySession,
@@ -59,9 +62,8 @@ function teamScoresForSession(savedScores: number[] | undefined, teamCount: numb
 }
 
 /** 저장한 큐시트도 공식 게임의 최신 룰·문항을 쓰되, 진행자가 편집한 순서와 시간은 보존합니다. */
-function withCurrentCatalog(cue: SavedCueSheet, officialGames: GameDefinition[]): SavedCueSheet {
-  const packs = loadItemPacks();
-  const catalog = [...loadCustomGames(), ...officialGames];
+function withCurrentCatalog(cue: SavedCueSheet, officialGames: GameDefinition[], customGames: GameDefinition[], packs: ItemPacksByGame): SavedCueSheet {
+  const catalog = [...customGames, ...officialGames];
 
   return {
     ...cue,
@@ -72,6 +74,7 @@ function withCurrentCatalog(cue: SavedCueSheet, officialGames: GameDefinition[])
         ...latest,
         allocatedDuration: game.allocatedDuration,
         reason: game.reason,
+        playMode: game.playMode ?? playModeFor(latest, cue.mode),
         items: currentItemsFor(latest, packs, catalog),
       };
     }),
@@ -80,7 +83,12 @@ function withCurrentCatalog(cue: SavedCueSheet, officialGames: GameDefinition[])
 
 export default function PlayContent({ id }: { id: string }) {
   const { games: catalog } = useGameCatalog();
+  const { games: customGames } = useCustomGames();
+  const { packs } = useItemPacks();
   const catalogRef = useRef(catalog);
+  const customGamesRef = useRef(customGames);
+  const packsRef = useRef(packs);
+  const lastCloudSaveRef = useRef(0);
   const [cue, setCue] = useState<SavedCueSheet | null>();
   const [currentIndex, setCurrentIndex] = useState(0);
   const [secondsLeft, setSecondsLeft] = useState(0);
@@ -97,15 +105,17 @@ export default function PlayContent({ id }: { id: string }) {
 
   useEffect(() => {
     catalogRef.current = catalog;
-  }, [catalog]);
+    customGamesRef.current = customGames;
+    packsRef.current = packs;
+  }, [catalog, customGames, packs]);
 
   useEffect(() => {
     let active = true;
 
-    function loadPlan(stored: SavedCueSheet | null | undefined) {
+    function loadPlan(stored: SavedCueSheet | null | undefined, restoredSession = loadPlaySession(id)) {
       if (!active) return;
-      const session = loadPlaySession(id);
-      const saved = stored ? withCurrentCatalog(stored, catalogRef.current) : null;
+      const session = restoredSession;
+      const saved = stored ? withCurrentCatalog(stored, catalogRef.current, customGamesRef.current, packsRef.current) : null;
 
       setCue(saved);
       if (!saved || !saved.games.length) return;
@@ -143,8 +153,10 @@ export default function PlayContent({ id }: { id: string }) {
         return;
       }
 
-      const cloud = await loadCloudCueSheet(id);
-      loadPlan(cloud ?? local);
+      const [cloud, cloudSession] = await Promise.all([loadCloudCueSheet(id), loadCloudPlaySession(id)]);
+      const localSession = loadPlaySession(id);
+      const newestSession = cloudSession && (!localSession || cloudSession.updatedAt > localSession.updatedAt) ? cloudSession : localSession;
+      loadPlan(cloud ?? local, newestSession);
     }
 
     void loadPlanForCurrentUser();
@@ -179,14 +191,23 @@ export default function PlayContent({ id }: { id: string }) {
   useEffect(() => {
     if (!cue) return;
 
-    savePlaySession(id, { currentIndex, secondsLeft, promptIndex, scores, personalScores, gameProgress, itemOrders });
+    const saved = savePlaySession(id, { currentIndex, secondsLeft, promptIndex, scores, personalScores, gameProgress, itemOrders });
+    if (!saved || !isSupabaseConfigured()) return;
+
+    const elapsed = Date.now() - lastCloudSaveRef.current;
+    const delay = Math.max(0, 5000 - elapsed);
+    const timer = window.setTimeout(() => {
+      lastCloudSaveRef.current = Date.now();
+      void savePlaySessionToCloud(id, saved);
+    }, delay);
+    return () => window.clearTimeout(timer);
   }, [cue, currentIndex, secondsLeft, promptIndex, scores, personalScores, gameProgress, itemOrders, id]);
 
-  const currentCue = useMemo(() => cue ? withCurrentCatalog(cue, catalog) : cue, [catalog, cue]);
+  const currentCue = useMemo(() => cue ? withCurrentCatalog(cue, catalog, customGames, packs) : cue, [catalog, cue, customGames, packs]);
   const game = currentCue?.games[currentIndex];
   const orderedItems = useMemo(() => game ? orderedGameItems(game, itemOrders[game.id]) : [], [game, itemOrders]);
   const progress = useMemo(() => currentCue?.games.length ? ((currentIndex + 1) / currentCue.games.length) * 100 : 0, [currentCue, currentIndex]);
-  const teamNames = currentCue?.mode === "team" ? teamNamesForCue(currentCue) : [];
+  const teamNames = currentCue && game?.playMode === "team" ? teamNamesForCue(currentCue) : [];
   const teamScores = teamNames.map((_, index) => scores[index] ?? 0);
 
   function goTo(index: number) {
@@ -220,6 +241,7 @@ export default function PlayContent({ id }: { id: string }) {
     if (!currentCue || !window.confirm("현재 진행 기록과 점수를 지우고 처음부터 시작할까요?")) return;
 
     clearPlaySession(id);
+    void clearCloudPlaySession(id);
     setCurrentIndex(0);
     setSecondsLeft((currentCue.games[0]?.allocatedDuration ?? 0) * 60);
     setPromptIndex(0);
@@ -315,13 +337,13 @@ export default function PlayContent({ id }: { id: string }) {
             : <button className={styles.revealAnswer} onClick={() => setAnswerVisible(true)}>정답 확인</button>)}
           {orderedItems.length > 1 && <button onClick={nextItem}>다음 카드 →</button>}
         </article>}
-        {currentCue.mode === "team" && <article className={styles.scoreboard}><span>점수판</span><div>{teamScores.map((value, team) => <div key={team}><b>{teamNames[team]}</b><strong>{value}</strong><nav><button onClick={() => score(team, -10)}>−10</button><button onClick={() => score(team, 10)}>＋10</button></nav></div>)}</div></article>}
-        {currentCue.mode === "personal" && selectedPlayer && <article className={styles.personalScoreboard}>
+        {game.playMode === "team" && <article className={styles.scoreboard}><span>팀 점수판</span><div>{teamScores.map((value, team) => <div key={team}><b>{teamNames[team]}</b><strong>{value}</strong><nav><button onClick={() => score(team, -10)}>−10</button><button onClick={() => score(team, 10)}>＋10</button></nav></div>)}</div></article>}
+        {game.playMode === "personal" && selectedPlayer && <article className={styles.personalScoreboard}>
           <div className={styles.personalScoreHeading}><span>개인 점수판</span><button onClick={() => setEditingNames((current) => !current)}>{editingNames ? "이름 편집 완료" : "이름 편집"}</button></div>
           <div className={styles.personalScoreControl}>
             <label>
               <span className={styles.srOnly}>점수를 기록할 참가자</span>
-              <select value={selectedPlayer.id} onChange={(event) => setSelectedPlayerId(event.target.value)}>{personalScores.map((player) => <option value={player.id} key={player.id}>{player.name.trim() || player.id.replace("player-", "참가자 ")}</option>)}</select>
+              <BrandSelect aria-label="점수를 기록할 참가자" value={selectedPlayer.id} onValueChange={setSelectedPlayerId} options={personalScores.map((player) => ({ value: player.id, label: player.name.trim() || player.id.replace("player-", "참가자 ") }))} variant="dark" />
             </label>
             <strong>{selectedPlayer.score}<small>점</small></strong>
             <nav><button onClick={() => scorePlayer(-10)}>−10</button><button onClick={() => scorePlayer(10)}>＋10</button></nav>

@@ -6,7 +6,7 @@ import { validatePassword } from "@/lib/auth/password-policy";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import styles from "./page.module.css";
 
-export default function AccountContent() {
+export default function AccountContent({ supportEmail }: { supportEmail?: string }) {
   const [email, setEmail] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [password, setPassword] = useState("");
@@ -14,6 +14,7 @@ export default function AccountContent() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     const supabase = createSupabaseBrowserClient();
@@ -68,6 +69,32 @@ export default function AccountContent() {
     setMessage("비밀번호를 저장했어요. 이제 이메일·비밀번호로도 로그인할 수 있어요.");
   }
 
+  async function deleteAccount() {
+    if (!window.confirm("계정과 서버에 저장된 행사 플랜·내 게임을 모두 삭제할까요? 이 작업은 되돌릴 수 없습니다.")) return;
+    const confirmation = window.prompt("계정 삭제를 확인하려면 ‘계정 삭제’를 입력해주세요.");
+    if (confirmation !== "계정 삭제") {
+      setError("확인 문구가 일치하지 않아 계정 삭제를 취소했어요.");
+      return;
+    }
+
+    setDeleting(true);
+    setError("");
+    setMessage("");
+    const response = await fetch("/api/account", { method: "DELETE" });
+    const result = await response.json().catch(() => ({ message: "계정을 삭제하지 못했어요." })) as { message?: string };
+    if (!response.ok) {
+      setDeleting(false);
+      setError(result.message ?? "계정을 삭제하지 못했어요.");
+      return;
+    }
+
+    Object.keys(window.localStorage).forEach((key) => {
+      if (key.startsWith("recplus.")) window.localStorage.removeItem(key);
+    });
+    await createSupabaseBrowserClient().auth.signOut({ scope: "local" });
+    window.location.replace("/");
+  }
+
   return (
     <main className={styles.page}>
       <section className={styles.heading}>
@@ -120,6 +147,12 @@ export default function AccountContent() {
 
             {message && <p className={styles.success} role="status">{message}</p>}
             {error && <p className={styles.error} role="alert">{error}</p>}
+
+            <div className={styles.divider} />
+            <div className={styles.accountFooter}>
+              <section><h2>도움이 필요하신가요?</h2><p>로그인, 데이터 또는 개인정보 관련 문의를 운영자에게 보낼 수 있어요.</p>{supportEmail ? <a href={`mailto:${supportEmail}`}>{supportEmail}</a> : <span>정식 공개 전 문의 이메일을 설정할 예정입니다.</span>}</section>
+              <section className={styles.danger}><h2>계정 삭제</h2><p>계정과 서버에 저장된 행사 플랜·내 게임·진행 상태가 영구 삭제됩니다.</p><button type="button" onClick={() => void deleteAccount()} disabled={deleting}>{deleting ? "삭제 중…" : "계정 및 서버 데이터 삭제"}</button></section>
+            </div>
           </>
         )}
       </section>

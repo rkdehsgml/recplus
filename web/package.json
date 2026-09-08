@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "e2e:supabase": "node --env-file=.env.local scripts/verify-supabase-e2e.mjs",
     "start": "next start",
     "lint": "eslint"
   },

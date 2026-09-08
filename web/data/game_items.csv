@@ -1,0 +1,1802 @@
+﻿id,game_id,kind,prompt,answer,hint,position
+acrostic-1,acrostic,prompt,사랑,,,0
+acrostic-2,acrostic,prompt,치킨,,,1
+acrostic-3,acrostic,prompt,방학,,,2
+acrostic-4,acrostic,prompt,월요일,,,3
+acrostic-5,acrostic,prompt,여행,,,4
+acrostic-6,acrostic,prompt,우정,,,5
+acrostic-7,acrostic,prompt,시험,,,6
+acrostic-8,acrostic,prompt,라면,,,7
+acrostic-9,acrostic,prompt,짝사랑,,,8
+acrostic-10,acrostic,prompt,새내기,,,9
+acrostic-11,acrostic,prompt,종강,,,10
+acrostic-12,acrostic,prompt,개강,,,11
+acrostic-13,acrostic,prompt,동아리,,,12
+acrostic-14,acrostic,prompt,축제,,,13
+acrostic-15,acrostic,prompt,겨울,,,14
+acrostic-16,acrostic,prompt,첫눈,,,15
+acrostic-17,acrostic,prompt,야식,,,16
+acrostic-18,acrostic,prompt,커피,,,17
+acrostic-19,acrostic,prompt,알바,,,18
+acrostic-20,acrostic,prompt,장학금,,,19
+acrostic-21,acrostic,prompt,조별과제,,,20
+acrostic-22,acrostic,prompt,기숙사,,,21
+acrostic-23,acrostic,prompt,청춘,,,22
+acrostic-24,acrostic,prompt,설렘,,,23
+acrostic-25,acrostic,prompt,행복,,,24
+acrostic-26,acrostic,prompt,추억,,,25
+acrostic-27,acrostic,prompt,도전,,,26
+acrostic-28,acrostic,prompt,성장,,,27
+acrostic-29,acrostic,prompt,응원,,,28
+acrostic-30,acrostic,prompt,감사,,,29
+acrostic-31,acrostic,prompt,우리들,,,30
+acrostic-32,acrostic,prompt,새출발,,,31
+acrostic-33,acrostic,prompt,졸업,,,32
+acrostic-34,acrostic,prompt,합격,,,33
+acrostic-35,acrostic,prompt,취업,,,34
+acrostic-36,acrostic,prompt,다이어트,,,35
+acrostic-37,acrostic,prompt,운동,,,36
+acrostic-38,acrostic,prompt,여름밤,,,37
+acrostic-39,acrostic,prompt,겨울밤,,,38
+acrostic-40,acrostic,prompt,봄바람,,,39
+awards-1,awards,prompt,오늘의 MVP,,,0
+awards-2,awards,prompt,분위기 메이커상,,,1
+awards-3,awards,prompt,최다 정답상,,,2
+awards-4,awards,prompt,최다 탈락상,,,3
+awards-5,awards,prompt,가장 열심히 참여상,,,4
+awards-6,awards,prompt,숨은 재능상,,,5
+awards-7,awards,prompt,베스트 리액션상,,,6
+awards-8,awards,prompt,최고의 성대모사상,,,7
+awards-9,awards,prompt,가장 크게 웃은 사람상,,,8
+awards-10,awards,prompt,조용한 실력자상,,,9
+awards-11,awards,prompt,최고의 팀워크상,,,10
+awards-12,awards,prompt,가장 빨리 손 든 사람상,,,11
+awards-13,awards,prompt,명언 제조기상,,,12
+awards-14,awards,prompt,오늘의 패션상,,,13
+awards-15,awards,prompt,가장 멀리서 온 사람상,,,14
+awards-16,awards,prompt,출석 성실상,,,15
+awards-17,awards,prompt,최고의 응원상,,,16
+awards-18,awards,prompt,베스트 진행 도우미상,,,17
+awards-19,awards,prompt,깜짝 등장상,,,18
+awards-20,awards,prompt,간식 요정상,,,19
+awards-21,awards,prompt,사진 담당상,,,20
+awards-22,awards,prompt,노래 실력상,,,21
+awards-23,awards,prompt,댄스 실력상,,,22
+awards-24,awards,prompt,최고의 아이디어상,,,23
+awards-25,awards,prompt,가장 많이 웃긴 사람상,,,24
+awards-26,awards,prompt,든든한 버팀목상,,,25
+awards-27,awards,prompt,새로운 얼굴상,,,26
+awards-28,awards,prompt,다음 모임 기대주상,,,27
+awards-29,awards,prompt,끝까지 남은 사람상,,,28
+awards-30,awards,prompt,올해의 한마디상,,,29
+balance-1,balance,prompt,평생 치킨만 vs 평생 피자만,,,0
+balance-2,balance,prompt,여름만 있는 세상 vs 겨울만 있는 세상,,,1
+balance-3,balance,prompt,하늘을 나는 능력 vs 투명해지는 능력,,,2
+balance-4,balance,prompt,아침형 인간 vs 저녁형 인간,,,3
+balance-5,balance,prompt,산으로 여행 vs 바다로 여행,,,4
+balance-6,balance,prompt,라면은 꼬들 vs 푹 퍼진,,,5
+balance-7,balance,prompt,탕수육 부먹 vs 찍먹,,,6
+balance-8,balance,prompt,민트초코 좋아 vs 싫어,,,7
+balance-9,balance,prompt,강아지상 vs 고양이상,,,8
+balance-10,balance,prompt,여행은 계획파 vs 즉흥파,,,9
+balance-11,balance,prompt,떡볶이는 밀떡 vs 쌀떡,,,10
+balance-12,balance,prompt,치킨은 후라이드 vs 양념,,,11
+balance-13,balance,prompt,커피는 뜨거운 것 vs 얼음 가득,,,12
+balance-14,balance,prompt,김밥은 김치 vs 참치,,,13
+balance-15,balance,prompt,짜장 vs 짬뽕,,,14
+balance-16,balance,prompt,물냉 vs 비냉,,,15
+balance-17,balance,prompt,피자는 도우 두꺼운 것 vs 얇은 것,,,16
+balance-18,balance,prompt,라면에 계란 풀기 vs 안 풀기,,,17
+balance-19,balance,prompt,고기는 삼겹살 vs 목살,,,18
+balance-20,balance,prompt,간식은 단 것 vs 짠 것,,,19
+balance-21,balance,prompt,여름 바다 vs 여름 계곡,,,20
+balance-22,balance,prompt,영화관 앞자리 vs 맨 뒷자리,,,21
+balance-23,balance,prompt,이불 밖 발 내놓기 vs 꽁꽁 싸매기,,,22
+balance-24,balance,prompt,샤워는 아침 vs 자기 전,,,23
+balance-25,balance,prompt,노래방에서 발라드 vs 댄스곡,,,24
+balance-26,balance,prompt,버스 vs 지하철,,,25
+balance-27,balance,prompt,창가 자리 vs 통로 자리,,,26
+balance-28,balance,prompt,택시비 아끼고 걷기 vs 5분 만에 도착,,,27
+balance-29,balance,prompt,편의점 도시락 vs 삼각김밥 두 개,,,28
+balance-30,balance,prompt,겨울에 반팔 vs 여름에 롱패딩,,,29
+balance-31,balance,prompt,월급 두 배에 야근 많음 vs 월급 그대로 칼퇴,,,30
+balance-32,balance,prompt,연애 여러 번 짧게 vs 한 번 아주 길게,,,31
+balance-33,balance,prompt,카톡 읽씹 vs 안읽씹,,,32
+balance-34,balance,prompt,친구랑 여행 vs 혼자 여행,,,33
+balance-35,balance,prompt,돈 많고 시간 없음 vs 시간 많고 돈 없음,,,34
+balance-36,balance,prompt,과제 몰아서 하기 vs 미리미리 하기,,,35
+balance-37,balance,prompt,단톡방 알림 다 켜기 vs 다 끄기,,,36
+balance-38,balance,prompt,출퇴근 10분에 좁은 집 vs 출퇴근 1시간에 넓은 집,,,37
+balance-39,balance,prompt,인생 사진 100장 vs 인생 영상 1개,,,38
+balance-40,balance,prompt,친구 100명 얕게 vs 친구 3명 깊게,,,39
+balance-41,balance,prompt,칭찬 많은 상사 vs 일 잘 알려주는 상사,,,40
+balance-42,balance,prompt,매일 야근하고 주 4일 vs 정시 퇴근하고 주 5일,,,41
+balance-43,balance,prompt,재택근무 vs 사무실 출근,,,42
+balance-44,balance,prompt,지금 100만 원 vs 1년 뒤 300만 원,,,43
+balance-45,balance,prompt,평생 무료 커피 vs 평생 무료 택시,,,44
+balance-46,balance,prompt,SNS 계정 삭제 vs 폰 앨범 삭제,,,45
+balance-47,balance,prompt,이사 매년 하기 vs 한 집에 20년 살기,,,46
+balance-48,balance,prompt,휴대폰 없이 하루 vs 말 없이 하루,,,47
+balance-49,balance,prompt,잘하는 일 하기 vs 좋아하는 일 하기,,,48
+balance-50,balance,prompt,인정받지만 바쁜 삶 vs 조용하지만 여유로운 삶,,,49
+balance-51,balance,prompt,월세 싸고 벌레 나옴 vs 월세 비싸고 깨끗함,,,50
+balance-52,balance,prompt,매일 같은 옷 vs 매일 다른 신발,,,51
+balance-53,balance,prompt,고백받기 vs 고백하기,,,52
+balance-54,balance,prompt,썸만 계속 vs 바로 사귀기,,,53
+balance-55,balance,prompt,연락 자주 하는 사람 vs 만나면 좋은 사람,,,54
+balance-56,balance,prompt,전 애인 기억 삭제 vs 첫사랑 다시 만나기,,,55
+balance-57,balance,prompt,평생 존댓말만 vs 평생 반말만,,,56
+balance-58,balance,prompt,모두가 내 속마음 들림 vs 내가 모두 속마음 들림,,,57
+balance-59,balance,prompt,미래 하루 미리 보기 vs 과거 하루 되돌리기,,,58
+balance-60,balance,prompt,3일 안 자기 vs 3일 안 먹기,,,59
+balance-61,balance,prompt,평생 앉아서만 살기 vs 평생 서서만 살기,,,60
+balance-62,balance,prompt,말할 때마다 노래로 vs 말할 때마다 춤추며,,,61
+balance-63,balance,prompt,10년 젊어지지만 기억 삭제 vs 그대로 살기,,,62
+balance-64,balance,prompt,모든 시험 만점이지만 시험이 매일 vs 지금처럼,,,63
+balance-65,balance,prompt,손이 발이 되기 vs 발이 손이 되기,,,64
+balance-66,balance,prompt,평생 실내만 vs 평생 실외만,,,65
+balance-67,balance,prompt,생각한 게 다 들리는 세상 vs 아무도 말 못 하는 세상,,,66
+balance-68,balance,prompt,평생 여름옷만 vs 평생 겨울옷만,,,67
+balance-69,balance,prompt,하루 1시간만 자도 되는 몸 vs 하루 12시간 자야 하는 몸,,,68
+balance-70,balance,prompt,모든 음식이 무맛 vs 모든 음식이 매운맛,,,69
+balance-71,balance,prompt,1교시 전공 vs 6교시 교양,,,70
+balance-72,balance,prompt,조별과제 다 내가 하기 vs 잠수 조원과 반반,,,71
+balance-73,balance,prompt,MT 가서 밤새기 vs 일찍 자기,,,72
+balance-74,balance,prompt,교수님과 밥 먹기 vs 혼밥,,,73
+balance-75,balance,prompt,MT 총무 맡기 vs 회비 두 배 내기,,,74
+balance-76,balance,prompt,발표는 첫 번째 vs 마지막,,,75
+balance-77,balance,prompt,출석 부르는 수업 vs 시험만 어려운 수업,,,76
+balance-78,balance,prompt,팀플 조장 vs 팀플 발표자,,,77
+balance-79,balance,prompt,매일 학식 vs 매일 편의점,,,78
+balance-80,balance,prompt,새벽까지 과제 vs 새벽에 일어나 과제,,,79
+balance-81,balance,prompt,학점 4.0에 추억 없음 vs 학점 2.5에 추억 가득,,,80
+balance-82,balance,prompt,동아리 세 개 vs 동아리 없음,,,81
+balance-83,balance,prompt,기숙사 4인실 저렴 vs 자취 1인실 비쌈,,,82
+balance-84,balance,prompt,장학금 받고 봉사 30시간 vs 그냥 등록금 내기,,,83
+balance-85,balance,prompt,교양 온라인 강의 몰아보기 vs 매주 꼬박꼬박,,,84
+balance-86,balance,prompt,종강총회 사회 보기 vs 장기자랑 나가기,,,85
+balance-87,balance,prompt,단체사진 맨 앞줄 vs 맨 뒷줄,,,86
+balance-88,balance,prompt,MT 요리 담당 vs 설거지 담당,,,87
+balance-89,balance,prompt,새벽 버스 타고 귀가 vs 아침까지 버티기,,,88
+balance-90,balance,prompt,고향 친구와 새터 vs 새로운 사람과 새터,,,89
+body-relay-1,body-relay,host-only,태권도,,,0
+body-relay-2,body-relay,host-only,요리사,,,1
+body-relay-3,body-relay,host-only,낚시,,,2
+body-relay-4,body-relay,host-only,발레,,,3
+body-relay-5,body-relay,host-only,복싱,,,4
+body-relay-6,body-relay,host-only,수영,,,5
+body-relay-7,body-relay,host-only,골프,,,6
+body-relay-8,body-relay,host-only,청소,,,7
+body-relay-9,body-relay,host-only,좀비,,,8
+body-relay-10,body-relay,host-only,로봇,,,9
+body-relay-11,body-relay,host-only,펭귄 걸음,,,10
+body-relay-12,body-relay,host-only,김장,,,11
+body-relay-13,body-relay,host-only,농구,,,12
+body-relay-14,body-relay,host-only,야구,,,13
+body-relay-15,body-relay,host-only,스키,,,14
+body-relay-16,body-relay,host-only,등산,,,15
+body-relay-17,body-relay,host-only,줄넘기,,,16
+body-relay-18,body-relay,host-only,요가,,,17
+body-relay-19,body-relay,host-only,화가,,,18
+body-relay-20,body-relay,host-only,지휘자,,,19
+body-relay-21,body-relay,host-only,소방관,,,20
+body-relay-22,body-relay,host-only,경찰,,,21
+body-relay-23,body-relay,host-only,의사,,,22
+body-relay-24,body-relay,host-only,치과 치료,,,23
+body-relay-25,body-relay,host-only,미용실,,,24
+body-relay-26,body-relay,host-only,택배 배달,,,25
+body-relay-27,body-relay,host-only,운전,,,26
+body-relay-28,body-relay,host-only,자전거 타기,,,27
+body-relay-29,body-relay,host-only,스마트폰 게임,,,28
+body-relay-30,body-relay,host-only,사진 촬영,,,29
+body-relay-31,body-relay,host-only,노래방,,,30
+body-relay-32,body-relay,host-only,면접,,,31
+body-relay-33,body-relay,host-only,발표,,,32
+body-relay-34,body-relay,host-only,다이어트 운동,,,33
+body-relay-35,body-relay,host-only,빨래 개기,,,34
+body-relay-36,body-relay,host-only,설거지,,,35
+body-relay-37,body-relay,host-only,이사하기,,,36
+body-relay-38,body-relay,host-only,우산 쓰고 걷기,,,37
+body-relay-39,body-relay,host-only,지하철 환승,,,38
+body-relay-40,body-relay,host-only,새벽 알람 끄기,,,39
+category-relay-1,category-relay,prompt,무지개 색깔,,,0
+category-relay-2,category-relay,prompt,태양계 행성,,,1
+category-relay-3,category-relay,prompt,한국 광역시,,,2
+category-relay-4,category-relay,prompt,분식 메뉴,,,3
+category-relay-5,category-relay,prompt,라면 종류,,,4
+category-relay-6,category-relay,prompt,편의점 이름,,,5
+category-relay-7,category-relay,prompt,지하철 2호선 역,,,6
+category-relay-8,category-relay,prompt,아이돌 그룹 이름,,,7
+category-relay-9,category-relay,prompt,웹툰 제목,,,8
+category-relay-10,category-relay,prompt,월드컵 개최국,,,9
+category-relay-11,category-relay,prompt,올림픽 종목,,,10
+category-relay-12,category-relay,prompt,한국의 섬,,,11
+category-relay-13,category-relay,prompt,제주도 관광지,,,12
+category-relay-14,category-relay,prompt,겨울 스포츠,,,13
+category-relay-15,category-relay,prompt,구기 종목,,,14
+category-relay-16,category-relay,prompt,한국 전통 음식,,,15
+category-relay-17,category-relay,prompt,중국집 메뉴,,,16
+category-relay-18,category-relay,prompt,치킨 맛 종류,,,17
+category-relay-19,category-relay,prompt,커피 메뉴,,,18
+category-relay-20,category-relay,prompt,아이스크림 이름,,,19
+category-relay-21,category-relay,prompt,명절 음식,,,20
+category-relay-22,category-relay,prompt,한국의 강 이름,,,21
+category-relay-23,category-relay,prompt,세계의 수도,,,22
+category-relay-24,category-relay,prompt,동물원에서 볼 수 있는 동물,,,23
+category-relay-25,category-relay,prompt,바다 생물,,,24
+category-relay-26,category-relay,prompt,악기 이름,,,25
+category-relay-27,category-relay,prompt,학교 과목,,,26
+category-relay-28,category-relay,prompt,직업 이름,,,27
+category-relay-29,category-relay,prompt,감정 단어,,,28
+category-relay-30,category-relay,prompt,우리 학교 건물 이름,,,29
+charades-1,charades,host-only,기타 치기,,,0
+charades-2,charades,host-only,헤엄치기,,,1
+charades-3,charades,host-only,볼링,,,2
+charades-4,charades,host-only,골프 스윙,,,3
+charades-5,charades,host-only,김치 담그기,,,4
+charades-6,charades,host-only,다림질,,,5
+charades-7,charades,host-only,낚시,,,6
+charades-8,charades,host-only,태권도 발차기,,,7
+charades-9,charades,host-only,셀카 찍기,,,8
+charades-10,charades,host-only,줄다리기,,,9
+charades-11,charades,host-only,요요,,,10
+charades-12,charades,host-only,훌라후프,,,11
+charades-13,charades,host-only,하품,,,12
+charades-14,charades,host-only,재채기,,,13
+charades-15,charades,host-only,좀비 걷기,,,14
+charades-16,charades,host-only,로봇춤,,,15
+charades-17,charades,host-only,김밥 말기,,,16
+charades-18,charades,host-only,계란 후라이,,,17
+charades-19,charades,host-only,물풍선 던지기,,,18
+charades-20,charades,host-only,눈싸움,,,19
+charades-21,charades,host-only,양치질,,,20
+charades-22,charades,host-only,머리 감기,,,21
+charades-23,charades,host-only,청소기 돌리기,,,22
+charades-24,charades,host-only,설거지,,,23
+charades-25,charades,host-only,빨래 널기,,,24
+charades-26,charades,host-only,우산 쓰기,,,25
+charades-27,charades,host-only,택시 잡기,,,26
+charades-28,charades,host-only,지하철 손잡이 잡기,,,27
+charades-29,charades,host-only,농구 슛,,,28
+charades-30,charades,host-only,야구 배팅,,,29
+charades-31,charades,host-only,탁구,,,30
+charades-32,charades,host-only,배드민턴,,,31
+charades-33,charades,host-only,스키 타기,,,32
+charades-34,charades,host-only,스케이트,,,33
+charades-35,charades,host-only,등산,,,34
+charades-36,charades,host-only,줄넘기,,,35
+charades-37,charades,host-only,팔굽혀펴기,,,36
+charades-38,charades,host-only,윗몸일으키기,,,37
+charades-39,charades,host-only,요가 자세,,,38
+charades-40,charades,host-only,발레 동작,,,39
+charades-41,charades,host-only,복싱,,,40
+charades-42,charades,host-only,펜싱,,,41
+charades-43,charades,host-only,활 쏘기,,,42
+charades-44,charades,host-only,역도,,,43
+charades-45,charades,host-only,피겨 스핀,,,44
+charades-46,charades,host-only,라면 끓이기,,,45
+charades-47,charades,host-only,커피 내리기,,,46
+charades-48,charades,host-only,케이크 자르기,,,47
+charades-49,charades,host-only,풍선 불기,,,48
+charades-50,charades,host-only,사진 찍히기,,,49
+charades-51,charades,host-only,면접 보기,,,50
+charades-52,charades,host-only,발표하기,,,51
+charades-53,charades,host-only,졸다가 깨기,,,52
+charades-54,charades,host-only,지각해서 뛰기,,,53
+charades-55,charades,host-only,우는 척하기,,,54
+charades-56,charades,host-only,웃음 참기,,,55
+charades-57,charades,host-only,무거운 짐 들기,,,56
+charades-58,charades,host-only,미끄러지기,,,57
+charades-59,charades,host-only,거울 보기,,,58
+charades-60,charades,host-only,춤 배우기,,,59
+choseong-1,choseong,quiz,[음식] ㄸㅂㅇ,떡볶이,분식집 대표 메뉴,0
+choseong-2,choseong,quiz,[음식] ㅁㄹㅌ,마라탕,요즘 대학가 필수,1
+choseong-3,choseong,quiz,[음식] ㅂㄷㅉㄱ,부대찌개,햄과 소시지가 들어감,2
+choseong-4,choseong,quiz,[음식] ㄱㅊㅂㅇㅂ,김치볶음밥,자취 요리 1순위,3
+choseong-5,choseong,quiz,[음식] ㅅㄷㄱㅂ,순대국밥,해장 메뉴,4
+choseong-6,choseong,quiz,[음식] ㄷㄱㅂ,닭갈비,춘천이 유명,5
+choseong-7,choseong,quiz,[음식] ㅇㅇㅅㅋㄹ,아이스크림,여름 필수,6
+choseong-8,choseong,quiz,[음식] ㅅㄱㅅ,삼겹살,회식 단골,7
+choseong-9,choseong,quiz,[음식] ㄴㅁ,냉면,여름에 시원하게,8
+choseong-10,choseong,quiz,[음식] ㅌㅅㅇ,탕수육,부먹 찍먹 논쟁,9
+choseong-11,choseong,quiz,[음식] ㅈㅇㅂㅇ,제육볶음,학식 단골 메뉴,10
+choseong-12,choseong,quiz,[음식] ㄷㄲㅅ,돈까스,소스 부어 먹기,11
+choseong-13,choseong,quiz,[음식] ㅊㅈㅅㅌ,치즈스틱,치킨 사이드,12
+choseong-14,choseong,quiz,[음식] ㄱㅊㅈㄱ,곱창전골,겨울에 뜨끈하게,13
+choseong-15,choseong,quiz,[음식] ㄷㅎㅁㄹ,닭한마리,동대문이 유명,14
+choseong-16,choseong,quiz,[음식] ㅎㄷㅂ,회덮밥,초장을 넣어 비빔,15
+choseong-17,choseong,quiz,[음식] ㄱㅈㅌ,감자탕,뼈다귀와 우거지,16
+choseong-18,choseong,quiz,[음식] ㅉㅁ,쫄면,매콤 새콤한 분식,17
+choseong-19,choseong,quiz,[음식] ㅂㅇㅃ,붕어빵,겨울 길거리 간식,18
+choseong-20,choseong,quiz,[음식] ㅎㄸ,호떡,안에 설탕이 흐름,19
+choseong-21,choseong,quiz,[장소] ㅅㅅㅇㅊㅂ,성산일출봉,제주 동쪽,20
+choseong-22,choseong,quiz,[장소] ㅎㅇㄷ,해운대,부산 여름 바다,21
+choseong-23,choseong,quiz,[장소] ㅎㄱㄱㅇ,한강공원,치맥 성지,22
+choseong-24,choseong,quiz,[장소] ㄴㅅㅌㅇ,남산타워,서울 야경,23
+choseong-25,choseong,quiz,[장소] ㄱㅂㄱ,경복궁,한복 입고 무료 입장,24
+choseong-26,choseong,quiz,[장소] ㅈㅈㅎㅇㅁㅇ,전주한옥마을,비빔밥과 기와집,25
+choseong-27,choseong,quiz,[장소] ㄱㅇㄹ,광안리,다리 야경이 유명,26
+choseong-28,choseong,quiz,[장소] ㅅㅊ,속초,닭강정과 바다,27
+choseong-29,choseong,quiz,[장소] ㅇㅇㄷ,여의도,봄에 벚꽃,28
+choseong-30,choseong,quiz,[장소] ㅎㄷㅇㄱ,홍대입구,버스킹과 골목,29
+choseong-31,choseong,quiz,[장소] ㅈㅈㄷ,제주도,비행기 타고 가는 섬,30
+choseong-32,choseong,quiz,[장소] ㄱㄹ,강릉,커피 거리와 바다,31
+choseong-33,choseong,quiz,[장소] ㅂㅎㅅ,북한산,서울 근교 등산,32
+choseong-34,choseong,quiz,[장소] ㅁㄷ,명동,환전과 쇼핑,33
+choseong-35,choseong,quiz,[장소] ㄷㅅㄱ,덕수궁,돌담길이 유명,34
+choseong-36,choseong,quiz,[동물] ㅋㅍㅂㄹ,카피바라,온천을 좋아함,35
+choseong-37,choseong,quiz,[동물] ㄹㅅㅍㄷ,레서판다,너구리를 닮음,36
+choseong-38,choseong,quiz,[동물] ㅅㄹㅂㅇㅇ,수리부엉이,야행성 맹금류,37
+choseong-39,choseong,quiz,[동물] ㄱㅁㅎㄱ,개미핥기,혀가 아주 김,38
+choseong-40,choseong,quiz,[동물] ㅋㅇㄹ,코알라,유칼립투스를 먹음,39
+choseong-41,choseong,quiz,[동물] ㅇㅍㅋ,알파카,털이 복슬복슬,40
+choseong-42,choseong,quiz,[동물] ㅎㅇㅇㄴ,하이에나,웃는 소리로 유명,41
+choseong-43,choseong,quiz,[동물] ㄱㅅㄷㅊ,고슴도치,가시가 있음,42
+choseong-44,choseong,quiz,[동물] ㄷㄹㅈ,다람쥐,볼주머니에 도토리,43
+choseong-45,choseong,quiz,[동물] ㅍㄱ,펭귄,남극에 삶,44
+choseong-46,choseong,quiz,[동물] ㄱㄹ,기린,목이 가장 김,45
+choseong-47,choseong,quiz,[동물] ㅊㅌ,치타,가장 빠른 육상 동물,46
+choseong-48,choseong,quiz,[동물] ㄷㄱㄹ,돌고래,초음파로 대화,47
+choseong-49,choseong,quiz,[동물] ㅂㄱㄱ,북극곰,얼음 위 사냥꾼,48
+choseong-50,choseong,quiz,[동물] ㅁㅇㅋ,미어캣,두 발로 서서 망을 봄,49
+choseong-51,choseong,quiz,[사물] ㅁㅅㅇㅇㅍ,무선이어폰,잃어버리기 쉬움,50
+choseong-52,choseong,quiz,[사물] ㅂㅈㅂㅌㄹ,보조배터리,여행 필수품,51
+choseong-53,choseong,quiz,[사물] ㄱㅅㄱ,가습기,겨울 실내 필수,52
+choseong-54,choseong,quiz,[사물] ㅈㄱㅈㅍ,전기장판,겨울 자취방 필수,53
+choseong-55,choseong,quiz,[사물] ㅇㅇㅍㄹㅇㅇ,에어프라이어,자취 요리 혁명,54
+choseong-56,choseong,quiz,[사물] ㅌㅂㄹ,텀블러,카페 할인 받음,55
+choseong-57,choseong,quiz,[사물] ㅎㄱㅍ,형광펜,시험기간 필수,56
+choseong-58,choseong,quiz,[사물] ㅇㅅ,우산,잃어버리기 1위,57
+choseong-59,choseong,quiz,[사물] ㅅㅍㄱ,선풍기,여름 필수 가전,58
+choseong-60,choseong,quiz,[사물] ㄷㅈㄹ,돗자리,한강에서 사용,59
+choseong-61,choseong,quiz,[대학생활] ㅈㄱㅊㅎ,종강총회,학기를 마무리하는 자리,60
+choseong-62,choseong,quiz,[대학생활] ㅈㅂㄱㅈ,조별과제,학점을 좌우함,61
+choseong-63,choseong,quiz,[대학생활] ㅈㅎㄱ,장학금,성적이 좋으면 받음,62
+choseong-64,choseong,quiz,[대학생활] ㅅㄱㅅㅊ,수강신청,광클이 필요함,63
+choseong-65,choseong,quiz,[대학생활] ㅎㅅㅎㄱ,학생회관,동아리방이 모인 곳,64
+choseong-66,choseong,quiz,[대학생활] ㅂㅎㅅ,복학생,돌아온 선배,65
+choseong-67,choseong,quiz,[대학생활] ㅅㄴㄱ,새내기,1학년,66
+choseong-68,choseong,quiz,[대학생활] ㅈㄱㄱㅅ,중간고사,학기 중간의 시련,67
+choseong-69,choseong,quiz,[대학생활] ㄷㅇㄹㅂ,동아리방,선배들이 상주,68
+choseong-70,choseong,quiz,[대학생활] ㅇㅌ,엠티,1박 2일 단체 여행,69
+choseong-71,choseong,quiz,[영화드라마] ㄱㅅㅊ,기생충,칸에서 상을 받은 한국 영화,70
+choseong-72,choseong,quiz,[영화드라마] ㅂㅅㅎ,부산행,좀비와 기차,71
+choseong-73,choseong,quiz,[영화드라마] ㄱㅇㅇㄱ,겨울왕국,눈의 여왕 자매,72
+choseong-74,choseong,quiz,[영화드라마] ㅇㅌㅅㅌㄹ,인터스텔라,우주와 시간,73
+choseong-75,choseong,quiz,[영화드라마] ㅌㅇㅌㄴ,타이타닉,배와 빙산,74
+choseong-76,choseong,quiz,[영화드라마] ㄹㅇㅇㅋ,라이언킹,사바나의 사자,75
+choseong-77,choseong,quiz,[영화드라마] ㅇㅅㅇㄷㅇㅇ,인사이드아웃,머릿속 감정들,76
+choseong-78,choseong,quiz,[영화드라마] ㅇㅂㅈㅅ,어벤져스,히어로가 모임,77
+choseong-79,choseong,quiz,[영화드라마] ㅎㄹㅍㅌ,해리포터,마법학교,78
+choseong-80,choseong,quiz,[영화드라마] ㅈㄹㄱㄱㅇ,쥬라기공원,공룡 테마파크,79
+chungazame-1,chungazame,prompt,손 올려,,,0
+chungazame-2,chungazame,prompt,손 내려,,,1
+chungazame-3,chungazame,prompt,앉아,,,2
+chungazame-4,chungazame,prompt,일어서,,,3
+chungazame-5,chungazame,prompt,웃어,,,4
+chungazame-6,chungazame,prompt,울어,,,5
+chungazame-7,chungazame,prompt,박수,,,6
+chungazame-8,chungazame,prompt,멈춰,,,7
+chungazame-9,chungazame,prompt,왼쪽 보기,,,8
+chungazame-10,chungazame,prompt,오른쪽 보기,,,9
+chungazame-11,chungazame,prompt,크게 외치기,,,10
+chungazame-12,chungazame,prompt,작게 말하기,,,11
+chungazame-13,chungazame,prompt,만세,,,12
+chungazame-14,chungazame,prompt,차렷,,,13
+chungazame-15,chungazame,prompt,앞으로 한 걸음,,,14
+chungazame-16,chungazame,prompt,뒤로 한 걸음,,,15
+chungazame-17,chungazame,prompt,눈 감기,,,16
+chungazame-18,chungazame,prompt,눈 뜨기,,,17
+chungazame-19,chungazame,prompt,고개 끄덕이기,,,18
+chungazame-20,chungazame,prompt,고개 젓기,,,19
+deep-balance-1,deep-balance,prompt,짝사랑하던 사람이 고백했다. 그런데 내일 이민을 간다. 사귄다 vs 안 사귄다,,,0
+deep-balance-2,deep-balance,prompt,복권 1등에 당첨됐다. 당첨금을 받으려면 전교생 앞에서 노래를 완창해야 한다. 받는다 vs 포기한다,,,1
+deep-balance-3,deep-balance,prompt,타임머신 1회권이 생겼다. 과거의 흑역사 하나 지우기 vs 미래 로또 번호 하나 알기,,,2
+deep-balance-4,deep-balance,prompt,소개팅 상대가 모든 게 완벽한데 씹는 소리가 엄청 크다. 만난다 vs 안 만난다,,,3
+deep-balance-5,deep-balance,prompt,친구가 내 비밀을 지켜주는 대신 매달 치킨 한 마리를 요구한다. 준다 vs 비밀을 공개한다,,,4
+deep-balance-6,deep-balance,prompt,취업이 확정됐는데 회사가 왕복 4시간 거리다. 간다 vs 다시 준비한다,,,5
+deep-balance-7,deep-balance,prompt,지금 절친이 나에게 100만 원을 빌려달라고 한다. 이유는 말 못 한다. 빌려준다 vs 거절한다,,,6
+deep-balance-8,deep-balance,prompt,내 그림이 대박 났는데 다른 사람 이름으로만 팔 수 있다. 판다 vs 안 판다,,,7
+deep-balance-9,deep-balance,prompt,일주일 뒤 세상 모두가 내 검색 기록을 본다. 폰을 버린다 vs 그냥 산다,,,8
+deep-balance-10,deep-balance,prompt,10년 뒤 내 모습을 볼 수 있는 사진 한 장이 있다. 본다 vs 안 본다,,,9
+deep-balance-11,deep-balance,prompt,조별과제에서 잠수 탄 조원이 성적을 나눠달라고 부탁한다. 나눈다 vs 교수님께 말한다,,,10
+deep-balance-12,deep-balance,prompt,매일 5분씩 젊어지지만 하루에 한 명씩 이름을 잊는다. 받는다 vs 거절한다,,,11
+deep-balance-13,deep-balance,prompt,MT 총무를 맡으면 회비가 공짜다. 대신 모든 정산을 혼자 한다. 맡는다 vs 안 맡는다,,,12
+deep-balance-14,deep-balance,prompt,내가 좋아하는 사람이 내 친구를 좋아한다는 걸 알았다. 말한다 vs 묻어둔다,,,13
+deep-balance-15,deep-balance,prompt,평생 무료로 여행할 수 있지만 사진은 한 장도 못 남긴다. 간다 vs 안 간다,,,14
+deep-balance-16,deep-balance,prompt,지금 다니는 학교를 그만두면 하고 싶던 일을 바로 시작할 수 있다. 그만둔다 vs 졸업한다,,,15
+deep-balance-17,deep-balance,prompt,친구의 새 애인이 예전에 나를 험담했던 사람이다. 말한다 vs 참는다,,,16
+deep-balance-18,deep-balance,prompt,내가 만든 서비스가 대기업에 팔린다. 대신 내 이름은 어디에도 안 남는다. 판다 vs 직접 키운다,,,17
+deep-balance-19,deep-balance,prompt,일주일 동안 아무 말도 못 하면 1000만 원을 준다. 한다 vs 안 한다,,,18
+deep-balance-20,deep-balance,prompt,동아리 회장이 되면 원하는 활동을 다 할 수 있지만 졸업이 한 학기 늦어진다. 한다 vs 안 한다,,,19
+deep-balance-21,deep-balance,prompt,누군가 내 SNS를 몰래 다 보고 있다. 계정을 지운다 vs 그대로 둔다,,,20
+deep-balance-22,deep-balance,prompt,졸업사진에서 나만 눈을 감았는데 재촬영하려면 전원이 다시 모여야 한다. 요청한다 vs 넘어간다,,,21
+deep-balance-23,deep-balance,prompt,면접에서 살짝 부풀린 경력이 통했다. 정정한다 vs 그냥 간다,,,22
+deep-balance-24,deep-balance,prompt,내 최애가 실제로 만나면 성격이 별로라고 한다. 만난다 vs 안 만난다,,,23
+deep-balance-25,deep-balance,prompt,인생에서 딱 하루를 무한 반복할 수 있다. 가장 행복했던 날 vs 가장 후회되는 날,,,24
+draw-relay-1,draw-relay,host-only,사랑니,,,0
+draw-relay-2,draw-relay,host-only,물멍,,,1
+draw-relay-3,draw-relay,host-only,출근길,,,2
+draw-relay-4,draw-relay,host-only,월요병,,,3
+draw-relay-5,draw-relay,host-only,짝사랑,,,4
+draw-relay-6,draw-relay,host-only,눈치게임,,,5
+draw-relay-7,draw-relay,host-only,불금,,,6
+draw-relay-8,draw-relay,host-only,숙취,,,7
+draw-relay-9,draw-relay,host-only,갑분싸,,,8
+draw-relay-10,draw-relay,host-only,방구석,,,9
+draw-relay-11,draw-relay,host-only,인생네컷,,,10
+draw-relay-12,draw-relay,host-only,치맥,,,11
+draw-relay-13,draw-relay,host-only,얼죽아,,,12
+draw-relay-14,draw-relay,host-only,등산왕,,,13
+draw-relay-15,draw-relay,host-only,새벽 감성,,,14
+draw-relay-16,draw-relay,host-only,무한 스크롤,,,15
+draw-relay-17,draw-relay,host-only,층간 소음,,,16
+draw-relay-18,draw-relay,host-only,택배 도착,,,17
+draw-relay-19,draw-relay,host-only,지각 직전,,,18
+draw-relay-20,draw-relay,host-only,시험 망함,,,19
+draw-relay-21,draw-relay,host-only,카페인 수혈,,,20
+draw-relay-22,draw-relay,host-only,다이어트 실패,,,21
+draw-relay-23,draw-relay,host-only,충동구매,,,22
+draw-relay-24,draw-relay,host-only,혼밥,,,23
+draw-relay-25,draw-relay,host-only,단톡방 알림,,,24
+draw-relay-26,draw-relay,host-only,와이파이 끊김,,,25
+draw-relay-27,draw-relay,host-only,배터리 1퍼센트,,,26
+draw-relay-28,draw-relay,host-only,빨래 산더미,,,27
+draw-relay-29,draw-relay,host-only,냉장고 파먹기,,,28
+draw-relay-30,draw-relay,host-only,이불 밖은 위험,,,29
+draw-relay-31,draw-relay,host-only,지하철 지옥철,,,30
+draw-relay-32,draw-relay,host-only,우산 없는 날,,,31
+draw-relay-33,draw-relay,host-only,첫눈,,,32
+draw-relay-34,draw-relay,host-only,종강 파티,,,33
+draw-relay-35,draw-relay,host-only,새터 첫날,,,34
+draw-relay-36,draw-relay,host-only,조별과제 잠수,,,35
+draw-relay-37,draw-relay,host-only,교수님 눈맞춤,,,36
+draw-relay-38,draw-relay,host-only,발표 전 심장,,,37
+draw-relay-39,draw-relay,host-only,알람 열 개,,,38
+draw-relay-40,draw-relay,host-only,귀가 택시,,,39
+draw-relay-41,draw-relay,host-only,라면 국물,,,40
+draw-relay-42,draw-relay,host-only,겨울 정전기,,,41
+draw-relay-43,draw-relay,host-only,봄 미세먼지,,,42
+draw-relay-44,draw-relay,host-only,여름 모기,,,43
+draw-relay-45,draw-relay,host-only,가을 감성,,,44
+elephant-spin-1,elephant-spin,prompt,다섯 바퀴 돌고 직선으로 걷기,,,0
+elephant-spin-2,elephant-spin,prompt,열 바퀴 돌고 물건 집어오기,,,1
+elephant-spin-3,elephant-spin,prompt,다섯 바퀴 돌고 이름 세 번 외치기,,,2
+elephant-spin-4,elephant-spin,prompt,여덟 바퀴 돌고 하이파이브 하기,,,3
+elephant-spin-5,elephant-spin,prompt,열 바퀴 돌고 제자리에서 만세,,,4
+elephant-spin-6,elephant-spin,prompt,다섯 바퀴 돌고 가위바위보 이기기,,,5
+elephant-spin-7,elephant-spin,prompt,일곱 바퀴 돌고 숫자 열까지 세기,,,6
+elephant-spin-8,elephant-spin,prompt,열 바퀴 돌고 지목한 사람에게 가기,,,7
+elephant-spin-9,elephant-spin,prompt,다섯 바퀴 돌고 종이컵 세우기,,,8
+elephant-spin-10,elephant-spin,prompt,여덟 바퀴 돌고 자기소개 하기,,,9
+elephant-spin-11,elephant-spin,prompt,열 바퀴 돌고 사진 포즈 취하기,,,10
+elephant-spin-12,elephant-spin,prompt,다섯 바퀴 돌고 노래 한 소절,,,11
+elephant-spin-13,elephant-spin,prompt,일곱 바퀴 돌고 팔짱 끼고 서 있기,,,12
+elephant-spin-14,elephant-spin,prompt,열 바퀴 돌고 한 발로 3초 서기,,,13
+elephant-spin-15,elephant-spin,prompt,다섯 바퀴 돌고 초성 하나 맞히기,,,14
+elephant-spin-16,elephant-spin,prompt,여덟 바퀴 돌고 박수 다섯 번,,,15
+elephant-spin-17,elephant-spin,prompt,열 바퀴 돌고 옆 사람 이름 부르기,,,16
+elephant-spin-18,elephant-spin,prompt,다섯 바퀴 돌고 뒤로 세 걸음,,,17
+elephant-spin-19,elephant-spin,prompt,일곱 바퀴 돌고 앉았다 일어서기,,,18
+elephant-spin-20,elephant-spin,prompt,열 바퀴 돌고 미소 유지하기,,,19
+fate-note-1,fate-note,prompt,플러스 2점,,,0
+fate-note-2,fate-note,prompt,플러스 1점,,,1
+fate-note-3,fate-note,prompt,마이너스 1점,,,2
+fate-note-4,fate-note,prompt,마이너스 2점,,,3
+fate-note-5,fate-note,prompt,점수 없음,,,4
+fate-note-6,fate-note,prompt,다음 사람에게 넘기기,,,5
+fate-note-7,fate-note,prompt,점수 두 배,,,6
+fate-note-8,fate-note,prompt,점수 교환,,,7
+fate-note-9,fate-note,prompt,면벌 카드,,,8
+fate-note-10,fate-note,prompt,벌칙 지목 카드,,,9
+finger-rank-1,finger-rank,prompt,오늘 가장 늦게 일어난 사람 접어,,,0
+finger-rank-2,finger-rank,prompt,오늘 가장 멀리서 온 사람 접어,,,1
+finger-rank-3,finger-rank,prompt,이 중에 학번이 가장 빠른 사람 접어,,,2
+finger-rank-4,finger-rank,prompt,오늘 아직 물 한 잔도 안 마신 사람 접어,,,3
+finger-rank-5,finger-rank,prompt,휴대폰 배터리 50퍼센트 이하인 사람 접어,,,4
+finger-rank-6,finger-rank,prompt,가방에 충전기 있는 사람 접어,,,5
+finger-rank-7,finger-rank,prompt,오늘 검은 옷 입은 사람 접어,,,6
+finger-rank-8,finger-rank,prompt,지금 배고픈 사람 접어,,,7
+finger-rank-9,finger-rank,prompt,오늘 웃은 횟수가 열 번 넘는 사람 접어,,,8
+finger-rank-10,finger-rank,prompt,이번 주에 운동한 사람 접어,,,9
+finger-rank-11,finger-rank,prompt,여기서 아는 사람이 세 명 이하인 사람 접어,,,10
+finger-rank-12,finger-rank,prompt,오늘 처음 만난 사람이 있는 사람 접어,,,11
+finger-rank-13,finger-rank,prompt,발표를 좋아하는 사람 접어,,,12
+finger-rank-14,finger-rank,prompt,노래를 시키면 부를 수 있는 사람 접어,,,13
+finger-rank-15,finger-rank,prompt,춤을 시키면 출 수 있는 사람 접어,,,14
+finger-rank-16,finger-rank,prompt,지금 앉은 자리가 마음에 드는 사람 접어,,,15
+finger-rank-17,finger-rank,prompt,오늘 계획이 있었는데 취소된 사람 접어,,,16
+finger-rank-18,finger-rank,prompt,이번 학기에 A 받은 과목 있는 사람 접어,,,17
+finger-rank-19,finger-rank,prompt,오늘 사진 찍힌 적 있는 사람 접어,,,18
+finger-rank-20,finger-rank,prompt,지금 손이 찬 사람 접어,,,19
+finger-sum-1,finger-sum,prompt,합 5 맞히기,,,0
+finger-sum-2,finger-sum,prompt,합 10 맞히기,,,1
+finger-sum-3,finger-sum,prompt,합 0 맞히기,,,2
+finger-sum-4,finger-sum,prompt,합 3 맞히기,,,3
+finger-sum-5,finger-sum,prompt,합 7 맞히기,,,4
+finger-sum-6,finger-sum,prompt,합 15 맞히기,,,5
+finger-sum-7,finger-sum,prompt,짝수 합 맞히기,,,6
+finger-sum-8,finger-sum,prompt,홀수 합 맞히기,,,7
+finger-sum-9,finger-sum,prompt,한 손만 사용,,,8
+finger-sum-10,finger-sum,prompt,두 손 모두 사용,,,9
+game369-1,game369,prompt,기본 3·6·9 박수,,,0
+game369-2,game369,prompt,3·6·9에서 두 번 박수,,,1
+game369-3,game369,prompt,5의 배수 금지,,,2
+game369-4,game369,prompt,7 대신 만세,,,3
+game369-5,game369,prompt,짝수는 작게 홀수는 크게,,,4
+game369-6,game369,prompt,숫자 거꾸로 세기,,,5
+game369-7,game369,prompt,3·6·9에서 일어서기,,,6
+game369-8,game369,prompt,4·8에서 박수 추가,,,7
+gather-up-1,gather-up,prompt,세 명씩 모여라,,,0
+gather-up-2,gather-up,prompt,네 명씩 모여라,,,1
+gather-up-3,gather-up,prompt,다섯 명씩 모여라,,,2
+gather-up-4,gather-up,prompt,두 명씩 모여라,,,3
+gather-up-5,gather-up,prompt,여섯 명씩 모여라,,,4
+gather-up-6,gather-up,prompt,생일이 같은 달인 사람끼리,,,5
+gather-up-7,gather-up,prompt,MBTI 첫 글자가 같은 사람끼리,,,6
+gather-up-8,gather-up,prompt,신발 색이 같은 사람끼리,,,7
+gather-up-9,gather-up,prompt,고향이 같은 지역인 사람끼리,,,8
+gather-up-10,gather-up,prompt,좋아하는 계절이 같은 사람끼리,,,9
+gather-up-11,gather-up,prompt,형제 수가 같은 사람끼리,,,10
+gather-up-12,gather-up,prompt,아침형인 사람과 저녁형인 사람 따로,,,11
+gather-up-13,gather-up,prompt,부먹과 찍먹 따로,,,12
+gather-up-14,gather-up,prompt,강아지파와 고양이파 따로,,,13
+gather-up-15,gather-up,prompt,같은 학년끼리,,,14
+gather-up-16,gather-up,prompt,같은 학과끼리,,,15
+gather-up-17,gather-up,prompt,통학 시간이 비슷한 사람끼리,,,16
+gather-up-18,gather-up,prompt,좋아하는 음식 종류가 같은 사람끼리,,,17
+gather-up-19,gather-up,prompt,오늘 처음 만난 사람끼리,,,18
+gather-up-20,gather-up,prompt,손 크기가 비슷한 사람끼리,,,19
+guard-snack-1,guard-snack,prompt,"클래식: 손에서 놓으면 뺏김, 15분 사수",,,0
+guard-snack-2,guard-snack,prompt,"매점런: 뺏은 사람이 다 가짐, 무한 약탈",,,1
+guard-snack-3,guard-snack,prompt,스텔스: 알람이 울리는 순간 들고 있으면 벌칙,,,2
+guard-snack-4,guard-snack,prompt,동맹전: 두 명이 짝을 지어 함께 지키기,,,3
+guard-snack-5,guard-snack,prompt,이동 금지: 자리에 앉은 채로만 방어 가능,,,4
+guard-snack-6,guard-snack,prompt,한 손 방어: 한 손만 사용해 지키기,,,5
+guard-snack-7,guard-snack,prompt,교대 방어: 3분마다 지키는 사람 교체,,,6
+guard-snack-8,guard-snack,prompt,"침묵 방어: 말하면 벌점, 몸으로만 방어",,,7
+guard-snack-9,guard-snack,prompt,봉인 해제: 진행자 신호에만 약탈 가능,,,8
+guard-snack-10,guard-snack,prompt,역전 규칙: 마지막 1분은 뺏기면 두 배 점수,,,9
+guard-snack-11,guard-snack,prompt,보물 교환: 5분마다 지킬 물건을 랜덤 교환,,,10
+guard-snack-12,guard-snack,prompt,지목 약탈: 진행자가 지목한 사람만 약탈 가능,,,11
+guard-snack-13,guard-snack,prompt,"느린 약탈: 걷기만 허용, 뛰면 무효",,,12
+guard-snack-14,guard-snack,prompt,관중 규칙: 탈락자는 심판이 되어 반칙 감시,,,13
+guard-snack-15,guard-snack,prompt,마지막 방어: 남은 두 명이 1대1로 대결,,,14
+humming-quiz-1,humming-quiz,host-only,생일 축하합니다,,,0
+humming-quiz-2,humming-quiz,host-only,학교 종,,,1
+humming-quiz-3,humming-quiz,host-only,곰 세 마리,,,2
+humming-quiz-4,humming-quiz,host-only,산토끼,,,3
+humming-quiz-5,humming-quiz,host-only,고향의 봄,,,4
+humming-quiz-6,humming-quiz,host-only,아리랑,,,5
+humming-quiz-7,humming-quiz,host-only,애국가,,,6
+humming-quiz-8,humming-quiz,host-only,비행기,,,7
+humming-quiz-9,humming-quiz,host-only,나비야,,,8
+humming-quiz-10,humming-quiz,host-only,작은 별,,,9
+humming-quiz-11,humming-quiz,host-only,징글벨,,,10
+humming-quiz-12,humming-quiz,host-only,루돌프 사슴코,,,11
+humming-quiz-13,humming-quiz,host-only,우리 반 응원가,,,12
+humming-quiz-14,humming-quiz,host-only,졸업식 노래,,,13
+humming-quiz-15,humming-quiz,host-only,새 신을 신고,,,14
+humming-quiz-16,humming-quiz,host-only,송아지,,,15
+humming-quiz-17,humming-quiz,host-only,동네 한 바퀴,,,16
+humming-quiz-18,humming-quiz,host-only,올챙이와 개구리,,,17
+humming-quiz-19,humming-quiz,host-only,그대로 멈춰라,,,18
+humming-quiz-20,humming-quiz,host-only,머리 어깨 무릎 발,,,19
+humming-quiz-21,humming-quiz,host-only,우리는 하나,,,20
+humming-quiz-22,humming-quiz,host-only,설날 노래,,,21
+humming-quiz-23,humming-quiz,host-only,네모의 꿈,,,22
+humming-quiz-24,humming-quiz,host-only,텔레비전에 내가 나왔으면,,,23
+humming-quiz-25,humming-quiz,host-only,곰돌이 푸 주제가,,,24
+humming-quiz-26,humming-quiz,host-only,뽀로로 주제가,,,25
+humming-quiz-27,humming-quiz,host-only,상어 가족,,,26
+humming-quiz-28,humming-quiz,host-only,정글북 느낌의 즉흥 멜로디,,,27
+humming-quiz-29,humming-quiz,host-only,우리 학교 교가,,,28
+humming-quiz-30,humming-quiz,host-only,응원 구호 리듬,,,29
+hunminjeongeum-1,hunminjeongeum,prompt,ㄱ만 써서 설명하기,,,0
+hunminjeongeum-2,hunminjeongeum,prompt,ㅅ만 써서 설명하기,,,1
+hunminjeongeum-3,hunminjeongeum,prompt,ㅁ만 써서 설명하기,,,2
+hunminjeongeum-4,hunminjeongeum,prompt,ㅂ만 써서 설명하기,,,3
+hunminjeongeum-5,hunminjeongeum,prompt,ㅈ만 써서 설명하기,,,4
+hunminjeongeum-6,hunminjeongeum,prompt,ㄷ만 써서 설명하기,,,5
+hunminjeongeum-7,hunminjeongeum,prompt,외래어 전면 금지,,,6
+hunminjeongeum-8,hunminjeongeum,prompt,숫자 말하기 금지,,,7
+hunminjeongeum-9,hunminjeongeum,prompt,이름 부르기 금지,,,8
+hunminjeongeum-10,hunminjeongeum,prompt,네와 아니오 금지,,,9
+hunminjeongeum-11,hunminjeongeum,prompt,손가락으로 가리키기 금지,,,10
+hunminjeongeum-12,hunminjeongeum,prompt,받침 있는 단어 금지,,,11
+hunminjeongeum-13,hunminjeongeum,prompt,세 글자 이상 단어 금지,,,12
+hunminjeongeum-14,hunminjeongeum,prompt,동사 사용 금지,,,13
+hunminjeongeum-15,hunminjeongeum,prompt,형용사 사용 금지,,,14
+hunminjeongeum-16,hunminjeongeum,prompt,같은 단어 두 번 사용 금지,,,15
+hunminjeongeum-17,hunminjeongeum,prompt,웃음 금지,,,16
+hunminjeongeum-18,hunminjeongeum,prompt,질문 금지,,,17
+hunminjeongeum-19,hunminjeongeum,prompt,긍정 표현만 사용,,,18
+hunminjeongeum-20,hunminjeongeum,prompt,존댓말만 사용,,,19
+image-rps-1,image-rps,prompt,호랑이 대 사람 대 총 기본 규칙,,,0
+image-rps-2,image-rps,prompt,"동물 버전: 사자, 사냥꾼, 그물",,,1
+image-rps-3,image-rps,prompt,"학교 버전: 교수, 학생, 과제",,,2
+image-rps-4,image-rps,prompt,"음식 버전: 불, 요리사, 재료",,,3
+image-rps-5,image-rps,prompt,"계절 버전: 태양, 구름, 바람",,,4
+image-rps-6,image-rps,prompt,"바다 버전: 상어, 어부, 그물",,,5
+image-rps-7,image-rps,prompt,"우주 버전: 외계인, 우주선, 레이저",,,6
+image-rps-8,image-rps,prompt,"겨울 버전: 눈사람, 햇빛, 구름",,,7
+image-rps-9,image-rps,prompt,"동아리 버전: 회장, 부원, 회비",,,8
+image-rps-10,image-rps,prompt,"MT 버전: 총무, 회비, 영수증",,,9
+king-game-1,king-game,prompt,3번과 5번 하이파이브,,,0
+king-game-2,king-game,prompt,1번이 2번 칭찬 10초,,,1
+king-game-3,king-game,prompt,짝수 번호 전원 애교,,,2
+king-game-4,king-game,prompt,홀수 번호 전원 기지개,,,3
+king-game-5,king-game,prompt,왕이 지목한 사람 성대모사,,,4
+king-game-6,king-game,prompt,2번과 4번 같은 포즈로 사진,,,5
+king-game-7,king-game,prompt,1번이 오늘의 MVP 발표,,,6
+king-game-8,king-game,prompt,가장 큰 번호가 노래 한 소절,,,7
+king-game-9,king-game,prompt,가장 작은 번호가 3행시,,,8
+king-game-10,king-game,prompt,3번이 옆 사람에게 응원 한마디,,,9
+king-game-11,king-game,prompt,전원 5초간 박수,,,10
+king-game-12,king-game,prompt,2번이 다음 게임 정하기,,,11
+king-game-13,king-game,prompt,왕과 4번이 하이파이브 다섯 번,,,12
+king-game-14,king-game,prompt,1번과 3번 서로 칭찬 주고받기,,,13
+king-game-15,king-game,prompt,5번이 동물 소리 흉내,,,14
+king-game-16,king-game,prompt,짝수 번호 전원 제자리 뛰기 열 번,,,15
+king-game-17,king-game,prompt,홀수 번호 전원 웃긴 표정,,,16
+king-game-18,king-game,prompt,2번이 오늘 배운 것 하나 말하기,,,17
+king-game-19,king-game,prompt,왕이 전원에게 감사 인사,,,18
+king-game-20,king-game,prompt,4번이 지금 기분을 한 단어로,,,19
+king-game-21,king-game,prompt,6번이 좋아하는 음식 세 개,,,20
+king-game-22,king-game,prompt,1번과 5번이 손 잡고 파이팅,,,21
+king-game-23,king-game,prompt,3번이 다음 사진 포즈 정하기,,,22
+king-game-24,king-game,prompt,전원 옆 사람과 하이파이브,,,23
+king-game-25,king-game,prompt,가장 늦게 온 사람이 자기소개,,,24
+king-game-26,king-game,prompt,왕이 오늘의 분위기 메이커 지목,,,25
+king-game-27,king-game,prompt,2번이 응원 구호 만들기,,,26
+king-game-28,king-game,prompt,짝수 번호 전원 어깨 스트레칭,,,27
+king-game-29,king-game,prompt,5번이 간식 나눠주기,,,28
+king-game-30,king-game,prompt,전원 다 같이 건배,,,29
+ladder-pick-1,ladder-pick,prompt,벌칙자 뽑기,,,0
+ladder-pick-2,ladder-pick,prompt,첫 발표자 정하기,,,1
+ladder-pick-3,ladder-pick,prompt,팀장 정하기,,,2
+ladder-pick-4,ladder-pick,prompt,게임 순서 정하기,,,3
+ladder-pick-5,ladder-pick,prompt,방 배정하기,,,4
+ladder-pick-6,ladder-pick,prompt,설거지 담당 정하기,,,5
+ladder-pick-7,ladder-pick,prompt,간식 사올 사람 정하기,,,6
+ladder-pick-8,ladder-pick,prompt,사진 담당 정하기,,,7
+ladder-pick-9,ladder-pick,prompt,다음 진행자 정하기,,,8
+ladder-pick-10,ladder-pick,prompt,자리 배치 정하기,,,9
+ladder-pick-11,ladder-pick,prompt,장기자랑 순서 정하기,,,10
+ladder-pick-12,ladder-pick,prompt,조 편성하기,,,11
+liar-game-1,liar-game,quiz,아메리카노,카페라떼,라이어만 다른 단어를 받습니다,0
+liar-game-2,liar-game,quiz,떡볶이,라볶이,라이어만 다른 단어를 받습니다,1
+liar-game-3,liar-game,quiz,축구,풋살,라이어만 다른 단어를 받습니다,2
+liar-game-4,liar-game,quiz,여름,봄,라이어만 다른 단어를 받습니다,3
+liar-game-5,liar-game,quiz,지하철,버스,라이어만 다른 단어를 받습니다,4
+liar-game-6,liar-game,quiz,치킨,피자,라이어만 다른 단어를 받습니다,5
+liar-game-7,liar-game,quiz,영화,드라마,라이어만 다른 단어를 받습니다,6
+liar-game-8,liar-game,quiz,고등학교,중학교,라이어만 다른 단어를 받습니다,7
+liar-game-9,liar-game,quiz,교수님,조교님,라이어만 다른 단어를 받습니다,8
+liar-game-10,liar-game,quiz,기숙사,자취방,라이어만 다른 단어를 받습니다,9
+liar-game-11,liar-game,quiz,도서관,카페,라이어만 다른 단어를 받습니다,10
+liar-game-12,liar-game,quiz,시험,과제,라이어만 다른 단어를 받습니다,11
+liar-game-13,liar-game,quiz,여행,출장,라이어만 다른 단어를 받습니다,12
+liar-game-14,liar-game,quiz,바다,호수,라이어만 다른 단어를 받습니다,13
+liar-game-15,liar-game,quiz,산,언덕,라이어만 다른 단어를 받습니다,14
+liar-game-16,liar-game,quiz,눈,비,라이어만 다른 단어를 받습니다,15
+liar-game-17,liar-game,quiz,겨울옷,가을옷,라이어만 다른 단어를 받습니다,16
+liar-game-18,liar-game,quiz,운동화,슬리퍼,라이어만 다른 단어를 받습니다,17
+liar-game-19,liar-game,quiz,휴대폰,태블릿,라이어만 다른 단어를 받습니다,18
+liar-game-20,liar-game,quiz,이어폰,헤드폰,라이어만 다른 단어를 받습니다,19
+liar-game-21,liar-game,quiz,라면,국수,라이어만 다른 단어를 받습니다,20
+liar-game-22,liar-game,quiz,김치,깍두기,라이어만 다른 단어를 받습니다,21
+liar-game-23,liar-game,quiz,우유,두유,라이어만 다른 단어를 받습니다,22
+liar-game-24,liar-game,quiz,케이크,빵,라이어만 다른 단어를 받습니다,23
+liar-game-25,liar-game,quiz,사탕,젤리,라이어만 다른 단어를 받습니다,24
+liar-game-26,liar-game,quiz,놀이공원,워터파크,라이어만 다른 단어를 받습니다,25
+liar-game-27,liar-game,quiz,공항,터미널,라이어만 다른 단어를 받습니다,26
+liar-game-28,liar-game,quiz,의사,간호사,라이어만 다른 단어를 받습니다,27
+liar-game-29,liar-game,quiz,선생님,학원 강사,라이어만 다른 단어를 받습니다,28
+liar-game-30,liar-game,quiz,가수,아이돌,라이어만 다른 단어를 받습니다,29
+liar-game-31,liar-game,quiz,농구,배구,라이어만 다른 단어를 받습니다,30
+liar-game-32,liar-game,quiz,수영장,목욕탕,라이어만 다른 단어를 받습니다,31
+liar-game-33,liar-game,quiz,자전거,킥보드,라이어만 다른 단어를 받습니다,32
+liar-game-34,liar-game,quiz,택시,대리운전,라이어만 다른 단어를 받습니다,33
+liar-game-35,liar-game,quiz,결혼식,돌잔치,라이어만 다른 단어를 받습니다,34
+liar-game-36,liar-game,quiz,설날,추석,라이어만 다른 단어를 받습니다,35
+liar-game-37,liar-game,quiz,생일파티,종강파티,라이어만 다른 단어를 받습니다,36
+liar-game-38,liar-game,quiz,연필,샤프,라이어만 다른 단어를 받습니다,37
+liar-game-39,liar-game,quiz,공책,다이어리,라이어만 다른 단어를 받습니다,38
+liar-game-40,liar-game,quiz,모니터,텔레비전,라이어만 다른 단어를 받습니다,39
+mini-olympic-1,mini-olympic,prompt,30초 동안 동전 최대한 뒤집기,,,0
+mini-olympic-2,mini-olympic,prompt,지정 문장 빨리 타이핑하기,,,1
+mini-olympic-3,mini-olympic,prompt,한 발로 오래 서 있기,,,2
+mini-olympic-4,mini-olympic,prompt,숨 오래 참기,,,3
+mini-olympic-5,mini-olympic,prompt,초성 다섯 개 빨리 맞히기,,,4
+mini-olympic-6,mini-olympic,prompt,팔굽혀펴기 개수 대결,,,5
+mini-olympic-7,mini-olympic,prompt,눈 안 깜빡이고 버티기,,,6
+mini-olympic-8,mini-olympic,prompt,종이컵 빨리 쌓기,,,7
+mini-olympic-9,mini-olympic,prompt,제자리 뛰기 30초 최다,,,8
+mini-olympic-10,mini-olympic,prompt,휴지 한 장 오래 불어 띄우기,,,9
+mini-olympic-11,mini-olympic,prompt,물병 세우기 성공 횟수,,,10
+mini-olympic-12,mini-olympic,prompt,가위바위보 연속 이기기,,,11
+mini-olympic-13,mini-olympic,prompt,손가락으로 숫자 빨리 만들기,,,12
+mini-olympic-14,mini-olympic,prompt,이름 거꾸로 빨리 말하기,,,13
+mini-olympic-15,mini-olympic,prompt,혀 꼬이는 문장 빨리 말하기,,,14
+mini-olympic-16,mini-olympic,prompt,10초 정확히 세기,,,15
+mini-olympic-17,mini-olympic,prompt,박수 30초 최다,,,16
+mini-olympic-18,mini-olympic,prompt,제자리에서 오래 균형 잡기,,,17
+mini-olympic-19,mini-olympic,prompt,종이 멀리 던지기,,,18
+mini-olympic-20,mini-olympic,prompt,빨대로 종이 옮기기,,,19
+mini-olympic-21,mini-olympic,prompt,노래 제목 빨리 대기,,,20
+mini-olympic-22,mini-olympic,prompt,무릎 굽히고 오래 버티기,,,21
+mini-olympic-23,mini-olympic,prompt,손등에 동전 많이 올리기,,,22
+mini-olympic-24,mini-olympic,prompt,눈 감고 직선으로 걷기,,,23
+mini-olympic-25,mini-olympic,prompt,1분 동안 웃음 참기,,,24
+minority-pick-1,minority-pick,prompt,부먹 vs 찍먹,,,0
+minority-pick-2,minority-pick,prompt,아침형 vs 저녁형,,,1
+minority-pick-3,minority-pick,prompt,산 vs 바다,,,2
+minority-pick-4,minority-pick,prompt,여름 vs 겨울,,,3
+minority-pick-5,minority-pick,prompt,계획파 vs 즉흥파,,,4
+minority-pick-6,minority-pick,prompt,강아지 vs 고양이,,,5
+minority-pick-7,minority-pick,prompt,매운맛 vs 순한맛,,,6
+minority-pick-8,minority-pick,prompt,짜장 vs 짬뽕,,,7
+minority-pick-9,minority-pick,prompt,커피 vs 차,,,8
+minority-pick-10,minority-pick,prompt,영화관 vs 집에서 보기,,,9
+minority-pick-11,minority-pick,prompt,버스 vs 지하철,,,10
+minority-pick-12,minority-pick,prompt,밥 vs 빵,,,11
+minority-pick-13,minority-pick,prompt,치킨 vs 피자,,,12
+minority-pick-14,minority-pick,prompt,혼자 놀기 vs 같이 놀기,,,13
+minority-pick-15,minority-pick,prompt,전화 vs 문자,,,14
+minority-pick-16,minority-pick,prompt,새벽 vs 아침,,,15
+minority-pick-17,minority-pick,prompt,실내 vs 야외,,,16
+minority-pick-18,minority-pick,prompt,단짠 vs 단짠 아님,,,17
+minority-pick-19,minority-pick,prompt,노래방 vs 피시방,,,18
+minority-pick-20,minority-pick,prompt,국물 라면 vs 볶음 라면,,,19
+minority-pick-21,minority-pick,prompt,탄산 vs 무탄산,,,20
+minority-pick-22,minority-pick,prompt,떡볶이 vs 순대,,,21
+minority-pick-23,minority-pick,prompt,바닐라 vs 초코,,,22
+minority-pick-24,minority-pick,prompt,여행은 도시 vs 자연,,,23
+minority-pick-25,minority-pick,prompt,선물은 현금 vs 물건,,,24
+minority-pick-26,minority-pick,prompt,앞자리 vs 뒷자리,,,25
+minority-pick-27,minority-pick,prompt,샤워는 아침 vs 밤,,,26
+minority-pick-28,minority-pick,prompt,이불 속 발 내놓기 vs 안 내놓기,,,27
+minority-pick-29,minority-pick,prompt,숙제 미리 vs 몰아서,,,28
+minority-pick-30,minority-pick,prompt,SNS 공개 vs 비공개,,,29
+minority-pick-31,minority-pick,prompt,모임은 소수 vs 다수,,,30
+minority-pick-32,minority-pick,prompt,여행 짐 많이 vs 적게,,,31
+minority-pick-33,minority-pick,prompt,책 종이 vs 전자,,,32
+minority-pick-34,minority-pick,prompt,겨울 실내 온도 높게 vs 낮게,,,33
+minority-pick-35,minority-pick,prompt,고백은 직접 vs 메시지,,,34
+minority-pick-36,minority-pick,prompt,음악 들으며 공부 vs 조용히,,,35
+minority-pick-37,minority-pick,prompt,사진 찍기 좋아함 vs 찍히기 싫음,,,36
+minority-pick-38,minority-pick,prompt,여름휴가 사람 많은 곳 vs 한적한 곳,,,37
+minority-pick-39,minority-pick,prompt,정장 vs 편한 옷,,,38
+minority-pick-40,minority-pick,prompt,지금 배고픔 vs 안 배고픔,,,39
+mirror-dance-1,mirror-dance,host-only,손하트 만들기,,,0
+mirror-dance-2,mirror-dance,host-only,웨이브 한 번,,,1
+mirror-dance-3,mirror-dance,host-only,어깨 털기,,,2
+mirror-dance-4,mirror-dance,host-only,포인트 안무 반복,,,3
+mirror-dance-5,mirror-dance,host-only,제자리 점프,,,4
+mirror-dance-6,mirror-dance,host-only,한 바퀴 돌기,,,5
+mirror-dance-7,mirror-dance,host-only,하트 뿅 날리기,,,6
+mirror-dance-8,mirror-dance,host-only,브이 포즈,,,7
+mirror-dance-9,mirror-dance,host-only,박수 두 번 후 손 올리기,,,8
+mirror-dance-10,mirror-dance,host-only,좌우로 스텝 밟기,,,9
+mirror-dance-11,mirror-dance,host-only,팔 크로스,,,10
+mirror-dance-12,mirror-dance,host-only,고개 좌우로 흔들기,,,11
+mirror-dance-13,mirror-dance,host-only,손가락 총 쏘기,,,12
+mirror-dance-14,mirror-dance,host-only,무릎 굽혔다 펴기,,,13
+mirror-dance-15,mirror-dance,host-only,양손 흔들기,,,14
+mirror-dance-16,mirror-dance,host-only,손끝으로 하늘 가리키기,,,15
+mirror-dance-17,mirror-dance,host-only,허리 돌리기,,,16
+mirror-dance-18,mirror-dance,host-only,발 구르기 네 번,,,17
+mirror-dance-19,mirror-dance,host-only,옆 사람과 하이파이브,,,18
+mirror-dance-20,mirror-dance,host-only,마무리 포즈 잡기,,,19
+music-quiz-2v2-1,music-quiz-2v2,host-only,최근 1년 안에 나온 아이돌 곡,,,0
+music-quiz-2v2-2,music-quiz-2v2,host-only,2010년대 히트곡,,,1
+music-quiz-2v2-3,music-quiz-2v2,host-only,2000년대 히트곡,,,2
+music-quiz-2v2-4,music-quiz-2v2,host-only,1990년대 히트곡,,,3
+music-quiz-2v2-5,music-quiz-2v2,host-only,누구나 아는 발라드,,,4
+music-quiz-2v2-6,music-quiz-2v2,host-only,노래방 애창곡 상위권,,,5
+music-quiz-2v2-7,music-quiz-2v2,host-only,여름에 자주 나오는 곡,,,6
+music-quiz-2v2-8,music-quiz-2v2,host-only,겨울과 크리스마스 시즌 곡,,,7
+music-quiz-2v2-9,music-quiz-2v2,host-only,드라마 주제가,,,8
+music-quiz-2v2-10,music-quiz-2v2,host-only,영화 주제가,,,9
+music-quiz-2v2-11,music-quiz-2v2,host-only,애니메이션 주제가,,,10
+music-quiz-2v2-12,music-quiz-2v2,host-only,동요와 캠프송,,,11
+music-quiz-2v2-13,music-quiz-2v2,host-only,응원가와 구호,,,12
+music-quiz-2v2-14,music-quiz-2v2,host-only,댄스곡 도입부만,,,13
+music-quiz-2v2-15,music-quiz-2v2,host-only,힙합 트랙 도입부,,,14
+music-quiz-2v2-16,music-quiz-2v2,host-only,역주행으로 유명해진 곡,,,15
+music-quiz-2v2-17,music-quiz-2v2,host-only,광고에 자주 쓰인 곡,,,16
+music-quiz-2v2-18,music-quiz-2v2,host-only,축제 마지막에 나오는 곡,,,17
+music-quiz-2v2-19,music-quiz-2v2,host-only,새벽 감성 플레이리스트,,,18
+music-quiz-2v2-20,music-quiz-2v2,host-only,운동할 때 듣는 곡,,,19
+nonsense-quiz-1,nonsense-quiz,quiz,세상에서 가장 뜨거운 과일은?,천도복숭아,천 도,0
+nonsense-quiz-2,nonsense-quiz,quiz,소가 웃으면?,우하하,소 우,1
+nonsense-quiz-3,nonsense-quiz,quiz,왕이 넘어지면?,킹콩,킹이 꽝,2
+nonsense-quiz-4,nonsense-quiz,quiz,병아리가 제일 좋아하는 약은?,삐약,병아리 소리,3
+nonsense-quiz-5,nonsense-quiz,quiz,눈이 녹으면?,눈물,봄도 정답,4
+nonsense-quiz-6,nonsense-quiz,quiz,가장 억울한 도형은?,사각,죽을 사,5
+nonsense-quiz-7,nonsense-quiz,quiz,빵이 웃으면?,빵긋,웃는 모양,6
+nonsense-quiz-8,nonsense-quiz,quiz,문이 화가 나면?,문열받아,문+열,7
+nonsense-quiz-9,nonsense-quiz,quiz,소금이 죽으면?,죽염,죽은 염,8
+nonsense-quiz-10,nonsense-quiz,quiz,가장 더러운 강은?,요강,옛날 화장실,9
+nonsense-quiz-11,nonsense-quiz,quiz,개가 사람을 가르치면?,개인지도,개+인,10
+nonsense-quiz-12,nonsense-quiz,quiz,세상에서 제일 빠른 닭은?,후다닭,후다닥,11
+nonsense-quiz-13,nonsense-quiz,quiz,바나나가 웃으면?,바나나킥,과자 이름,12
+nonsense-quiz-14,nonsense-quiz,quiz,아몬드가 죽으면?,다이아몬드,다이+아몬드,13
+nonsense-quiz-15,nonsense-quiz,quiz,발이 두 개인 소는?,이발소,이+발+소,14
+nonsense-quiz-16,nonsense-quiz,quiz,귀가 밝은 사람은?,귀신,귀가 신통,15
+nonsense-quiz-17,nonsense-quiz,quiz,가장 시원한 사람은?,선풍기 앞 사람,바람,16
+nonsense-quiz-18,nonsense-quiz,quiz,햄버거의 나이는?,십대,번이 두 장,17
+nonsense-quiz-19,nonsense-quiz,quiz,세상에서 가장 억울한 새는?,참새,참았는데,18
+nonsense-quiz-20,nonsense-quiz,quiz,추장보다 높은 사람은?,고추장,고+추장,19
+nonsense-quiz-21,nonsense-quiz,quiz,고추장보다 높은 사람은?,초고추장,초+고추장,20
+nonsense-quiz-22,nonsense-quiz,quiz,계란이 화나면?,계란후라이,화가 나서 후끈,21
+nonsense-quiz-23,nonsense-quiz,quiz,가장 게으른 동물은?,나무늘보,느림의 상징,22
+nonsense-quiz-24,nonsense-quiz,quiz,문을 열 수 없는 도시는?,대구,문이 닫힘,23
+nonsense-quiz-25,nonsense-quiz,quiz,가장 무거운 풀은?,누룽지,눌러붙음,24
+nonsense-quiz-26,nonsense-quiz,quiz,세상에서 가장 지루한 중학교는?,로딩중,계속 기다림,25
+nonsense-quiz-27,nonsense-quiz,quiz,젖소가 넘어지면?,우유,소가 넘어짐,26
+nonsense-quiz-28,nonsense-quiz,quiz,의사가 좋아하는 아이스크림은?,메로나,메스,27
+nonsense-quiz-29,nonsense-quiz,quiz,가장 뜨거운 바다는?,열바다,열이 남,28
+nonsense-quiz-30,nonsense-quiz,quiz,돈을 세는 나무는?,돈나무,화폐 식물,29
+nonsense-quiz-31,nonsense-quiz,quiz,가장 예의 없는 동물은?,반말,반+말,30
+nonsense-quiz-32,nonsense-quiz,quiz,가장 착한 사자는?,자원봉사자,봉사+자,31
+nonsense-quiz-33,nonsense-quiz,quiz,세상에서 가장 슬픈 과일은?,눈물바나나,울고 있음,32
+nonsense-quiz-34,nonsense-quiz,quiz,김밥이 죽으면?,김밥천국,천국으로 감,33
+nonsense-quiz-35,nonsense-quiz,quiz,가장 빠른 물고기는?,고등어,고등,34
+nonsense-quiz-36,nonsense-quiz,quiz,오리가 얼면?,언덕,언 오리,35
+nonsense-quiz-37,nonsense-quiz,quiz,가장 오래된 다리는?,고다리,옛 고,36
+nonsense-quiz-38,nonsense-quiz,quiz,불이 나면 가장 먼저 튀어나오는 것은?,불티,불티나게,37
+nonsense-quiz-39,nonsense-quiz,quiz,가장 시끄러운 채소는?,시끄러운 파,왁자지껄,38
+nonsense-quiz-40,nonsense-quiz,quiz,세상에서 제일 긴 음식은?,참기름,참기 힘든 길이,39
+nonsense-quiz-41,nonsense-quiz,quiz,가장 정직한 새는?,참새,참말만 함,40
+nonsense-quiz-42,nonsense-quiz,quiz,가장 뜨거운 채소는?,화이트 아스파라거스,화+이트,41
+nonsense-quiz-43,nonsense-quiz,quiz,가장 가난한 왕은?,최저임금,왕이 아님,42
+nonsense-quiz-44,nonsense-quiz,quiz,사람이 즐겨 먹는 제비는?,수제비,수+제비,43
+nonsense-quiz-45,nonsense-quiz,quiz,눈사람이 좋아하는 계절은?,겨울,녹지 않음,44
+nonsense-quiz-46,nonsense-quiz,quiz,가장 시원한 학교는?,냉방학교,에어컨,45
+nonsense-quiz-47,nonsense-quiz,quiz,사과가 웃으면?,풋사과,풋,46
+nonsense-quiz-48,nonsense-quiz,quiz,가장 화가 난 음식은?,부글부글 찌개,끓어오름,47
+nonsense-quiz-49,nonsense-quiz,quiz,가장 무서운 라면은?,귀신라면,무서움,48
+nonsense-quiz-50,nonsense-quiz,quiz,책이 도망가면?,책도망,도서관 탈출,49
+nonsense-quiz-51,nonsense-quiz,quiz,가장 달콤한 개는?,사탕개,달다,50
+nonsense-quiz-52,nonsense-quiz,quiz,세상에서 가장 큰 코는?,멕시코,멕+시+코,51
+nonsense-quiz-53,nonsense-quiz,quiz,세상에서 가장 작은 코는?,모기코,아주 작음,52
+nonsense-quiz-54,nonsense-quiz,quiz,가장 시끄러운 문은?,쾅문,닫는 소리,53
+nonsense-quiz-55,nonsense-quiz,quiz,가장 착한 밥은?,착한 볶음밥,착함,54
+nonsense-quiz-56,nonsense-quiz,quiz,가장 빠른 개는?,번개,번+개,55
+nonsense-quiz-57,nonsense-quiz,quiz,가장 슬픈 나무는?,울릉나무,울다,56
+nonsense-quiz-58,nonsense-quiz,quiz,가장 신나는 도시는?,부산,부산스러움,57
+nonsense-quiz-59,nonsense-quiz,quiz,가장 조용한 동물은?,말 없는 말,말+말,58
+nonsense-quiz-60,nonsense-quiz,quiz,가장 배부른 산은?,포만산,포만감,59
+number-rhythm-1,number-rhythm,prompt,뻔 데기 규칙으로 늘려가기,,,0
+number-rhythm-2,number-rhythm,prompt,하나 둘 셋 규칙으로 늘려가기,,,1
+number-rhythm-3,number-rhythm,prompt,쿵 짝 규칙으로 늘려가기,,,2
+number-rhythm-4,number-rhythm,prompt,박수 한 번 두 번 규칙,,,3
+number-rhythm-5,number-rhythm,prompt,무릎 손뼉 규칙,,,4
+number-rhythm-6,number-rhythm,prompt,이름 박수 규칙,,,5
+number-rhythm-7,number-rhythm,prompt,숫자 두 배 규칙,,,6
+number-rhythm-8,number-rhythm,prompt,홀수만 외치기,,,7
+number-rhythm-9,number-rhythm,prompt,짝수만 외치기,,,8
+number-rhythm-10,number-rhythm,prompt,5의 배수에서 침묵,,,9
+nunchi-1,nunchi,prompt,1부터 인원수까지,,,0
+nunchi-2,nunchi,prompt,숫자 대신 과일 이름,,,1
+nunchi-3,nunchi,prompt,숫자 대신 동물 이름,,,2
+nunchi-4,nunchi,prompt,역순으로 세기,,,3
+nunchi-5,nunchi,prompt,짝수만 외치기,,,4
+nunchi-6,nunchi,prompt,홀수만 외치기,,,5
+nunchi-7,nunchi,prompt,숫자 대신 나라 이름,,,6
+nunchi-8,nunchi,prompt,숫자 대신 색깔 이름,,,7
+one-mind-1,one-mind,prompt,치킨 하면 떠오르는 부위는?,,,0
+one-mind-2,one-mind,prompt,초록색 하면 떠오르는 것은?,,,1
+one-mind-3,one-mind,prompt,여름 하면 생각나는 한 단어?,,,2
+one-mind-4,one-mind,prompt,유명한 가수 한 명?,,,3
+one-mind-5,one-mind,prompt,분식집 대표 메뉴는?,,,4
+one-mind-6,one-mind,prompt,우리 과 하면 떠오르는 것?,,,5
+one-mind-7,one-mind,prompt,흔한 이름 하나?,,,6
+one-mind-8,one-mind,prompt,놀이공원 하면 떠오르는 것?,,,7
+one-mind-9,one-mind,prompt,겨울 간식 하나?,,,8
+one-mind-10,one-mind,prompt,아침에 제일 먼저 하는 것?,,,9
+one-mind-11,one-mind,prompt,편의점에서 제일 자주 사는 것?,,,10
+one-mind-12,one-mind,prompt,비 오는 날 먹고 싶은 음식?,,,11
+one-mind-13,one-mind,prompt,MT 하면 떠오르는 장면?,,,12
+one-mind-14,one-mind,prompt,시험기간 하면 떠오르는 것?,,,13
+one-mind-15,one-mind,prompt,빨간색 하면 떠오르는 음식?,,,14
+one-mind-16,one-mind,prompt,동물원에서 제일 먼저 보고 싶은 동물?,,,15
+one-mind-17,one-mind,prompt,커피숍에서 제일 많이 시키는 음료?,,,16
+one-mind-18,one-mind,prompt,설날 하면 떠오르는 것?,,,17
+one-mind-19,one-mind,prompt,학교 앞 하면 떠오르는 가게?,,,18
+one-mind-20,one-mind,prompt,라면에 넣는 재료 하나?,,,19
+one-mind-21,one-mind,prompt,여행 갈 때 꼭 챙기는 것?,,,20
+one-mind-22,one-mind,prompt,노래방 애창곡 장르?,,,21
+one-mind-23,one-mind,prompt,겨울 하면 떠오르는 색깔?,,,22
+one-mind-24,one-mind,prompt,제일 흔한 반려동물 이름?,,,23
+one-mind-25,one-mind,prompt,야식으로 제일 많이 시키는 것?,,,24
+one-mind-26,one-mind,prompt,운동 하면 떠오르는 종목?,,,25
+one-mind-27,one-mind,prompt,학교 축제 하면 떠오르는 것?,,,26
+one-mind-28,one-mind,prompt,새벽 두 시에 떠오르는 생각?,,,27
+one-mind-29,one-mind,prompt,지하철에서 하는 일?,,,28
+one-mind-30,one-mind,prompt,생일 하면 떠오르는 음식?,,,29
+one-mind-31,one-mind,prompt,바다 하면 떠오르는 한 단어?,,,30
+one-mind-32,one-mind,prompt,가장 흔한 비밀번호 형태?,,,31
+one-mind-33,one-mind,prompt,월요일 하면 떠오르는 감정?,,,32
+one-mind-34,one-mind,prompt,치킨 시킬 때 같이 시키는 것?,,,33
+one-mind-35,one-mind,prompt,폰 배경화면에 제일 많은 것?,,,34
+one-mind-36,one-mind,prompt,우리 학교 하면 떠오르는 건물?,,,35
+one-mind-37,one-mind,prompt,명절에 듣는 잔소리 하나?,,,36
+one-mind-38,one-mind,prompt,카페에서 공부할 때 시키는 것?,,,37
+one-mind-39,one-mind,prompt,첫눈 오면 하고 싶은 것?,,,38
+one-mind-40,one-mind,prompt,종강 하면 제일 먼저 하고 싶은 것?,,,39
+pass-the-phone-1,pass-the-phone,prompt,여기서 제일 친해지고 싶은 사람은?,,,0
+pass-the-phone-2,pass-the-phone,prompt,최근에 가장 창피했던 순간은?,,,1
+pass-the-phone-3,pass-the-phone,prompt,옆 사람에게 내 첫인상을 물어보세요,,,2
+pass-the-phone-4,pass-the-phone,prompt,지금 배고픔은 1에서 10 중 몇?,,,3
+pass-the-phone-5,pass-the-phone,prompt,오늘 여기 오면서 든 생각은?,,,4
+pass-the-phone-6,pass-the-phone,prompt,요즘 제일 자주 하는 거짓말은?,,,5
+pass-the-phone-7,pass-the-phone,prompt,최근에 산 것 중 후회하는 것은?,,,6
+pass-the-phone-8,pass-the-phone,prompt,이 중에서 제일 오래 알고 지낸 사람은?,,,7
+pass-the-phone-9,pass-the-phone,prompt,지금 제일 보고 싶은 사람은?,,,8
+pass-the-phone-10,pass-the-phone,prompt,최근에 울컥했던 순간은?,,,9
+pass-the-phone-11,pass-the-phone,prompt,친구들에게 못 한 말이 있다면?,,,10
+pass-the-phone-12,pass-the-phone,prompt,오늘 컨디션을 색깔로 표현하면?,,,11
+pass-the-phone-13,pass-the-phone,prompt,제일 최근에 받은 칭찬은?,,,12
+pass-the-phone-14,pass-the-phone,prompt,지금 폰에 마지막으로 온 알림은?,,,13
+pass-the-phone-15,pass-the-phone,prompt,올해 가장 잘한 일은?,,,14
+pass-the-phone-16,pass-the-phone,prompt,올해 가장 아쉬운 일은?,,,15
+pass-the-phone-17,pass-the-phone,prompt,여기서 제일 웃긴 사람은 누구?,,,16
+pass-the-phone-18,pass-the-phone,prompt,요즘 제일 큰 고민을 한 문장으로?,,,17
+pass-the-phone-19,pass-the-phone,prompt,지금 당장 하루가 생기면 뭐 할래요?,,,18
+pass-the-phone-20,pass-the-phone,prompt,최근에 처음 해본 일은?,,,19
+pass-the-phone-21,pass-the-phone,prompt,옆 사람 장점 하나만 말해주세요,,,20
+pass-the-phone-22,pass-the-phone,prompt,내가 제일 아끼는 물건은?,,,21
+pass-the-phone-23,pass-the-phone,prompt,인생에서 제일 크게 웃었던 날은?,,,22
+pass-the-phone-24,pass-the-phone,prompt,요즘 자주 듣는 노래 한 곡은?,,,23
+pass-the-phone-25,pass-the-phone,prompt,제일 최근에 고맙다고 말한 사람은?,,,24
+pass-the-phone-26,pass-the-phone,prompt,다음 모임에서 하고 싶은 것은?,,,25
+pass-the-phone-27,pass-the-phone,prompt,이 자리에서 배운 것 하나?,,,26
+pass-the-phone-28,pass-the-phone,prompt,지금 가장 필요한 것은?,,,27
+pass-the-phone-29,pass-the-phone,prompt,오늘 밤 몇 시에 잘 것 같아요?,,,28
+pass-the-phone-30,pass-the-phone,prompt,내일의 나에게 한마디만?,,,29
+penalty-wheel-1,penalty-wheel,prompt,옆 사람 칭찬 10초,,,0
+penalty-wheel-2,penalty-wheel,prompt,웃긴 표정 5초,,,1
+penalty-wheel-3,penalty-wheel,prompt,유행어 외치기,,,2
+penalty-wheel-4,penalty-wheel,prompt,애교 3종 세트,,,3
+penalty-wheel-5,penalty-wheel,prompt,성대모사 하나,,,4
+penalty-wheel-6,penalty-wheel,prompt,아이돌 댄스 한 소절,,,5
+penalty-wheel-7,penalty-wheel,prompt,좋아하는 노래 후렴 부르기,,,6
+penalty-wheel-8,penalty-wheel,prompt,물 한 잔 원샷하고 카 외치기,,,7
+penalty-wheel-9,penalty-wheel,prompt,다음 게임 진행자 되기,,,8
+penalty-wheel-10,penalty-wheel,prompt,오늘의 흑역사 하나 공개,,,9
+penalty-wheel-11,penalty-wheel,prompt,옆 사람과 하이파이브 열 번,,,10
+penalty-wheel-12,penalty-wheel,prompt,제자리 뛰기 스무 번,,,11
+penalty-wheel-13,penalty-wheel,prompt,팔굽혀펴기 다섯 개,,,12
+penalty-wheel-14,penalty-wheel,prompt,스쿼트 열 개,,,13
+penalty-wheel-15,penalty-wheel,prompt,가장 슬픈 표정 짓기,,,14
+penalty-wheel-16,penalty-wheel,prompt,가장 화난 표정 짓기,,,15
+penalty-wheel-17,penalty-wheel,prompt,동물 소리 세 가지,,,16
+penalty-wheel-18,penalty-wheel,prompt,3행시 즉석에서 짓기,,,17
+penalty-wheel-19,penalty-wheel,prompt,여기 있는 사람 이름 모두 부르기,,,18
+penalty-wheel-20,penalty-wheel,prompt,옆 사람 흉내 10초,,,19
+penalty-wheel-21,penalty-wheel,prompt,무표정으로 사랑합니다 외치기,,,20
+penalty-wheel-22,penalty-wheel,prompt,지금 폰 배경화면 공개,,,21
+penalty-wheel-23,penalty-wheel,prompt,최근 사진 한 장 공개,,,22
+penalty-wheel-24,penalty-wheel,prompt,아무 노래나 한 소절 완창,,,23
+penalty-wheel-25,penalty-wheel,prompt,1분간 존댓말 금지,,,24
+penalty-wheel-26,penalty-wheel,prompt,1분간 반말 금지,,,25
+penalty-wheel-27,penalty-wheel,prompt,다음 라운드 동안 별명으로만 불리기,,,26
+penalty-wheel-28,penalty-wheel,prompt,간식 나눠주는 담당 되기,,,27
+penalty-wheel-29,penalty-wheel,prompt,다음 사진 촬영 포즈 정하기,,,28
+penalty-wheel-30,penalty-wheel,prompt,오늘의 명언 즉석에서 만들기,,,29
+penalty-wheel-31,penalty-wheel,prompt,다음 사람 지목해서 칭찬 받기,,,30
+penalty-wheel-32,penalty-wheel,prompt,왼손으로만 5분 버티기,,,31
+penalty-wheel-33,penalty-wheel,prompt,지금부터 말끝에 다냥 붙이기,,,32
+penalty-wheel-34,penalty-wheel,prompt,자기소개 다시 하기,,,33
+penalty-wheel-35,penalty-wheel,prompt,10초 안에 웃기기 도전,,,34
+penalty-wheel-36,penalty-wheel,prompt,옆 사람 어깨 주무르기 10초,,,35
+penalty-wheel-37,penalty-wheel,prompt,가장 자신 있는 개인기,,,36
+penalty-wheel-38,penalty-wheel,prompt,눈 감고 한 발로 10초 서기,,,37
+penalty-wheel-39,penalty-wheel,prompt,고음 도전 한 번,,,38
+penalty-wheel-40,penalty-wheel,prompt,지금 기분을 춤으로 표현,,,39
+penalty-wheel-41,penalty-wheel,prompt,본인 이름으로 삼행시,,,40
+penalty-wheel-42,penalty-wheel,prompt,테이블 정리 담당 되기,,,41
+penalty-wheel-43,penalty-wheel,prompt,다음 게임 팀 나누기 담당,,,42
+penalty-wheel-44,penalty-wheel,prompt,오늘 MVP 즉석 발표하기,,,43
+penalty-wheel-45,penalty-wheel,prompt,칭찬 릴레이 시작하기,,,44
+penalty-wheel-46,penalty-wheel,prompt,가장 최근 검색어 공개,,,45
+penalty-wheel-47,penalty-wheel,prompt,좋아하는 음식 세 개 말하기,,,46
+penalty-wheel-48,penalty-wheel,prompt,10초 안에 초성 세 개 맞히기,,,47
+penalty-wheel-49,penalty-wheel,prompt,지금 앉은 자리 바꾸기,,,48
+penalty-wheel-50,penalty-wheel,prompt,다음 라운드 응원 구호 만들기,,,49
+person-quiz-1,person-quiz,quiz,조선 4대 왕 / 만원권 지폐 / 한글 창제,세종대왕,가장 존경받는 왕,0
+person-quiz-2,person-quiz,quiz,조선 장군 / 거북선 / 백원 동전,이순신,명량과 한산,1
+person-quiz-3,person-quiz,quiz,물리학자 / 혀 내민 사진 / 상대성이론,아인슈타인,머리가 헝클어진 과학자,2
+person-quiz-4,person-quiz,quiz,파란 펭귄 / 헬멧과 고글 / 노는 게 제일 좋아,뽀로로,아이들의 대통령,3
+person-quiz-5,person-quiz,quiz,빨간 옷 / 순록 썰매 / 12월,산타클로스,굴뚝으로 들어옴,4
+person-quiz-6,person-quiz,quiz,탐정 / 파이프 / 왓슨,셜록 홈즈,베이커가 221B,5
+person-quiz-7,person-quiz,quiz,노란 캐릭터 / 볼이 빨감 / 전기,피카츄,포켓몬 대표,6
+person-quiz-8,person-quiz,quiz,라듐 발견 / 노벨상 두 번 / 여성 과학자,퀴리 부인,방사능 연구,7
+person-quiz-9,person-quiz,quiz,사과 / 만유인력 / 영국 과학자,뉴턴,고전역학의 아버지,8
+person-quiz-10,person-quiz,quiz,진화론 / 비글호 / 갈라파고스,다윈,종의 기원,9
+person-quiz-11,person-quiz,quiz,전구 / 발명왕 / 축음기,에디슨,천재는 99퍼센트 노력,10
+person-quiz-12,person-quiz,quiz,모나리자 / 최후의 만찬 / 만능 천재,레오나르도 다빈치,르네상스 화가,11
+person-quiz-13,person-quiz,quiz,해바라기 / 귀 / 별이 빛나는 밤,고흐,네덜란드 화가,12
+person-quiz-14,person-quiz,quiz,한글 소설 / 홍길동전 / 조선 문인,허균,서얼 차별을 다룸,13
+person-quiz-15,person-quiz,quiz,독립운동가 / 하얼빈 / 안중근 의사,안중근,이토 히로부미 저격,14
+person-quiz-16,person-quiz,quiz,유관순 / 3·1운동 / 아우내 장터,유관순,만세 운동의 상징,15
+person-quiz-17,person-quiz,quiz,장영실 / 조선 과학자 / 자격루,장영실,물시계를 만듦,16
+person-quiz-18,person-quiz,quiz,신사임당 / 오만원권 / 율곡의 어머니,신사임당,조선의 예술가,17
+person-quiz-19,person-quiz,quiz,초록 피부 / 화가 나면 커짐 / 브루스 배너,헐크,마블 히어로,18
+person-quiz-20,person-quiz,quiz,빨간 망토 / 크립톤 행성 / S 마크,슈퍼맨,하늘을 나는 히어로,19
+person-quiz-21,person-quiz,quiz,박쥐 / 고담시 / 억만장자,배트맨,검은 망토의 히어로,20
+person-quiz-22,person-quiz,quiz,유리구두 / 12시 / 계모와 언니들,신데렐라,무도회에서 도망침,21
+person-quiz-23,person-quiz,quiz,긴 머리 / 탑에 갇힘 / 마녀,라푼젤,머리카락이 아주 김,22
+person-quiz-24,person-quiz,quiz,바다 / 인어 / 목소리를 잃음,인어공주,왕자를 사랑함,23
+person-quiz-25,person-quiz,quiz,일곱 난쟁이 / 독사과 / 거울아 거울아,백설공주,숲속에서 잠듦,24
+person-quiz-26,person-quiz,quiz,나무 인형 / 코가 길어짐 / 거짓말,피노키오,제페토 할아버지,25
+person-quiz-27,person-quiz,quiz,초록 모자 / 활 / 부자를 털어 가난한 이를 도움,로빈 후드,셔우드 숲,26
+person-quiz-28,person-quiz,quiz,램프 / 소원 세 가지 / 파란 정령,지니,알라딘에 나옴,27
+person-quiz-29,person-quiz,quiz,흥부와 대비 / 제비 / 박씨,놀부,욕심 많은 형,28
+person-quiz-30,person-quiz,quiz,호랑이와 곶감 / 옛날 이야기 / 무서운 것,곶감,호랑이도 무서워함,29
+person-quiz-31,person-quiz,quiz,자유의 여신상 / 뉴욕 / 프랑스가 선물,자유의 여신상,횃불을 들고 있음,30
+person-quiz-32,person-quiz,quiz,만유 천재 / 음악가 / 청력을 잃음,베토벤,운명 교향곡,31
+person-quiz-33,person-quiz,quiz,음악 신동 / 오스트리아 / 어릴 때부터 작곡,모차르트,레퀴엠,32
+person-quiz-34,person-quiz,quiz,농구 / 시카고 / 23번,마이클 조던,역대 최고 농구선수,33
+person-quiz-35,person-quiz,quiz,축구 / 아르헨티나 / 신의 손,마라도나,1986년 월드컵,34
+person-quiz-36,person-quiz,quiz,수영 / 올림픽 금메달 다수 / 미국,펠프스,역대 최다 금메달,35
+person-quiz-37,person-quiz,quiz,우주 / 최초로 달을 밟음 / 미국,닐 암스트롱,한 사람에게는 작은 발걸음,36
+person-quiz-38,person-quiz,quiz,전화기 / 발명가 / 청각 교육,벨,전화의 발명자,37
+person-quiz-39,person-quiz,quiz,애플 / 검은 터틀넥 / 아이폰,스티브 잡스,프레젠테이션의 대가,38
+person-quiz-40,person-quiz,quiz,간디 / 비폭력 / 인도,간디,소금 행진,39
+poker-face-1,poker-face,host-only,가장 웃긴 표정 5초 짓기,,,0
+poker-face-2,poker-face,host-only,아무 동물 울음소리 내기,,,1
+poker-face-3,poker-face,host-only,좋아하는 사람 이름 진지하게 부르기,,,2
+poker-face-4,poker-face,host-only,무표정으로 사랑합니다 고객님 외치기,,,3
+poker-face-5,poker-face,host-only,갑자기 슬픈 표정 짓기,,,4
+poker-face-6,poker-face,host-only,성대모사 아무거나 하나,,,5
+poker-face-7,poker-face,host-only,제자리에서 로봇춤 5초,,,6
+poker-face-8,poker-face,host-only,혼자 대화하는 척 10초,,,7
+poker-face-9,poker-face,host-only,아기 목소리로 인사하기,,,8
+poker-face-10,poker-face,host-only,사극 말투로 자기소개,,,9
+poker-face-11,poker-face,host-only,뉴스 앵커 톤으로 오늘 날씨 전하기,,,10
+poker-face-12,poker-face,host-only,슬로우 모션으로 걷기,,,11
+poker-face-13,poker-face,host-only,무언극으로 라면 먹는 흉내,,,12
+poker-face-14,poker-face,host-only,눈썹만 움직이기,,,13
+poker-face-15,poker-face,host-only,가장 진지한 표정으로 아무 말 대잔치,,,14
+poker-face-16,poker-face,host-only,외국어처럼 들리게 아무 말하기,,,15
+poker-face-17,poker-face,host-only,손으로만 감정 표현하기,,,16
+poker-face-18,poker-face,host-only,웃음 참으며 숫자 열까지 세기,,,17
+poker-face-19,poker-face,host-only,옆 사람 말투 따라 하기,,,18
+poker-face-20,poker-face,host-only,정색하고 유행어 외치기,,,19
+poker-face-21,poker-face,host-only,1인 2역 대화하기,,,20
+poker-face-22,poker-face,host-only,동물처럼 걷기,,,21
+poker-face-23,poker-face,host-only,조용히 박수만 치며 응원하기,,,22
+poker-face-24,poker-face,host-only,표정 없이 만세 삼창,,,23
+poker-face-25,poker-face,host-only,가장 어색한 인사 건네기,,,24
+relay-bomb-1,relay-bomb,prompt,시장에 가면,,,0
+relay-bomb-2,relay-bomb,prompt,동물원에 가면,,,1
+relay-bomb-3,relay-bomb,prompt,냉장고 속에는,,,2
+relay-bomb-4,relay-bomb,prompt,MT에 챙길 것은,,,3
+relay-bomb-5,relay-bomb,prompt,우리 과 특징은,,,4
+relay-bomb-6,relay-bomb,prompt,여름 하면,,,5
+relay-bomb-7,relay-bomb,prompt,겨울 하면,,,6
+relay-bomb-8,relay-bomb,prompt,편의점에 가면,,,7
+relay-bomb-9,relay-bomb,prompt,학교에 가면,,,8
+relay-bomb-10,relay-bomb,prompt,여행 가방에는,,,9
+relay-bomb-11,relay-bomb,prompt,카페에 가면,,,10
+relay-bomb-12,relay-bomb,prompt,분식집에 가면,,,11
+relay-bomb-13,relay-bomb,prompt,우리 집에는,,,12
+relay-bomb-14,relay-bomb,prompt,노래방에 가면,,,13
+relay-bomb-15,relay-bomb,prompt,바다에 가면,,,14
+relay-bomb-16,relay-bomb,prompt,산에 가면,,,15
+relay-bomb-17,relay-bomb,prompt,병원에 가면,,,16
+relay-bomb-18,relay-bomb,prompt,지하철에는,,,17
+relay-bomb-19,relay-bomb,prompt,축제에 가면,,,18
+relay-bomb-20,relay-bomb,prompt,설날에는,,,19
+relay-bomb-21,relay-bomb,prompt,부엌에는,,,20
+relay-bomb-22,relay-bomb,prompt,교실에는,,,21
+relay-bomb-23,relay-bomb,prompt,체육관에는,,,22
+relay-bomb-24,relay-bomb,prompt,도서관에는,,,23
+relay-bomb-25,relay-bomb,prompt,기숙사에는,,,24
+rhythm-tag-1,rhythm-tag,prompt,딸기 딸기 몇 개,,,0
+rhythm-tag-2,rhythm-tag,prompt,사과 사과 몇 개,,,1
+rhythm-tag-3,rhythm-tag,prompt,포도 포도 몇 개,,,2
+rhythm-tag-4,rhythm-tag,prompt,두부 한 모 두 모,,,3
+rhythm-tag-5,rhythm-tag,prompt,참외 참외 몇 개,,,4
+rhythm-tag-6,rhythm-tag,prompt,수박 수박 몇 개,,,5
+rhythm-tag-7,rhythm-tag,prompt,바나나 바나나 몇 개,,,6
+rhythm-tag-8,rhythm-tag,prompt,고구마 고구마 몇 개,,,7
+rhythm-tag-9,rhythm-tag,prompt,감자 감자 몇 개,,,8
+rhythm-tag-10,rhythm-tag,prompt,당근 당근 몇 개,,,9
+rhythm-tag-11,rhythm-tag,prompt,토마토 토마토 몇 개,,,10
+rhythm-tag-12,rhythm-tag,prompt,메론 메론 몇 개,,,11
+rhythm-word-1,rhythm-word,prompt,이름 릴레이,,,0
+rhythm-word-2,rhythm-word,prompt,별명 릴레이,,,1
+rhythm-word-3,rhythm-word,prompt,좋아하는 음식,,,2
+rhythm-word-4,rhythm-word,prompt,가고 싶은 여행지,,,3
+rhythm-word-5,rhythm-word,prompt,동물 이름,,,4
+rhythm-word-6,rhythm-word,prompt,감정 단어,,,5
+rhythm-word-7,rhythm-word,prompt,과일 이름,,,6
+rhythm-word-8,rhythm-word,prompt,색깔 이름,,,7
+rhythm-word-9,rhythm-word,prompt,직업 이름,,,8
+rhythm-word-10,rhythm-word,prompt,학교 과목,,,9
+rhythm-word-11,rhythm-word,prompt,브랜드 이름,,,10
+rhythm-word-12,rhythm-word,prompt,노래 제목,,,11
+rhythm-word-13,rhythm-word,prompt,영화 제목,,,12
+rhythm-word-14,rhythm-word,prompt,운동 종목,,,13
+rhythm-word-15,rhythm-word,prompt,나라 이름,,,14
+rhythm-word-16,rhythm-word,prompt,도시 이름,,,15
+rhythm-word-17,rhythm-word,prompt,채소 이름,,,16
+rhythm-word-18,rhythm-word,prompt,악기 이름,,,17
+rhythm-word-19,rhythm-word,prompt,만화 캐릭터,,,18
+rhythm-word-20,rhythm-word,prompt,편의점 물건,,,19
+secret-mission-1,secret-mission,host-only,5분 안에 아무나 세 명에게 하이파이브 받기,,,0
+secret-mission-2,secret-mission,host-only,3분 안에 옆 사람 웃기기,,,1
+secret-mission-3,secret-mission,host-only,10분간 말끝마다 다냥 붙이기,,,2
+secret-mission-4,secret-mission,host-only,아무나 붙잡고 진심 어린 칭찬 30초 하기,,,3
+secret-mission-5,secret-mission,host-only,5분 안에 각각 다른 사람과 셀카 다섯 장 찍기,,,4
+secret-mission-6,secret-mission,host-only,이 공간에서 파란색 물건 세 개 찾아오기,,,5
+secret-mission-7,secret-mission,host-only,10분간 다리 꼬지 않기,,,6
+secret-mission-8,secret-mission,host-only,진행자 몰래 누군가 등 뒤에 포스트잇 붙이기,,,7
+secret-mission-9,secret-mission,host-only,5분간 웃지 않기,,,8
+secret-mission-10,secret-mission,host-only,아무 노래나 한 소절 완창하기,,,9
+secret-mission-11,secret-mission,host-only,물 한 컵 마시고 카 외치기,,,10
+secret-mission-12,secret-mission,host-only,지목한 사람과 3분간 눈 마주치지 않기,,,11
+secret-mission-13,secret-mission,host-only,10분 안에 세 명에게 이름을 물어보기,,,12
+secret-mission-14,secret-mission,host-only,누군가에게 자연스럽게 간식 얻어내기,,,13
+secret-mission-15,secret-mission,host-only,5분간 존댓말만 쓰기,,,14
+secret-mission-16,secret-mission,host-only,5분간 반말만 쓰기,,,15
+secret-mission-17,secret-mission,host-only,다음 게임에서 자원해서 먼저 나서기,,,16
+secret-mission-18,secret-mission,host-only,누군가의 취미를 알아내서 진행자에게 보고하기,,,17
+secret-mission-19,secret-mission,host-only,10분 안에 두 명을 웃기기,,,18
+secret-mission-20,secret-mission,host-only,지금부터 자기 이름 대신 별명으로만 불리게 만들기,,,19
+secret-mission-21,secret-mission,host-only,누군가와 하이파이브를 다섯 번 하기,,,20
+secret-mission-22,secret-mission,host-only,이 공간에서 가장 오래된 물건 찾기,,,21
+secret-mission-23,secret-mission,host-only,5분 안에 세 명의 MBTI 알아내기,,,22
+secret-mission-24,secret-mission,host-only,진행자에게 질문 세 개 하기,,,23
+secret-mission-25,secret-mission,host-only,누군가에게 응원 한마디 건네기,,,24
+secret-mission-26,secret-mission,host-only,10분간 팔짱 끼지 않기,,,25
+secret-mission-27,secret-mission,host-only,아무도 모르게 자리 한 칸 옮기기,,,26
+secret-mission-28,secret-mission,host-only,다른 사람 말에 무조건 맞장구 세 번 치기,,,27
+secret-mission-29,secret-mission,host-only,5분 안에 사진 열 장 찍기,,,28
+secret-mission-30,secret-mission,host-only,지금부터 웃을 때 소리 내지 않기,,,29
+secret-mission-31,secret-mission,host-only,누군가와 같은 포즈로 사진 찍기,,,30
+secret-mission-32,secret-mission,host-only,5분 안에 두 명에게 고맙다고 말하기,,,31
+secret-mission-33,secret-mission,host-only,옆 사람이 좋아하는 음식 알아내기,,,32
+secret-mission-34,secret-mission,host-only,10분간 휴대폰 보지 않기,,,33
+secret-mission-35,secret-mission,host-only,누군가의 첫인상을 물어보기,,,34
+secret-mission-36,secret-mission,host-only,3분 안에 박수 소리 세 번 유도하기,,,35
+secret-mission-37,secret-mission,host-only,이 자리에서 가장 조용한 사람에게 말 걸기,,,36
+secret-mission-38,secret-mission,host-only,누군가에게 다음 게임을 추천받기,,,37
+secret-mission-39,secret-mission,host-only,10분간 이름 부르지 않고 대화하기,,,38
+secret-mission-40,secret-mission,host-only,다 같이 건배를 한 번 유도하기,,,39
+secret-mission-41,secret-mission,host-only,5분 안에 누군가에게 자리 양보 제안하기,,,40
+secret-mission-42,secret-mission,host-only,가장 멀리 앉은 사람과 인사하기,,,41
+secret-mission-43,secret-mission,host-only,누군가의 고향을 알아내기,,,42
+secret-mission-44,secret-mission,host-only,3분 안에 웃음소리를 다섯 번 듣기,,,43
+secret-mission-45,secret-mission,host-only,오늘의 사진 담당을 자원하기,,,44
+silent-shout-1,silent-shout,host-only,고슴도치,,,0
+silent-shout-2,silent-shout,host-only,방울토마토,,,1
+silent-shout-3,silent-shout,host-only,대나무숲,,,2
+silent-shout-4,silent-shout,host-only,냉장고,,,3
+silent-shout-5,silent-shout,host-only,형광펜,,,4
+silent-shout-6,silent-shout,host-only,수제비,,,5
+silent-shout-7,silent-shout,host-only,우주비행사,,,6
+silent-shout-8,silent-shout,host-only,코딱지,,,7
+silent-shout-9,silent-shout,host-only,삼겹살,,,8
+silent-shout-10,silent-shout,host-only,훈민정음,,,9
+silent-shout-11,silent-shout,host-only,주전자,,,10
+silent-shout-12,silent-shout,host-only,곱슬머리,,,11
+silent-shout-13,silent-shout,host-only,달팽이,,,12
+silent-shout-14,silent-shout,host-only,물미역,,,13
+silent-shout-15,silent-shout,host-only,손톱깎이,,,14
+silent-shout-16,silent-shout,host-only,빨래집게,,,15
+silent-shout-17,silent-shout,host-only,고구마순,,,16
+silent-shout-18,silent-shout,host-only,청국장,,,17
+silent-shout-19,silent-shout,host-only,무지개떡,,,18
+silent-shout-20,silent-shout,host-only,카네이션,,,19
+silent-shout-21,silent-shout,host-only,가스레인지,,,20
+silent-shout-22,silent-shout,host-only,옥수수수염,,,21
+silent-shout-23,silent-shout,host-only,부침개,,,22
+silent-shout-24,silent-shout,host-only,김치냉장고,,,23
+silent-shout-25,silent-shout,host-only,선인장,,,24
+silent-shout-26,silent-shout,host-only,도토리묵,,,25
+silent-shout-27,silent-shout,host-only,복숭아뼈,,,26
+silent-shout-28,silent-shout,host-only,지하철역,,,27
+silent-shout-29,silent-shout,host-only,매미소리,,,28
+silent-shout-30,silent-shout,host-only,귀이개,,,29
+silent-shout-31,silent-shout,host-only,다람쥐,,,30
+silent-shout-32,silent-shout,host-only,메추리알,,,31
+silent-shout-33,silent-shout,host-only,바게트빵,,,32
+silent-shout-34,silent-shout,host-only,쑥떡,,,33
+silent-shout-35,silent-shout,host-only,번데기,,,34
+silent-shout-36,silent-shout,host-only,낙엽더미,,,35
+silent-shout-37,silent-shout,host-only,얼음정수기,,,36
+silent-shout-38,silent-shout,host-only,발레복,,,37
+silent-shout-39,silent-shout,host-only,골뱅이무침,,,38
+silent-shout-40,silent-shout,host-only,탕후루,,,39
+snack-quiz-1,snack-quiz,quiz,길쭉한 막대에 초콜릿을 입힌 과자,막대 초코 과자,손에 안 묻음,0
+snack-quiz-2,snack-quiz,quiz,동그란 감자칩이 통에 쌓여 있음,원통 감자칩,겹쳐서 포장,1
+snack-quiz-3,snack-quiz,quiz,새우 모양으로 튀긴 짭짤한 스낵,새우 스낵,손이 가요,2
+snack-quiz-4,snack-quiz,quiz,초코 코팅 안에 크림이 든 파이,초코파이,정이 담김,3
+snack-quiz-5,snack-quiz,quiz,바나나 모양 우유맛 과자,바나나킥,부드러운 식감,4
+snack-quiz-6,snack-quiz,quiz,링 모양 옥수수 스낵,링 스낵,손가락에 끼움,5
+snack-quiz-7,snack-quiz,quiz,얇은 웨하스 사이에 크림,웨하스,바스러짐,6
+snack-quiz-8,snack-quiz,quiz,작은 별 모양 초콜릿 시리얼,별 시리얼,우유에 넣음,7
+snack-quiz-9,snack-quiz,quiz,네모난 크래커에 소금 간,소금 크래커,담백함,8
+snack-quiz-10,snack-quiz,quiz,젤리를 곰 모양으로 만든 것,곰 젤리,쫀득함,9
+snack-quiz-11,snack-quiz,quiz,바삭한 옥수수를 튀긴 콘칩,콘칩,치즈맛도 있음,10
+snack-quiz-12,snack-quiz,quiz,길쭉한 스틱에 소금,프레첼 스틱,짭짤함,11
+snack-quiz-13,snack-quiz,quiz,동그란 초코볼,초코볼,한 입 크기,12
+snack-quiz-14,snack-quiz,quiz,찹쌀떡 안에 아이스크림,찹쌀떡 아이스크림,냉동실,13
+snack-quiz-15,snack-quiz,quiz,팥이 든 붕어 모양 간식,붕어빵,겨울 길거리,14
+snack-quiz-16,snack-quiz,quiz,검은 쿠키 사이 하얀 크림,샌드 쿠키,돌려서 먹기,15
+snack-quiz-17,snack-quiz,quiz,바삭한 시리얼을 초코로 굳힘,초코 시리얼바,간편식,16
+snack-quiz-18,snack-quiz,quiz,작은 과자에 치즈 가루,치즈볼,손에 묻음,17
+snack-quiz-19,snack-quiz,quiz,고구마 맛 스틱 과자,고구마 스틱,달달함,18
+snack-quiz-20,snack-quiz,quiz,옥수수를 튀겨 부풀린 과자,뻥튀기,가벼움,19
+snack-quiz-21,snack-quiz,quiz,작은 젤리에 신맛 가루,신맛 젤리,입이 오므라듦,20
+snack-quiz-22,snack-quiz,quiz,우유맛 사탕,밀크 캔디,부드러움,21
+snack-quiz-23,snack-quiz,quiz,박하맛 사탕,박하 사탕,시원함,22
+snack-quiz-24,snack-quiz,quiz,초코가 든 둥근 비스킷,초코 비스킷,커피와 함께,23
+snack-quiz-25,snack-quiz,quiz,김을 튀겨 만든 스낵,김 스낵,짭조름함,24
+snack-quiz-26,snack-quiz,quiz,감자를 얇게 썰어 튀긴 것,감자칩,봉지 과자,25
+snack-quiz-27,snack-quiz,quiz,쌀로 만든 동그란 과자,쌀과자,담백함,26
+snack-quiz-28,snack-quiz,quiz,젤리에 콜라 맛,콜라 젤리,톡 쏘는 맛,27
+snack-quiz-29,snack-quiz,quiz,아이스크림을 콘에 담음,콘 아이스크림,밑에 초코,28
+snack-quiz-30,snack-quiz,quiz,막대에 꽂힌 얼음 과자,아이스바,여름 필수,29
+sonbyeongho-1,sonbyeongho,prompt,오늘 지각한 사람 접어,,,0
+sonbyeongho-2,sonbyeongho,prompt,자취하는 사람 접어,,,1
+sonbyeongho-3,sonbyeongho,prompt,아침을 안 먹고 온 사람 접어,,,2
+sonbyeongho-4,sonbyeongho,prompt,연애 중인 사람 접어,,,3
+sonbyeongho-5,sonbyeongho,prompt,새내기 접어,,,4
+sonbyeongho-6,sonbyeongho,prompt,복학생 접어,,,5
+sonbyeongho-7,sonbyeongho,prompt,안경 쓴 사람 접어,,,6
+sonbyeongho-8,sonbyeongho,prompt,오늘 커피 마신 사람 접어,,,7
+sonbyeongho-9,sonbyeongho,prompt,형제자매 있는 사람 접어,,,8
+sonbyeongho-10,sonbyeongho,prompt,운전면허 있는 사람 접어,,,9
+sonbyeongho-11,sonbyeongho,prompt,해외여행 가본 사람 접어,,,10
+sonbyeongho-12,sonbyeongho,prompt,제주도 가본 사람 접어,,,11
+sonbyeongho-13,sonbyeongho,prompt,반려동물 키우는 사람 접어,,,12
+sonbyeongho-14,sonbyeongho,prompt,매운 것 못 먹는 사람 접어,,,13
+sonbyeongho-15,sonbyeongho,prompt,민트초코 좋아하는 사람 접어,,,14
+sonbyeongho-16,sonbyeongho,prompt,오늘 화장한 사람 접어,,,15
+sonbyeongho-17,sonbyeongho,prompt,아침형 인간 접어,,,16
+sonbyeongho-18,sonbyeongho,prompt,밤새본 적 있는 사람 접어,,,17
+sonbyeongho-19,sonbyeongho,prompt,노래방에서 마이크 잡는 사람 접어,,,18
+sonbyeongho-20,sonbyeongho,prompt,춤출 줄 아는 사람 접어,,,19
+sonbyeongho-21,sonbyeongho,prompt,이번 학기 장학금 받은 사람 접어,,,20
+sonbyeongho-22,sonbyeongho,prompt,조별과제에서 조장 해본 사람 접어,,,21
+sonbyeongho-23,sonbyeongho,prompt,동아리 하는 사람 접어,,,22
+sonbyeongho-24,sonbyeongho,prompt,알바 하는 사람 접어,,,23
+sonbyeongho-25,sonbyeongho,prompt,기숙사 사는 사람 접어,,,24
+sonbyeongho-26,sonbyeongho,prompt,통학 한 시간 넘는 사람 접어,,,25
+sonbyeongho-27,sonbyeongho,prompt,오늘 지하철 타고 온 사람 접어,,,26
+sonbyeongho-28,sonbyeongho,prompt,고향이 서울이 아닌 사람 접어,,,27
+sonbyeongho-29,sonbyeongho,prompt,형제 중 막내인 사람 접어,,,28
+sonbyeongho-30,sonbyeongho,prompt,SNS 매일 하는 사람 접어,,,29
+sonbyeongho-31,sonbyeongho,prompt,게임 좋아하는 사람 접어,,,30
+sonbyeongho-32,sonbyeongho,prompt,운동 주 3회 이상 하는 사람 접어,,,31
+sonbyeongho-33,sonbyeongho,prompt,카페인 없이 못 사는 사람 접어,,,32
+sonbyeongho-34,sonbyeongho,prompt,오늘 아침에 알람 두 번 이상 끈 사람 접어,,,33
+sonbyeongho-35,sonbyeongho,prompt,MBTI가 I로 시작하는 사람 접어,,,34
+sonbyeongho-36,sonbyeongho,prompt,여기 처음 온 사람 접어,,,35
+sonbyeongho-37,sonbyeongho,prompt,오늘 새로운 사람과 인사한 사람 접어,,,36
+sonbyeongho-38,sonbyeongho,prompt,다음 학기 휴학 생각 중인 사람 접어,,,37
+sonbyeongho-39,sonbyeongho,prompt,취미가 두 개 이상인 사람 접어,,,38
+sonbyeongho-40,sonbyeongho,prompt,오늘 사진 열 장 넘게 찍은 사람 접어,,,39
+sound-quiz-1,sound-quiz,quiz,띵 하고 한 번 울리는 짧은 알림음,전자레인지 종료음,주방에서 들림,0
+sound-quiz-2,sound-quiz,quiz,짧은 알림음 두 번,메신저 알림,휴대폰에서,1
+sound-quiz-3,sound-quiz,quiz,도착을 알리는 멜로디,지하철 도착음,역에서 들림,2
+sound-quiz-4,sound-quiz,quiz,보글보글 끓는 소리,라면 끓는 소리,냄비 안,3
+sound-quiz-5,sound-quiz,quiz,타닥타닥 두드리는 소리,키보드 타건,책상 위,4
+sound-quiz-6,sound-quiz,quiz,삐삐삐 하고 열리는 전자음,도어락,현관에서,5
+sound-quiz-7,sound-quiz,quiz,동전이 떨어져 굴러가는 소리,자판기 동전,잔돈이 나옴,6
+sound-quiz-8,sound-quiz,quiz,길게 울리는 완료 멜로디,세탁기 완료음,빨래가 끝남,7
+sound-quiz-9,sound-quiz,quiz,치익 하고 뿜는 소리,탄산 캔 따는 소리,음료수,8
+sound-quiz-10,sound-quiz,quiz,드르륵 하고 밀리는 소리,의자 끄는 소리,교실에서,9
+sound-quiz-11,sound-quiz,quiz,사각사각 종이 넘기는 소리,책장 넘기기,도서관,10
+sound-quiz-12,sound-quiz,quiz,쏴 하고 쏟아지는 물소리,샤워기,욕실,11
+sound-quiz-13,sound-quiz,quiz,탁 하고 닫히는 소리,문 닫는 소리,출입문,12
+sound-quiz-14,sound-quiz,quiz,지지직 하며 굽는 소리,고기 굽는 소리,불판 위,13
+sound-quiz-15,sound-quiz,quiz,딸깍딸깍 반복되는 소리,볼펜 누르기,손버릇,14
+sound-quiz-16,sound-quiz,quiz,웅 하고 도는 저음,선풍기,여름,15
+sound-quiz-17,sound-quiz,quiz,칙칙 하고 뿜는 소리,커피머신 스팀,카페,16
+sound-quiz-18,sound-quiz,quiz,삐 소리가 길게 이어짐,전자레인지 예약음,주방,17
+sound-quiz-19,sound-quiz,quiz,드르륵 갈리는 소리,믹서기,주스 만들기,18
+sound-quiz-20,sound-quiz,quiz,톡톡 두드리는 소리,빗방울,창문에 떨어짐,19
+sound-quiz-21,sound-quiz,quiz,찰칵 하는 짧은 소리,카메라 셔터,사진 촬영,20
+sound-quiz-22,sound-quiz,quiz,치이익 하고 끓어 넘침,냄비 넘침,불 앞,21
+sound-quiz-23,sound-quiz,quiz,바스락거리는 소리,과자 봉지,간식 시간,22
+sound-quiz-24,sound-quiz,quiz,따르릉 울리는 소리,알람 시계,아침,23
+sound-quiz-25,sound-quiz,quiz,쿠르릉 낮게 울림,천둥,비 오는 날,24
+sound-quiz-26,sound-quiz,quiz,삐이 하고 새어 나오는 소리,이어폰 누음,지하철,25
+sound-quiz-27,sound-quiz,quiz,탁탁 두드리는 나무 소리,도마질,요리 중,26
+sound-quiz-28,sound-quiz,quiz,쓱쓱 문지르는 소리,빗자루질,청소,27
+sound-quiz-29,sound-quiz,quiz,찰랑거리는 금속 소리,열쇠 꾸러미,가방 속,28
+sound-quiz-30,sound-quiz,quiz,붕 하고 지나가는 소리,오토바이,배달,29
+speed-quiz-1,speed-quiz,host-only,라면,,,0
+speed-quiz-2,speed-quiz,host-only,축구,,,1
+speed-quiz-3,speed-quiz,host-only,우산,,,2
+speed-quiz-4,speed-quiz,host-only,세탁기,,,3
+speed-quiz-5,speed-quiz,host-only,코끼리,,,4
+speed-quiz-6,speed-quiz,host-only,냉장고,,,5
+speed-quiz-7,speed-quiz,host-only,무지개,,,6
+speed-quiz-8,speed-quiz,host-only,자전거,,,7
+speed-quiz-9,speed-quiz,host-only,딸기,,,8
+speed-quiz-10,speed-quiz,host-only,눈사람,,,9
+speed-quiz-11,speed-quiz,host-only,선풍기,,,10
+speed-quiz-12,speed-quiz,host-only,거북이,,,11
+speed-quiz-13,speed-quiz,host-only,김밥,,,12
+speed-quiz-14,speed-quiz,host-only,놀이터,,,13
+speed-quiz-15,speed-quiz,host-only,텔레비전,,,14
+speed-quiz-16,speed-quiz,host-only,가위,,,15
+speed-quiz-17,speed-quiz,host-only,칫솔,,,16
+speed-quiz-18,speed-quiz,host-only,수박,,,17
+speed-quiz-19,speed-quiz,host-only,기차,,,18
+speed-quiz-20,speed-quiz,host-only,병원,,,19
+speed-quiz-21,speed-quiz,host-only,학교,,,20
+speed-quiz-22,speed-quiz,host-only,달력,,,21
+speed-quiz-23,speed-quiz,host-only,지갑,,,22
+speed-quiz-24,speed-quiz,host-only,안경,,,23
+speed-quiz-25,speed-quiz,host-only,휴대폰,,,24
+speed-quiz-26,speed-quiz,host-only,신호등,,,25
+speed-quiz-27,speed-quiz,host-only,고양이,,,26
+speed-quiz-28,speed-quiz,host-only,바나나,,,27
+speed-quiz-29,speed-quiz,host-only,피아노,,,28
+speed-quiz-30,speed-quiz,host-only,우체통,,,29
+speed-quiz-31,speed-quiz,host-only,짝사랑,,,30
+speed-quiz-32,speed-quiz,host-only,아이스아메리카노,,,31
+speed-quiz-33,speed-quiz,host-only,지각,,,32
+speed-quiz-34,speed-quiz,host-only,다이어트,,,33
+speed-quiz-35,speed-quiz,host-only,방탈출,,,34
+speed-quiz-36,speed-quiz,host-only,롤러코스터,,,35
+speed-quiz-37,speed-quiz,host-only,첫눈,,,36
+speed-quiz-38,speed-quiz,host-only,소개팅,,,37
+speed-quiz-39,speed-quiz,host-only,모기,,,38
+speed-quiz-40,speed-quiz,host-only,캠핑,,,39
+speed-quiz-41,speed-quiz,host-only,시험기간,,,40
+speed-quiz-42,speed-quiz,host-only,멀미,,,41
+speed-quiz-43,speed-quiz,host-only,노래방,,,42
+speed-quiz-44,speed-quiz,host-only,택배,,,43
+speed-quiz-45,speed-quiz,host-only,알람,,,44
+speed-quiz-46,speed-quiz,host-only,월요병,,,45
+speed-quiz-47,speed-quiz,host-only,새벽 배송,,,46
+speed-quiz-48,speed-quiz,host-only,무인 카페,,,47
+speed-quiz-49,speed-quiz,host-only,중고 거래,,,48
+speed-quiz-50,speed-quiz,host-only,층간 소음,,,49
+speed-quiz-51,speed-quiz,host-only,장마,,,50
+speed-quiz-52,speed-quiz,host-only,인생네컷,,,51
+speed-quiz-53,speed-quiz,host-only,단톡방,,,52
+speed-quiz-54,speed-quiz,host-only,출석 체크,,,53
+speed-quiz-55,speed-quiz,host-only,기숙사,,,54
+speed-quiz-56,speed-quiz,host-only,조별과제,,,55
+speed-quiz-57,speed-quiz,host-only,종강,,,56
+speed-quiz-58,speed-quiz,host-only,개강,,,57
+speed-quiz-59,speed-quiz,host-only,동아리,,,58
+speed-quiz-60,speed-quiz,host-only,학식,,,59
+speed-quiz-61,speed-quiz,host-only,질투,,,60
+speed-quiz-62,speed-quiz,host-only,데자뷰,,,61
+speed-quiz-63,speed-quiz,host-only,애매하다,,,62
+speed-quiz-64,speed-quiz,host-only,갑분싸,,,63
+speed-quiz-65,speed-quiz,host-only,손절,,,64
+speed-quiz-66,speed-quiz,host-only,눈치,,,65
+speed-quiz-67,speed-quiz,host-only,번아웃,,,66
+speed-quiz-68,speed-quiz,host-only,밀당,,,67
+speed-quiz-69,speed-quiz,host-only,오글거림,,,68
+speed-quiz-70,speed-quiz,host-only,현타,,,69
+speed-quiz-71,speed-quiz,host-only,TMI,,,70
+speed-quiz-72,speed-quiz,host-only,낄끼빠빠,,,71
+speed-quiz-73,speed-quiz,host-only,워라밸,,,72
+speed-quiz-74,speed-quiz,host-only,국룰,,,73
+speed-quiz-75,speed-quiz,host-only,인싸,,,74
+speed-quiz-76,speed-quiz,host-only,가성비,,,75
+speed-quiz-77,speed-quiz,host-only,존버,,,76
+speed-quiz-78,speed-quiz,host-only,사회생활,,,77
+speed-quiz-79,speed-quiz,host-only,눈물버튼,,,78
+speed-quiz-80,speed-quiz,host-only,케미,,,79
+speed-quiz-81,speed-quiz,host-only,루틴,,,80
+speed-quiz-82,speed-quiz,host-only,덕질,,,81
+speed-quiz-83,speed-quiz,host-only,플렉스,,,82
+speed-quiz-84,speed-quiz,host-only,무한리필,,,83
+speed-quiz-85,speed-quiz,host-only,취향저격,,,84
+speed-quiz-86,speed-quiz,host-only,혼밥,,,85
+speed-quiz-87,speed-quiz,host-only,역주행,,,86
+speed-quiz-88,speed-quiz,host-only,품절대란,,,87
+speed-quiz-89,speed-quiz,host-only,부캐,,,88
+speed-quiz-90,speed-quiz,host-only,연말정산,,,89
+sync-shout-1,sync-shout,prompt,무인도에 가져갈 것 하나?,,,0
+sync-shout-2,sync-shout,prompt,치킨 시키면 부위는?,,,1
+sync-shout-3,sync-shout,prompt,여행지는 국내 vs 해외?,,,2
+sync-shout-4,sync-shout,prompt,라면에 계란 풀어 vs 안 풀어?,,,3
+sync-shout-5,sync-shout,prompt,데이트는 영화 vs 맛집?,,,4
+sync-shout-6,sync-shout,prompt,지금 제일 먹고 싶은 것?,,,5
+sync-shout-7,sync-shout,prompt,떠오르는 과일 하나?,,,6
+sync-shout-8,sync-shout,prompt,떠오르는 숫자 하나?,,,7
+sync-shout-9,sync-shout,prompt,떠오르는 색깔 하나?,,,8
+sync-shout-10,sync-shout,prompt,우리 둘 다 아는 사람 이름 하나?,,,9
+sync-shout-11,sync-shout,prompt,여름휴가는 바다 vs 산?,,,10
+sync-shout-12,sync-shout,prompt,야식으로 뭐 시킬래?,,,11
+sync-shout-13,sync-shout,prompt,떠오르는 동물 하나?,,,12
+sync-shout-14,sync-shout,prompt,카페 가면 뭐 시켜?,,,13
+sync-shout-15,sync-shout,prompt,우리 팀 이름을 짓는다면?,,,14
+sync-shout-16,sync-shout,prompt,지금 기분을 한 단어로?,,,15
+sync-shout-17,sync-shout,prompt,떠오르는 아이돌 그룹 하나?,,,16
+sync-shout-18,sync-shout,prompt,제일 좋아하는 계절?,,,17
+sync-shout-19,sync-shout,prompt,학교에서 제일 자주 가는 곳?,,,18
+sync-shout-20,sync-shout,prompt,오늘 제일 힘들었던 것?,,,19
+sync-shout-21,sync-shout,prompt,떠오르는 영화 제목 하나?,,,20
+sync-shout-22,sync-shout,prompt,제일 좋아하는 라면 종류?,,,21
+sync-shout-23,sync-shout,prompt,휴대폰에서 제일 많이 쓰는 앱?,,,22
+sync-shout-24,sync-shout,prompt,떠오르는 나라 이름 하나?,,,23
+sync-shout-25,sync-shout,prompt,우리 과를 한 단어로?,,,24
+sync-shout-26,sync-shout,prompt,지금 몇 시쯤 자고 싶어?,,,25
+sync-shout-27,sync-shout,prompt,제일 좋아하는 편의점 간식?,,,26
+sync-shout-28,sync-shout,prompt,떠오르는 운동 하나?,,,27
+sync-shout-29,sync-shout,prompt,다음 여행 가고 싶은 도시?,,,28
+sync-shout-30,sync-shout,prompt,오늘 MVP는 누구?,,,29
+time-bomb-1,time-bomb,prompt,ㄱ으로 시작하는 음식 하나 말하고 넘기기,,,0
+time-bomb-2,time-bomb,prompt,옆 사람 이름 부르고 넘기기,,,1
+time-bomb-3,time-bomb,prompt,동물 하나 말하고 넘기기,,,2
+time-bomb-4,time-bomb,prompt,숫자 이어 세며 넘기기,,,3
+time-bomb-5,time-bomb,prompt,과일 하나 말하고 넘기기,,,4
+time-bomb-6,time-bomb,prompt,나라 이름 하나 말하고 넘기기,,,5
+time-bomb-7,time-bomb,prompt,색깔 하나 말하고 넘기기,,,6
+time-bomb-8,time-bomb,prompt,가수 이름 하나 말하고 넘기기,,,7
+time-bomb-9,time-bomb,prompt,영화 제목 하나 말하고 넘기기,,,8
+time-bomb-10,time-bomb,prompt,지하철역 하나 말하고 넘기기,,,9
+time-bomb-11,time-bomb,prompt,오늘 가장 웃겼던 사람 말하기,,,10
+time-bomb-12,time-bomb,prompt,왼쪽 사람 칭찬하기,,,11
+time-bomb-13,time-bomb,prompt,좋아하는 간식 말하기,,,12
+time-bomb-14,time-bomb,prompt,지금 하고 싶은 일 하나 말하기,,,13
+time-bomb-15,time-bomb,prompt,여기 있는 사람 중 한 명 지목하고 넘기기,,,14
+time-bomb-16,time-bomb,prompt,ㅅ으로 시작하는 단어 하나,,,15
+time-bomb-17,time-bomb,prompt,두 글자 음식 하나,,,16
+time-bomb-18,time-bomb,prompt,겨울 하면 떠오르는 것 하나,,,17
+time-bomb-19,time-bomb,prompt,여름 하면 떠오르는 것 하나,,,18
+time-bomb-20,time-bomb,prompt,학교에서 볼 수 있는 것 하나,,,19
+time-bomb-21,time-bomb,prompt,편의점 물건 하나,,,20
+time-bomb-22,time-bomb,prompt,운동 종목 하나,,,21
+time-bomb-23,time-bomb,prompt,직업 하나,,,22
+time-bomb-24,time-bomb,prompt,브랜드 하나,,,23
+time-bomb-25,time-bomb,prompt,웹툰 제목 하나,,,24
+time-bomb-26,time-bomb,prompt,감정 단어 하나,,,25
+time-bomb-27,time-bomb,prompt,악기 하나,,,26
+time-bomb-28,time-bomb,prompt,채소 하나,,,27
+time-bomb-29,time-bomb,prompt,바다 생물 하나,,,28
+time-bomb-30,time-bomb,prompt,오늘 배운 것 하나 말하고 넘기기,,,29
+tmi-intro-1,tmi-intro,prompt,최근에 산 것 중 제일 잘 산 것은?,,,0
+tmi-intro-2,tmi-intro,prompt,폰 배경화면이 뭐예요?,,,1
+tmi-intro-3,tmi-intro,prompt,지금 가장 하고 싶은 것은?,,,2
+tmi-intro-4,tmi-intro,prompt,인생 음식 하나만 고른다면?,,,3
+tmi-intro-5,tmi-intro,prompt,최근에 본 웃긴 영상은?,,,4
+tmi-intro-6,tmi-intro,prompt,MBTI 앞 두 글자만 말해주세요,,,5
+tmi-intro-7,tmi-intro,prompt,요즘 최애는 누구 또는 무엇?,,,6
+tmi-intro-8,tmi-intro,prompt,나만의 스트레스 해소법은?,,,7
+tmi-intro-9,tmi-intro,prompt,최근에 들은 노래 하나?,,,8
+tmi-intro-10,tmi-intro,prompt,어릴 때 장래희망은?,,,9
+tmi-intro-11,tmi-intro,prompt,제일 자주 가는 배달 메뉴는?,,,10
+tmi-intro-12,tmi-intro,prompt,오늘 아침에 뭐 먹었어요?,,,11
+tmi-intro-13,tmi-intro,prompt,휴대폰 배터리 몇 퍼센트예요?,,,12
+tmi-intro-14,tmi-intro,prompt,가장 최근에 찍은 사진은 뭐예요?,,,13
+tmi-intro-15,tmi-intro,prompt,잘 때 꼭 하는 습관 하나?,,,14
+tmi-intro-16,tmi-intro,prompt,지금 가방에 있는 이상한 물건 하나?,,,15
+tmi-intro-17,tmi-intro,prompt,제일 좋아하는 요일과 이유는?,,,16
+tmi-intro-18,tmi-intro,prompt,인생에서 제일 잘한 결정은?,,,17
+tmi-intro-19,tmi-intro,prompt,가장 최근에 웃었던 순간은?,,,18
+tmi-intro-20,tmi-intro,prompt,여행 가고 싶은 도시 하나?,,,19
+tmi-intro-21,tmi-intro,prompt,제일 자신 있는 요리는?,,,20
+tmi-intro-22,tmi-intro,prompt,학교까지 얼마나 걸려요?,,,21
+tmi-intro-23,tmi-intro,prompt,최근에 새로 시작한 것은?,,,22
+tmi-intro-24,tmi-intro,prompt,지금 듣는 플레이리스트 이름은?,,,23
+tmi-intro-25,tmi-intro,prompt,친구들이 말하는 내 첫인상은?,,,24
+tmi-intro-26,tmi-intro,prompt,제일 좋아하는 계절과 이유는?,,,25
+tmi-intro-27,tmi-intro,prompt,요즘 빠져 있는 것은?,,,26
+tmi-intro-28,tmi-intro,prompt,인생 영화 한 편은?,,,27
+tmi-intro-29,tmi-intro,prompt,돈 생기면 제일 먼저 살 것은?,,,28
+tmi-intro-30,tmi-intro,prompt,가장 오래된 친구는 몇 년 됐어요?,,,29
+tmi-intro-31,tmi-intro,prompt,제일 좋아하는 편의점 조합은?,,,30
+tmi-intro-32,tmi-intro,prompt,최근에 배운 쓸데없는 지식 하나?,,,31
+tmi-intro-33,tmi-intro,prompt,나를 한 단어로 표현하면?,,,32
+tmi-intro-34,tmi-intro,prompt,오늘 여기 오면서 든 생각은?,,,33
+tmi-intro-35,tmi-intro,prompt,이번 학기 목표 하나만?,,,34
+truth-or-dare-1,truth-or-dare,prompt,[진실] 여기서 첫인상이 제일 좋았던 사람은?,,,0
+truth-or-dare-2,truth-or-dare,prompt,[진실] 최근에 제일 크게 웃은 일은?,,,1
+truth-or-dare-3,truth-or-dare,prompt,[진실] 인생 최대 흑역사를 살짝만 말하면?,,,2
+truth-or-dare-4,truth-or-dare,prompt,[진실] 지금 폰 배경화면은?,,,3
+truth-or-dare-5,truth-or-dare,prompt,[진실] 요즘 최애는?,,,4
+truth-or-dare-6,truth-or-dare,prompt,[진실] 최근에 한 가장 큰 지출은?,,,5
+truth-or-dare-7,truth-or-dare,prompt,[진실] 오늘 여기 오기 전에 무슨 생각을 했나요?,,,6
+truth-or-dare-8,truth-or-dare,prompt,[진실] 제일 최근에 운 적은 언제인가요?,,,7
+truth-or-dare-9,truth-or-dare,prompt,[진실] 남들이 모르는 사소한 습관 하나는?,,,8
+truth-or-dare-10,truth-or-dare,prompt,[진실] 지금 가장 고민되는 선택은?,,,9
+truth-or-dare-11,truth-or-dare,prompt,[진실] 인생에서 가장 잘한 결정은?,,,10
+truth-or-dare-12,truth-or-dare,prompt,[진실] 요즘 제일 자주 듣는 노래는?,,,11
+truth-or-dare-13,truth-or-dare,prompt,[진실] 친구에게 못 한 말이 있다면?,,,12
+truth-or-dare-14,truth-or-dare,prompt,[진실] 스스로 생각하는 나의 최고 장점은?,,,13
+truth-or-dare-15,truth-or-dare,prompt,[진실] 최근에 가장 뿌듯했던 순간은?,,,14
+truth-or-dare-16,truth-or-dare,prompt,[진실] 제일 최근에 검색한 것은?,,,15
+truth-or-dare-17,truth-or-dare,prompt,[진실] 여기서 가장 배우고 싶은 점이 있는 사람은?,,,16
+truth-or-dare-18,truth-or-dare,prompt,[진실] 5년 뒤 나는 뭘 하고 있을 것 같나요?,,,17
+truth-or-dare-19,truth-or-dare,prompt,[진실] 오늘 하루 점수를 매기면 몇 점인가요?,,,18
+truth-or-dare-20,truth-or-dare,prompt,[진실] 제일 좋아하는 계절과 그 이유는?,,,19
+truth-or-dare-21,truth-or-dare,prompt,[진실] 최근에 포기한 것이 있다면?,,,20
+truth-or-dare-22,truth-or-dare,prompt,[진실] 가장 오래 간직한 물건은?,,,21
+truth-or-dare-23,truth-or-dare,prompt,[진실] 가족에게 가장 고마운 순간은?,,,22
+truth-or-dare-24,truth-or-dare,prompt,[진실] 지금 통장에 남은 돈으로 뭘 하고 싶나요?,,,23
+truth-or-dare-25,truth-or-dare,prompt,[진실] 다시 돌아가고 싶은 시절은?,,,24
+truth-or-dare-26,truth-or-dare,prompt,[도전] 아무나 붙잡고 30초 칭찬하기,,,25
+truth-or-dare-27,truth-or-dare,prompt,[도전] 성대모사 하나 하기,,,26
+truth-or-dare-28,truth-or-dare,prompt,[도전] 좋아하는 노래 후렴 부르기,,,27
+truth-or-dare-29,truth-or-dare,prompt,[도전] 웃긴 표정으로 셀카 찍기,,,28
+truth-or-dare-30,truth-or-dare,prompt,[도전] 옆 사람과 3초 하트 포즈,,,29
+truth-or-dare-31,truth-or-dare,prompt,[도전] 제자리에서 춤 10초,,,30
+truth-or-dare-32,truth-or-dare,prompt,[도전] 즉석 3행시 짓기,,,31
+truth-or-dare-33,truth-or-dare,prompt,[도전] 여기 있는 사람 이름 다 부르기,,,32
+truth-or-dare-34,truth-or-dare,prompt,[도전] 동물 소리 세 가지 내기,,,33
+truth-or-dare-35,truth-or-dare,prompt,[도전] 1분간 웃음 참기,,,34
+truth-or-dare-36,truth-or-dare,prompt,[도전] 팔굽혀펴기 다섯 개,,,35
+truth-or-dare-37,truth-or-dare,prompt,[도전] 가장 슬픈 표정 10초 유지,,,36
+truth-or-dare-38,truth-or-dare,prompt,[도전] 무표정으로 사랑합니다 외치기,,,37
+truth-or-dare-39,truth-or-dare,prompt,[도전] 오늘의 명언 즉석에서 만들기,,,38
+truth-or-dare-40,truth-or-dare,prompt,[도전] 눈 감고 한 발로 10초 서기,,,39
+truth-or-dare-41,truth-or-dare,prompt,[도전] 옆 사람 흉내 10초,,,40
+truth-or-dare-42,truth-or-dare,prompt,[도전] 다음 게임 진행자 자원하기,,,41
+truth-or-dare-43,truth-or-dare,prompt,[도전] 지금 기분을 몸으로 표현하기,,,42
+truth-or-dare-44,truth-or-dare,prompt,[도전] 즉석에서 응원 구호 만들기,,,43
+truth-or-dare-45,truth-or-dare,prompt,[도전] 최근 사진 한 장 공개하기,,,44
+truth-or-dare-46,truth-or-dare,prompt,[도전] 아무 노래나 한 소절 완창,,,45
+truth-or-dare-47,truth-or-dare,prompt,[도전] 다 같이 건배 유도하기,,,46
+truth-or-dare-48,truth-or-dare,prompt,[도전] 가장 멀리 있는 사람과 하이파이브,,,47
+truth-or-dare-49,truth-or-dare,prompt,[도전] 자기소개 다시 하기,,,48
+truth-or-dare-50,truth-or-dare,prompt,[도전] 10초 안에 웃기기 도전,,,49
+what-if-1,what-if,prompt,만약 하루 동안 투명인간이 된다면?,,,0
+what-if-2,what-if,prompt,만약 동물 한 마리로 변한다면?,,,1
+what-if-3,what-if,prompt,만약 평생 한 음식만 먹어야 한다면?,,,2
+what-if-4,what-if,prompt,만약 유명인과 하루를 바꿀 수 있다면?,,,3
+what-if-5,what-if,prompt,만약 10억이 생기면 제일 먼저 할 일은?,,,4
+what-if-6,what-if,prompt,만약 과거로 딱 하루 돌아간다면?,,,5
+what-if-7,what-if,prompt,만약 초능력 하나를 고른다면?,,,6
+what-if-8,what-if,prompt,만약 무인도에 물건 3개만 가져간다면?,,,7
+what-if-9,what-if,prompt,만약 내일 지구가 멸망한다면 오늘 뭐 할래?,,,8
+what-if-10,what-if,prompt,만약 시간을 멈출 수 있다면 언제 쓸래?,,,9
+what-if-11,what-if,prompt,만약 하루 24시간이 30시간이 된다면?,,,10
+what-if-12,what-if,prompt,만약 동물과 대화할 수 있다면 누구랑 먼저?,,,11
+what-if-13,what-if,prompt,만약 로또 1등이 됐는데 아무한테도 말 못 한다면?,,,12
+what-if-14,what-if,prompt,만약 내 인생이 영화라면 제목은?,,,13
+what-if-15,what-if,prompt,만약 다른 나라에서 1년 살아야 한다면 어디?,,,14
+what-if-16,what-if,prompt,만약 나이를 하나 고정할 수 있다면 몇 살?,,,15
+what-if-17,what-if,prompt,만약 모든 사람이 내 마음을 읽는다면?,,,16
+what-if-18,what-if,prompt,만약 하루 동안 다른 사람이 될 수 있다면 누구?,,,17
+what-if-19,what-if,prompt,만약 기억 하나를 지울 수 있다면?,,,18
+what-if-20,what-if,prompt,만약 꿈에서 배운 걸 현실에 쓸 수 있다면?,,,19
+what-if-21,what-if,prompt,만약 평생 잠을 안 자도 된다면 그 시간에 뭐 할래?,,,20
+what-if-22,what-if,prompt,만약 100년 뒤로 갈 수 있다면 제일 궁금한 것은?,,,21
+what-if-23,what-if,prompt,만약 지금 전공을 다시 고를 수 있다면?,,,22
+what-if-24,what-if,prompt,만약 하루 동안 학교를 마음대로 바꿀 수 있다면?,,,23
+what-if-25,what-if,prompt,만약 순간이동이 가능하면 매일 어디 갈래?,,,24
+what-if-26,what-if,prompt,만약 내 이름을 바꿀 수 있다면 뭘로?,,,25
+what-if-27,what-if,prompt,만약 평생 하나의 노래만 들을 수 있다면?,,,26
+what-if-28,what-if,prompt,만약 나만 아는 비밀 공간이 생긴다면 뭐 할래?,,,27
+what-if-29,what-if,prompt,만약 반려동물이 하루만 사람이 된다면 뭐부터 물어볼래?,,,28
+what-if-30,what-if,prompt,만약 하루 동안 투표로 뭐든 바꿀 수 있다면?,,,29
+what-if-31,what-if,prompt,만약 지금 이 순간이 게임이라면 내 능력치는?,,,30
+what-if-32,what-if,prompt,만약 부모님과 친구가 될 수 있다면 뭐 하고 놀래?,,,31
+what-if-33,what-if,prompt,만약 실패가 없는 하루가 주어진다면 뭘 시도할래?,,,32
+what-if-34,what-if,prompt,만약 아무도 나를 모르는 도시에 떨어진다면?,,,33
+what-if-35,what-if,prompt,만약 평생 여행만 다녀도 된다면 첫 목적지는?,,,34
+what-if-36,what-if,prompt,만약 미래의 나에게 한 문장만 보낼 수 있다면?,,,35
+what-if-37,what-if,prompt,만약 과거의 나에게 한 문장만 보낼 수 있다면?,,,36
+what-if-38,what-if,prompt,만약 오늘 하루를 무한 반복한다면 뭘 바꿀래?,,,37
+what-if-39,what-if,prompt,만약 재능 하나를 즉시 얻는다면?,,,38
+what-if-40,what-if,prompt,만약 세상 모든 사람이 하루만 정직해진다면?,,,39
+what-is-this-1,what-is-this,quiz,빨간 표면에 작은 씨앗들이 박혀 있음,딸기,겉에 씨가 있음,0
+what-is-this-2,what-is-this,quiz,빨간 버튼을 클로즈업한 화면,리모컨,소파에서 자주 잃어버림,1
+what-is-this-3,what-is-this,quiz,반투명한 껍질이 여러 층,양파,썰면 눈물,2
+what-is-this-4,what-is-this,quiz,하얀 직육면체의 모서리,지우개,필통 단골,3
+what-is-this-5,what-is-this,quiz,나란히 뚫린 구멍 두 개,콘센트,벽에 붙어 있음,4
+what-is-this-6,what-is-this,quiz,초록색 몽글몽글한 표면,브로콜리,나무 닮은 채소,5
+what-is-this-7,what-is-this,quiz,촘촘한 갈색 격자 무늬,골판지,택배 상자,6
+what-is-this-8,what-is-this,quiz,노란 껍질에 검은 점,바나나,익으면 점이 생김,7
+what-is-this-9,what-is-this,quiz,얇은 금속 이가 맞물린 줄,지퍼,옷과 가방,8
+what-is-this-10,what-is-this,quiz,주황색 오돌토돌한 표면,오렌지 껍질,까면 향이 남,9
+what-is-this-11,what-is-this,quiz,검은 원판 가운데 구멍,도넛,먹을 수 있음,10
+what-is-this-12,what-is-this,quiz,가는 실이 다발로 묶임,칫솔모,매일 사용,11
+what-is-this-13,what-is-this,quiz,녹색 잎맥이 뻗은 얇은 면,나뭇잎,가을에 색이 변함,12
+what-is-this-14,what-is-this,quiz,작은 구멍이 촘촘한 노란 덩어리,스펀지,설거지 필수,13
+what-is-this-15,what-is-this,quiz,검은 흑연 심 끝,연필,깎아 씀,14
+what-is-this-16,what-is-this,quiz,투명한 액체 속 얼음 조각,아이스아메리카노,여름 필수,15
+what-is-this-17,what-is-this,quiz,동그란 유리에 다리 두 개,안경,얼굴에 씀,16
+what-is-this-18,what-is-this,quiz,숫자와 바늘 세 개,시계,시간을 봄,17
+what-is-this-19,what-is-this,quiz,하얀 알갱이가 뭉쳐 있음,설탕,달다,18
+what-is-this-20,what-is-this,quiz,면발이 구불구불 뭉침,라면,3분이면 완성,19
+what-is-this-21,what-is-this,quiz,초록색 껍질에 검은 줄무늬,수박,여름 과일,20
+what-is-this-22,what-is-this,quiz,갈색 알맹이가 빽빽함,커피 원두,갈아서 내림,21
+what-is-this-23,what-is-this,quiz,금속 이빨이 나란히 있음,빗,머리를 정리,22
+what-is-this-24,what-is-this,quiz,네모난 판에 문자 배열,키보드,타자를 침,23
+what-is-this-25,what-is-this,quiz,검은 원통에 렌즈,카메라,사진을 찍음,24
+what-is-this-26,what-is-this,quiz,작은 사각형이 붙은 끈적한 종이,포스트잇,메모용,25
+what-is-this-27,what-is-this,quiz,갈색 껍질 속 하얀 속살,감자,튀기면 맛있음,26
+what-is-this-28,what-is-this,quiz,길고 하얀 원통 여러 개,빨대,음료에 꽂음,27
+what-is-this-29,what-is-this,quiz,빨갛고 둥근 표면에 초록 꼭지,사과,하루 한 알,28
+what-is-this-30,what-is-this,quiz,초록 잎이 겹겹이 쌓임,양배추,겹이 많음,29
+what-is-this-31,what-is-this,quiz,작은 구멍이 뚫린 금속 판,스피커,소리가 나옴,30
+what-is-this-32,what-is-this,quiz,반짝이는 은색 곡면,숟가락,밥을 먹음,31
+what-is-this-33,what-is-this,quiz,올이 촘촘히 뜬 천,수건,물기를 닦음,32
+what-is-this-34,what-is-this,quiz,검고 동그란 고무 테두리,타이어,차에 달림,33
+what-is-this-35,what-is-this,quiz,얇은 종이가 겹겹이 말림,휴지,화장실 필수,34
+what-is-this-36,what-is-this,quiz,작은 초록 알갱이가 줄지어 있음,완두콩,꼬투리 안에,35
+what-is-this-37,what-is-this,quiz,투명한 판에 금이 감,액정,떨어뜨리면 생김,36
+what-is-this-38,what-is-this,quiz,작고 노란 알갱이가 줄줄이,옥수수,쪄서 먹음,37
+what-is-this-39,what-is-this,quiz,검은 점이 흩어진 하얀 조각,참깨 뿌린 빵,고소함,38
+what-is-this-40,what-is-this,quiz,길고 가는 은색 막대 두 개,젓가락,짝을 이룸,39
+who-am-i-1,who-am-i,host-only,산타클로스,,,0
+who-am-i-2,who-am-i,host-only,슈퍼맨,,,1
+who-am-i-3,who-am-i,host-only,신데렐라,,,2
+who-am-i-4,who-am-i,host-only,셜록 홈즈,,,3
+who-am-i-5,who-am-i,host-only,피노키오,,,4
+who-am-i-6,who-am-i,host-only,인어공주,,,5
+who-am-i-7,who-am-i,host-only,백설공주,,,6
+who-am-i-8,who-am-i,host-only,라푼젤,,,7
+who-am-i-9,who-am-i,host-only,헐크,,,8
+who-am-i-10,who-am-i,host-only,배트맨,,,9
+who-am-i-11,who-am-i,host-only,흥부,,,10
+who-am-i-12,who-am-i,host-only,놀부,,,11
+who-am-i-13,who-am-i,host-only,심청,,,12
+who-am-i-14,who-am-i,host-only,홍길동,,,13
+who-am-i-15,who-am-i,host-only,세종대왕,,,14
+who-am-i-16,who-am-i,host-only,이순신,,,15
+who-am-i-17,who-am-i,host-only,아인슈타인,,,16
+who-am-i-18,who-am-i,host-only,에디슨,,,17
+who-am-i-19,who-am-i,host-only,뉴턴,,,18
+who-am-i-20,who-am-i,host-only,고흐,,,19
+who-am-i-21,who-am-i,host-only,냉장고,,,20
+who-am-i-22,who-am-i,host-only,우산,,,21
+who-am-i-23,who-am-i,host-only,신호등,,,22
+who-am-i-24,who-am-i,host-only,에어컨,,,23
+who-am-i-25,who-am-i,host-only,김치,,,24
+who-am-i-26,who-am-i,host-only,축구공,,,25
+who-am-i-27,who-am-i,host-only,지우개,,,26
+who-am-i-28,who-am-i,host-only,칫솔,,,27
+who-am-i-29,who-am-i,host-only,선풍기,,,28
+who-am-i-30,who-am-i,host-only,전자레인지,,,29
+who-am-i-31,who-am-i,host-only,청소기,,,30
+who-am-i-32,who-am-i,host-only,노트북,,,31
+who-am-i-33,who-am-i,host-only,이어폰,,,32
+who-am-i-34,who-am-i,host-only,베개,,,33
+who-am-i-35,who-am-i,host-only,거울,,,34
+who-am-i-36,who-am-i,host-only,라면,,,35
+who-am-i-37,who-am-i,host-only,떡볶이,,,36
+who-am-i-38,who-am-i,host-only,치킨,,,37
+who-am-i-39,who-am-i,host-only,피자,,,38
+who-am-i-40,who-am-i,host-only,커피,,,39
+who-am-i-41,who-am-i,host-only,아이스크림,,,40
+who-am-i-42,who-am-i,host-only,수박,,,41
+who-am-i-43,who-am-i,host-only,바나나,,,42
+who-am-i-44,who-am-i,host-only,소방관,,,43
+who-am-i-45,who-am-i,host-only,유튜버,,,44
+who-am-i-46,who-am-i,host-only,바리스타,,,45
+who-am-i-47,who-am-i,host-only,파일럿,,,46
+who-am-i-48,who-am-i,host-only,개그맨,,,47
+who-am-i-49,who-am-i,host-only,교수,,,48
+who-am-i-50,who-am-i,host-only,아이돌,,,49
+who-am-i-51,who-am-i,host-only,택배 기사,,,50
+who-am-i-52,who-am-i,host-only,간호사,,,51
+who-am-i-53,who-am-i,host-only,요리사,,,52
+who-am-i-54,who-am-i,host-only,사진작가,,,53
+who-am-i-55,who-am-i,host-only,운동선수,,,54
+who-am-i-56,who-am-i,host-only,가수,,,55
+who-am-i-57,who-am-i,host-only,화가,,,56
+who-am-i-58,who-am-i,host-only,펭귄,,,57
+who-am-i-59,who-am-i,host-only,코알라,,,58
+who-am-i-60,who-am-i,host-only,고슴도치,,,59
+who-am-i-61,who-am-i,host-only,카피바라,,,60
+word-chain-1,word-chain,prompt,동물 이름,,,0
+word-chain-2,word-chain,prompt,한국 음식,,,1
+word-chain-3,word-chain,prompt,영화 제목,,,2
+word-chain-4,word-chain,prompt,과일 이름,,,3
+word-chain-5,word-chain,prompt,나라 이름,,,4
+word-chain-6,word-chain,prompt,가수 이름,,,5
+word-chain-7,word-chain,prompt,지하철역 이름,,,6
+word-chain-8,word-chain,prompt,브랜드 이름,,,7
+word-chain-9,word-chain,prompt,웹툰 제목,,,8
+word-chain-10,word-chain,prompt,두 글자 단어,,,9
+word-chain-11,word-chain,prompt,받침 없는 단어,,,10
+word-chain-12,word-chain,prompt,ㅅ으로 시작하는 단어,,,11
+word-chain-13,word-chain,prompt,학교에서 볼 수 있는 것,,,12
+word-chain-14,word-chain,prompt,냉장고에 있는 것,,,13
+word-chain-15,word-chain,prompt,여름 하면 떠오르는 것,,,14
+word-chain-16,word-chain,prompt,겨울 하면 떠오르는 것,,,15
+word-chain-17,word-chain,prompt,직업 이름,,,16
+word-chain-18,word-chain,prompt,운동 종목,,,17
+word-chain-19,word-chain,prompt,색깔 이름,,,18
+word-chain-20,word-chain,prompt,악기 이름,,,19
+word-chain-21,word-chain,prompt,채소 이름,,,20
+word-chain-22,word-chain,prompt,바다에 사는 것,,,21
+word-chain-23,word-chain,prompt,하늘을 나는 것,,,22
+word-chain-24,word-chain,prompt,부엌에 있는 물건,,,23
+word-chain-25,word-chain,prompt,교실에 있는 물건,,,24
+word-chain-26,word-chain,prompt,편의점에서 파는 것,,,25
+word-chain-27,word-chain,prompt,카페 메뉴,,,26
+word-chain-28,word-chain,prompt,분식집 메뉴,,,27
+word-chain-29,word-chain,prompt,치킨 브랜드,,,28
+word-chain-30,word-chain,prompt,라면 종류,,,29
+word-spy-1,word-spy,quiz,바다,수영장,스파이만 다른 단어를 받습니다,0
+word-spy-2,word-spy,quiz,커피,홍차,스파이만 다른 단어를 받습니다,1
+word-spy-3,word-spy,quiz,겨울,가을,스파이만 다른 단어를 받습니다,2
+word-spy-4,word-spy,quiz,영화관,연극무대,스파이만 다른 단어를 받습니다,3
+word-spy-5,word-spy,quiz,라면,우동,스파이만 다른 단어를 받습니다,4
+word-spy-6,word-spy,quiz,축구,농구,스파이만 다른 단어를 받습니다,5
+word-spy-7,word-spy,quiz,고양이,강아지,스파이만 다른 단어를 받습니다,6
+word-spy-8,word-spy,quiz,비행기,기차,스파이만 다른 단어를 받습니다,7
+word-spy-9,word-spy,quiz,사과,배,스파이만 다른 단어를 받습니다,8
+word-spy-10,word-spy,quiz,치킨,피자,스파이만 다른 단어를 받습니다,9
+word-spy-11,word-spy,quiz,떡볶이,라볶이,스파이만 다른 단어를 받습니다,10
+word-spy-12,word-spy,quiz,버스,지하철,스파이만 다른 단어를 받습니다,11
+word-spy-13,word-spy,quiz,학교,학원,스파이만 다른 단어를 받습니다,12
+word-spy-14,word-spy,quiz,도서관,독서실,스파이만 다른 단어를 받습니다,13
+word-spy-15,word-spy,quiz,여름휴가,겨울방학,스파이만 다른 단어를 받습니다,14
+word-spy-16,word-spy,quiz,우산,양산,스파이만 다른 단어를 받습니다,15
+word-spy-17,word-spy,quiz,냉장고,김치냉장고,스파이만 다른 단어를 받습니다,16
+word-spy-18,word-spy,quiz,노트북,태블릿,스파이만 다른 단어를 받습니다,17
+word-spy-19,word-spy,quiz,운동화,구두,스파이만 다른 단어를 받습니다,18
+word-spy-20,word-spy,quiz,모자,머리띠,스파이만 다른 단어를 받습니다,19
+word-spy-21,word-spy,quiz,샌드위치,햄버거,스파이만 다른 단어를 받습니다,20
+word-spy-22,word-spy,quiz,아이스크림,빙수,스파이만 다른 단어를 받습니다,21
+word-spy-23,word-spy,quiz,편의점,슈퍼마켓,스파이만 다른 단어를 받습니다,22
+word-spy-24,word-spy,quiz,카페,베이커리,스파이만 다른 단어를 받습니다,23
+word-spy-25,word-spy,quiz,놀이공원,동물원,스파이만 다른 단어를 받습니다,24
+word-spy-26,word-spy,quiz,병원,약국,스파이만 다른 단어를 받습니다,25
+word-spy-27,word-spy,quiz,경찰,소방관,스파이만 다른 단어를 받습니다,26
+word-spy-28,word-spy,quiz,가수,배우,스파이만 다른 단어를 받습니다,27
+word-spy-29,word-spy,quiz,피아노,기타,스파이만 다른 단어를 받습니다,28
+word-spy-30,word-spy,quiz,수영,서핑,스파이만 다른 단어를 받습니다,29
+word-spy-31,word-spy,quiz,등산,캠핑,스파이만 다른 단어를 받습니다,30
+word-spy-32,word-spy,quiz,새해,크리스마스,스파이만 다른 단어를 받습니다,31
+word-spy-33,word-spy,quiz,생일,기념일,스파이만 다른 단어를 받습니다,32
+word-spy-34,word-spy,quiz,사진,그림,스파이만 다른 단어를 받습니다,33
+word-spy-35,word-spy,quiz,일기,편지,스파이만 다른 단어를 받습니다,34
+word-spy-36,word-spy,quiz,바람,안개,스파이만 다른 단어를 받습니다,35
+word-spy-37,word-spy,quiz,눈사람,허수아비,스파이만 다른 단어를 받습니다,36
+word-spy-38,word-spy,quiz,김밥,주먹밥,스파이만 다른 단어를 받습니다,37
+word-spy-39,word-spy,quiz,소파,침대,스파이만 다른 단어를 받습니다,38
+word-spy-40,word-spy,quiz,거울,창문,스파이만 다른 단어를 받습니다,39
+zoom-quiz-1,zoom-quiz,quiz,칫솔모를 극단적으로 확대,칫솔,매일 아침저녁,0
+zoom-quiz-2,zoom-quiz,quiz,벨크로의 갈고리 구조,찍찍이,신발과 가방,1
+zoom-quiz-3,zoom-quiz,quiz,오렌지 껍질의 기공,오렌지,비타민C,2
+zoom-quiz-4,zoom-quiz,quiz,스펀지의 구멍 단면,스펀지,설거지,3
+zoom-quiz-5,zoom-quiz,quiz,지퍼 이빨의 맞물림,지퍼,옷에 달림,4
+zoom-quiz-6,zoom-quiz,quiz,키위 단면의 씨앗 배열,키위,초록 과육,5
+zoom-quiz-7,zoom-quiz,quiz,브로콜리 꽃봉오리 확대,브로콜리,초록 채소,6
+zoom-quiz-8,zoom-quiz,quiz,골판지 물결 단면,택배 상자,물결 모양 속,7
+zoom-quiz-9,zoom-quiz,quiz,수건 올의 실 구조,수건,욕실 필수,8
+zoom-quiz-10,zoom-quiz,quiz,연필심 끝 확대,연필,흑연,9
+zoom-quiz-11,zoom-quiz,quiz,라면 면발의 굴곡,라면,구불구불,10
+zoom-quiz-12,zoom-quiz,quiz,양말 무늬의 실 짜임,양말,발에 신음,11
+zoom-quiz-13,zoom-quiz,quiz,소금 결정의 각진 면,소금,짠맛,12
+zoom-quiz-14,zoom-quiz,quiz,설탕 알갱이의 투명한 결정,설탕,단맛,13
+zoom-quiz-15,zoom-quiz,quiz,딸기 표면의 씨,딸기,겉에 씨,14
+zoom-quiz-16,zoom-quiz,quiz,바나나 껍질 안쪽 섬유,바나나,노란 과일,15
+zoom-quiz-17,zoom-quiz,quiz,동전 가장자리 톱니,동전,금속 화폐,16
+zoom-quiz-18,zoom-quiz,quiz,지폐의 미세 인쇄,지폐,종이 화폐,17
+zoom-quiz-19,zoom-quiz,quiz,이어폰 그물망,이어폰,귀에 꽂음,18
+zoom-quiz-20,zoom-quiz,quiz,휴대폰 스피커 구멍,스마트폰,매일 들고 다님,19
+zoom-quiz-21,zoom-quiz,quiz,가위 날의 이음새,가위,종이를 자름,20
+zoom-quiz-22,zoom-quiz,quiz,스테이플러 심 다발,스테이플러,종이를 묶음,21
+zoom-quiz-23,zoom-quiz,quiz,우산살의 연결부,우산,비 오는 날,22
+zoom-quiz-24,zoom-quiz,quiz,운동화 밑창 홈,운동화,발에 신음,23
+zoom-quiz-25,zoom-quiz,quiz,배추 잎맥,배추,김치 재료,24
+zoom-quiz-26,zoom-quiz,quiz,깻잎 표면의 잔털,깻잎,고기와 함께,25
+zoom-quiz-27,zoom-quiz,quiz,귤 속껍질의 흰 실,귤,겨울 과일,26
+zoom-quiz-28,zoom-quiz,quiz,포도 껍질의 하얀 가루,포도,송이로 자람,27
+zoom-quiz-29,zoom-quiz,quiz,초콜릿 표면의 각인,초콜릿,달콤함,28
+zoom-quiz-30,zoom-quiz,quiz,과자 표면의 소금 결정,감자칩,바삭함,29
+zoom-quiz-31,zoom-quiz,quiz,빵의 기포 단면,식빵,토스트,30
+zoom-quiz-32,zoom-quiz,quiz,계란 껍질의 미세 구멍,계란,냉장고 필수,31
+zoom-quiz-33,zoom-quiz,quiz,치즈의 구멍,치즈,노랗고 고소함,32
+zoom-quiz-34,zoom-quiz,quiz,김의 결,김,밥에 싸 먹음,33
+zoom-quiz-35,zoom-quiz,quiz,나무 나이테,나무,나이를 알 수 있음,34
+zoom-quiz-36,zoom-quiz,quiz,모래 알갱이,모래,해변에 많음,35
+zoom-quiz-37,zoom-quiz,quiz,눈송이 결정,눈,겨울에 내림,36
+zoom-quiz-38,zoom-quiz,quiz,깃털의 갈래,깃털,새에게 있음,37
+zoom-quiz-39,zoom-quiz,quiz,실타래의 꼬임,실,바느질,38
+zoom-quiz-40,zoom-quiz,quiz,종이컵 접힌 바닥,종이컵,정수기 옆,39

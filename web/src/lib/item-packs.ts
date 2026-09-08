@@ -36,8 +36,13 @@ export function loadItemPacks(): ItemPacksByGame {
 
 export function saveItemPack(gameId: string, items: GameItem[]): ItemPacksByGame {
   const next = { ...loadItemPacks(), [gameId]: items };
-  window.localStorage.setItem(ITEM_PACKS_KEY, JSON.stringify(next));
+  cacheItemPacks(next);
   return next;
+}
+
+export function cacheItemPacks(packs: ItemPacksByGame) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(ITEM_PACKS_KEY, JSON.stringify(packs));
 }
 
 /** 공식 게임에 얹은 문항만 반환합니다. 내 게임은 항상 비어 있습니다. */

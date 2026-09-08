@@ -1,7 +1,7 @@
 import type { EventTeam, RecommendedGame, RecommendationInput } from "@/engine/recommend";
 import { places, type Place } from "@/lib/game-types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
-import type { SavedCueSheet } from "./cuesheets";
+import { loadCueSheets, type SavedCueSheet } from "./cuesheets";
 
 type CloudSaveResult =
   | { status: "synced" }
@@ -41,12 +41,13 @@ function isRecommendedGame(value: unknown): value is RecommendedGame {
     && typeof value.id === "string"
     && typeof value.name === "string"
     && typeof value.allocatedDuration === "number"
-    && typeof value.reason === "string";
+    && typeof value.reason === "string"
+    && (value.playMode === undefined || value.playMode === "team" || value.playMode === "personal");
 }
 
 function cloudRowToCueSheet(row: CloudPlanRow): SavedCueSheet | null {
   if (!places.includes(row.place as Place)) return null;
-  if (row.mode !== "team" && row.mode !== "personal") return null;
+  if (row.mode !== "team" && row.mode !== "personal" && row.mode !== "both") return null;
   if (!Number.isFinite(row.people) || !Number.isFinite(row.target_minutes)) return null;
 
   const games = (row.event_plan_games ?? [])
@@ -102,33 +103,36 @@ export async function saveCueSheetToCloud(cue: SavedCueSheet): Promise<CloudSave
   const user = userData.user;
   if (userError || !user) return { status: "signed-out" };
 
-  const { error: planError } = await supabase.from("event_plans").insert({
-    id: cue.id,
-    owner_id: user.id,
-    name: cue.name,
-    place: cue.place,
-    people: cue.people,
-    mode: cue.mode,
-    target_minutes: cue.targetMinutes,
-    teams: cue.teams ?? [],
+  const { error } = await supabase.rpc("save_event_plan", {
+    p_plan: {
+      id: cue.id,
+      name: cue.name,
+      place: cue.place,
+      people: cue.people,
+      mode: cue.mode,
+      target_minutes: cue.targetMinutes,
+      teams: cue.teams ?? [],
+      games: cue.games.map((game) => ({
+        snapshot: game,
+        allocated_minutes: game.allocatedDuration,
+      })),
+    },
   });
-  if (planError) return { status: "failed" };
-  if (!cue.games.length) return { status: "synced" };
 
-  const { error: gamesError } = await supabase.from("event_plan_games").insert(
-    cue.games.map((game, position) => ({
-      event_plan_id: cue.id,
-      // 공식 게임 시드를 DB로 옮기기 전에도 실행할 수 있게 전체 스냅샷을 보관합니다.
-      game_id: null,
-      game_snapshot: game,
-      allocated_minutes: game.allocatedDuration,
-      position,
-    })),
-  );
-  if (!gamesError) return { status: "synced" };
+  return error ? { status: "failed" } : { status: "synced" };
+}
 
-  await supabase.from("event_plans").delete().eq("id", cue.id);
-  return { status: "failed" };
+/** 로그인 직전에 기기에만 저장된 플랜도 계정으로 안전하게 옮깁니다. */
+export async function syncLocalCueSheetsToCloud(existingCloud?: SavedCueSheet[]) {
+  const currentCloud = existingCloud ?? await loadCloudCueSheets();
+  const local = loadCueSheets();
+  const cloudById = new Map(currentCloud.map((cue) => [cue.id, cue]));
+  const needsUpload = local.filter((cue) => {
+    const cloud = cloudById.get(cue.id);
+    return !cloud || cue.updatedAt > cloud.updatedAt;
+  });
+  const results = await Promise.all(needsUpload.map((cue) => saveCueSheetToCloud(cue)));
+  return results.every((result) => result.status === "synced");
 }
 
 export async function deleteCueSheetFromCloud(id: string): Promise<CloudDeleteResult> {

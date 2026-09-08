@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import type { PlayMode } from "@/lib/game-types";
 import styles from "./page.module.css";
 
 const places = [
@@ -16,15 +17,13 @@ const peopleOptions = [8, 20, 40, 80];
 const timeOptions = [30, 60, 90, 120];
 
 type Place = (typeof places)[number]["id"];
-type Mode = "team" | "personal";
-
 export default function CreatePage() {
   const router = useRouter();
   const [step, setStep] = useState(1);
   const [place, setPlace] = useState<Place>("room");
   const [people, setPeople] = useState(20);
   const [peopleInput, setPeopleInput] = useState("20");
-  const [mode, setMode] = useState<Mode>("team");
+  const [mode, setMode] = useState<PlayMode>("team");
   const [teamCount, setTeamCount] = useState(4);
   const [teamCountInput, setTeamCountInput] = useState("4");
   const [teamNames, setTeamNames] = useState(["1조", "2조", "3조", "4조"]);
@@ -59,7 +58,7 @@ export default function CreatePage() {
 
   function createEventPlan() {
     const params = new URLSearchParams({ place, people: String(people), mode, time: String(time) });
-    if (mode === "team") params.set("teams", JSON.stringify(teamNames.map((name, index) => ({ id: `team-${index + 1}`, name: name.trim() || `${index + 1}조` }))));
+    if (mode !== "personal") params.set("teams", JSON.stringify(teamNames.map((name, index) => ({ id: `team-${index + 1}`, name: name.trim() || `${index + 1}조` }))));
     router.push(`/create/result?${params.toString()}`);
   }
 
@@ -69,7 +68,7 @@ export default function CreatePage() {
         <aside className={styles.desktopRail} aria-label="행사 준비 단계">
           <div className={styles.railIntro}><p>EVENT BUILDER</p><h1>모임 정보를<br />먼저 맞춰볼까요?</h1><span>세 가지 정보만 고르면 바로 쓸 수 있는 행사 플랜을 만들어드려요.</span></div>
           <nav className={styles.stepNav} aria-label="단계 이동">
-            {[{ id: 1, label: "장소", value: selectedPlace.title }, { id: 2, label: "인원·방식", value: `${people}명 · ${mode === "team" ? `${teamCount}조 팀전` : "개인전"}` }, { id: 3, label: "진행 시간", value: `${time}분` }].map((item) => <button className={step === item.id ? styles.stepNavActive : ""} type="button" onClick={() => setStep(item.id)} key={item.id}><i>{item.id}</i><span><strong>{item.label}</strong><small>{item.value}</small></span></button>)}
+            {[{ id: 1, label: "장소", value: selectedPlace.title }, { id: 2, label: "인원·방식", value: `${people}명 · ${mode === "team" ? `${teamCount}조 팀전` : mode === "personal" ? "개인전" : `${teamCount}조 + 개인 이벤트`}` }, { id: 3, label: "진행 시간", value: `${time}분` }].map((item) => <button className={step === item.id ? styles.stepNavActive : ""} type="button" onClick={() => setStep(item.id)} key={item.id}><i>{item.id}</i><span><strong>{item.label}</strong><small>{item.value}</small></span></button>)}
           </nav>
           <div className={styles.railTip}><span>✦</span><p>플랜은 만든 뒤에도 게임 순서와 시간을 자유롭게 바꿀 수 있어요.</p></div>
         </aside>
@@ -100,7 +99,7 @@ export default function CreatePage() {
           <div className={styles.step}>
             <p className={styles.stepLabel}>STEP 2 / 3</p>
             <h1>몇 명이서<br />어떻게 하나요?</h1>
-            <p className={styles.description}>정확한 인원과 팀 구성을 알려주면 더 현실적으로 골라드릴 수 있어요.</p>
+            <p className={styles.description}>팀전 사이에 개인전 이벤트를 넣을 계획이라면 혼합 진행을 골라보세요.</p>
             <div className={styles.choiceGroup}>
               <span className={styles.choiceLabel}>참가 인원</span>
               <div className={styles.peopleInput}><input aria-label="참가 인원" type="number" min="0" inputMode="numeric" value={peopleInput} onChange={(event) => updatePeople(event.target.value)} /><span>명</span></div>
@@ -111,11 +110,12 @@ export default function CreatePage() {
               <div className={styles.modeCards}>
                 <button className={mode === "team" ? styles.modeSelected : ""} aria-pressed={mode === "team"} onClick={() => setMode("team")}><span>🏆</span><strong>팀전</strong><small>조별 점수로 더 신나게</small><b>{mode === "team" ? "선택됨" : "선택"}</b></button>
                 <button className={mode === "personal" ? styles.modeSelected : ""} aria-pressed={mode === "personal"} onClick={() => setMode("personal")}><span>🙋</span><strong>개인전</strong><small>가볍고 빠르게 진행</small><b>{mode === "personal" ? "선택됨" : "선택"}</b></button>
+                <button className={`${styles.modeMixed} ${mode === "both" ? styles.modeSelected : ""}`} aria-pressed={mode === "both"} onClick={() => setMode("both")}><span>🔀</span><strong>혼합 진행</strong><small>팀전 중간에 개인 이벤트도</small><b>{mode === "both" ? "선택됨" : "선택"}</b></button>
               </div>
             </div>
-            {mode === "team" && <div className={styles.choiceGroup}>
+            {mode !== "personal" && <div className={styles.choiceGroup}>
               <div className={styles.teamHeading}><span className={styles.choiceLabel}>조 구성</span><label><input aria-label="조 수" type="number" min="0" inputMode="numeric" value={teamCountInput} onChange={(event) => updateTeamTotal(event.target.value)} /><span>조</span></label></div>
-              <p className={styles.teamHint}>기본 조 이름은 지금 바꿀 수 있고, 구성원 배정은 나중에 추가할 수 있어요.</p>
+              <p className={styles.teamHint}>{mode === "both" ? "팀전은 이 조 구성으로 진행하고, 개인전 이벤트는 참가자별로 점수를 기록할 수 있어요." : "기본 조 이름은 지금 바꿀 수 있고, 구성원 배정은 나중에 추가할 수 있어요."}</p>
               <div className={styles.teamNames}>{teamNames.map((name, index) => <label key={index}><span>{index + 1}</span><input value={name} onChange={(event) => updateTeamName(index, event.target.value)} placeholder={`${index + 1}조`} /></label>)}</div>
             </div>}
           </div>
@@ -129,7 +129,7 @@ export default function CreatePage() {
             <div className={styles.timeOptions}>{timeOptions.map((item) => <button className={time === item ? styles.timeSelected : ""} key={item} onClick={() => setTime(item)}>{item}<small>분</small></button>)}</div>
             <div className={styles.selectionPreview}>
               <span>이렇게 만들어드려요</span>
-              <strong>{selectedPlace.icon} {selectedPlace.title} · 👥 {people}명 {mode === "team" ? `· 🏆 ${teamCount}조` : "· 🙋 개인전"} · ⏱ {time}분</strong>
+              <strong>{selectedPlace.icon} {selectedPlace.title} · 👥 {people}명 {mode === "team" ? `· 🏆 ${teamCount}조 팀전` : mode === "personal" ? "· 🙋 개인전" : `· 🏆 ${teamCount}조 + 🙋 개인 이벤트`} · ⏱ {time}분</strong>
             </div>
           </div>
         )}

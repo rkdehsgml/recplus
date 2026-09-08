@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { deleteCueSheet, type SavedCueSheet } from "@/lib/cuesheets";
-import { deleteCueSheetFromCloud, loadCloudCueSheets } from "@/lib/event-plan-store";
+import { cacheCueSheets, deleteCueSheet, loadCueSheets, type SavedCueSheet } from "@/lib/cuesheets";
+import { deleteCueSheetFromCloud, loadCloudCueSheets, mergeCueSheets, syncLocalCueSheetsToCloud } from "@/lib/event-plan-store";
 import { placeLabels } from "@/lib/game-types";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import styles from "./page.module.css";
@@ -33,10 +33,15 @@ export default function CueSheetsPage() {
         return;
       }
 
-      const cloud = await loadCloudCueSheets();
+      const initialCloud = await loadCloudCueSheets();
+      const synced = await syncLocalCueSheetsToCloud(initialCloud);
+      const cloud = synced ? await loadCloudCueSheets() : initialCloud;
       if (!active) return;
 
-      setCueSheets(cloud);
+      const merged = mergeCueSheets(cloud, loadCueSheets());
+      cacheCueSheets(merged);
+      setCueSheets(merged);
+      if (!synced) setDeleteError("일부 기기 저장 플랜을 계정에 동기화하지 못했어요. 연결을 확인한 뒤 다시 열어주세요.");
       setSignedOut(false);
       setLoaded(true);
     }
@@ -96,7 +101,7 @@ export default function CueSheetsPage() {
               <div className={styles.cardTop}><span>{placeLabels[cue.place]}</span><button onClick={() => remove(cue)}>삭제</button></div>
               <h2>{cue.name}</h2>
               <p>{new Date(cue.createdAt).toLocaleDateString("ko-KR")} 저장</p>
-              <div className={styles.meta}><span>👥 {cue.people}명</span><span>{cue.mode === "team" ? `🏆 ${cue.teams?.length ?? 2}조 팀전` : "🙋 개인전"}</span><span>🎮 {cue.games.length}게임</span></div>
+              <div className={styles.meta}><span>👥 {cue.people}명</span><span>{cue.mode === "team" ? `🏆 ${cue.teams?.length ?? 2}조 팀전` : cue.mode === "personal" ? "🙋 개인전" : `🔀 ${cue.teams?.length ?? 2}조 + 개인 이벤트`}</span><span>🎮 {cue.games.length}게임</span></div>
               <div className={styles.total}><span>예상 진행 시간</span><strong>{totalMinutes(cue)}분</strong></div>
               <Link href={`/play/${cue.id}`}>진행 시작 <span>→</span></Link>
             </article>

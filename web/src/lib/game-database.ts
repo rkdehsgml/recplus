@@ -52,6 +52,10 @@ export type DatabaseGameRow = {
   rule_steps: unknown;
   series: unknown;
   source: string;
+  created_at?: string;
+  updated_at?: string;
+  moderation_status?: "archived" | "draft" | "pending_review" | "published" | "rejected";
+  review_note?: string | null;
 };
 
 const modes: PlayMode[] = ["team", "personal", "both"];
@@ -115,6 +119,10 @@ export function gameFromDatabaseRow(row: DatabaseGameRow): GameDefinition | null
     series,
     // 공개 카탈로그에서는 로컬 전용 게임과 구분해 읽기 전용 콘텐츠로 취급합니다.
     source: "official",
+    ...(row.created_at ? { createdAt: row.created_at } : {}),
+    ...(row.updated_at ? { updatedAt: row.updated_at } : {}),
+    ...(row.moderation_status ? { moderationStatus: row.moderation_status } : {}),
+    ...(row.review_note ? { reviewNote: row.review_note } : {}),
     profile: {
       people: { min: row.people_min ?? 1, ...(row.people_max ? { max: row.people_max } : {}) },
       ...(row.recommended_teams_min && row.recommended_teams_max ? { recommendedTeams: { min: row.recommended_teams_min, max: row.recommended_teams_max } } : {}),
@@ -127,10 +135,11 @@ export function gameFromDatabaseRow(row: DatabaseGameRow): GameDefinition | null
   };
 }
 
-const publicGameSelect = `
+export const databaseGameSelect = `
   id, name, archetype, phase, duration_minutes, places, mode, energy, description,
   host_script, rule_steps, people_min, people_max, recommended_teams_min,
   recommended_teams_max, contexts, preparations, difficulty, source, origin, series,
+  created_at, updated_at, moderation_status, review_note,
   game_items ( id, game_id, kind, prompt, answer, hint, position )
 `;
 
@@ -140,7 +149,7 @@ export async function loadPublishedGames(): Promise<GameDefinition[]> {
     const supabase = createSupabaseBrowserClient();
     const { data, error } = await supabase
       .from("games")
-      .select(publicGameSelect)
+      .select(databaseGameSelect)
       .eq("visibility", "public")
       .eq("moderation_status", "published")
       .order("published_at", { ascending: false });

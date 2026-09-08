@@ -72,10 +72,11 @@ export function loadPlaySession(cueSheetId: string): PlaySession | null {
 }
 
 export function savePlaySession(cueSheetId: string, session: Omit<PlaySession, "updatedAt">) {
-  if (typeof window === "undefined") return;
+  if (typeof window === "undefined") return null;
 
   const next: PlaySession = { ...session, updatedAt: new Date().toISOString() };
   window.localStorage.setItem(sessionKey(cueSheetId), JSON.stringify(next));
+  return next;
 }
 
 export function clearPlaySession(cueSheetId: string) {

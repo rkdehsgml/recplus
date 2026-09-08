@@ -20,7 +20,7 @@ export default async function LoginPage({ searchParams }: LoginPageProps) {
           <li><span>✓</span> 로그인한 계정만 내 플랜에 접근</li>
           <li><span>✓</span> 이메일과 비밀번호로 안전하게 로그인</li>
         </ul>
-        <p className={styles.securityNote}><span>✦</span> 소셜 계정의 비밀번호는 레크플러스에 전달되지 않아요.</p>
+        <p className={styles.securityNote}><span>✦</span> 인증 링크와 비밀번호 로그인은 Supabase Auth로 안전하게 처리합니다.</p>
       </section>
       <section className={styles.authCard}>
         <div className={styles.cardHeader}>

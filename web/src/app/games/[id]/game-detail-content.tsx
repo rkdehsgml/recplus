@@ -1,32 +1,31 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { itemTargetFor } from "@/data/item-targets";
-import { loadCustomGames } from "@/lib/custom-games";
+import { saveCustomGameToCloud, submitCustomGame } from "@/lib/custom-game-store";
+import { updateCustomGame } from "@/lib/custom-games";
 import { gameContextLabel, gamePeopleLabel, gameTeamLabel } from "@/lib/game-discovery";
 import { gameItemsFor } from "@/lib/game-catalog";
-import { addedItemsFor, loadItemPacks, type ItemPacksByGame } from "@/lib/item-packs";
-import { archetypeLabels, difficultyLabels, gameOriginFor, gameOriginLabels, gameSeriesLabels, placeLabels, type GameDefinition } from "@/lib/game-types";
+import { addedItemsFor } from "@/lib/item-packs";
+import { archetypeLabels, difficultyLabels, gameOriginFor, gameOriginLabels, gameSeriesLabels, placeLabels } from "@/lib/game-types";
 import { useGameCatalog } from "@/lib/use-game-catalog";
+import { useCustomGames } from "@/lib/use-custom-games";
+import { useItemPacks } from "@/lib/use-item-packs";
 import styles from "./page.module.css";
 
 const icons = { QUIZ: "🧠", TALK: "💬", SURVIVAL: "⚡", PERFORM: "🎭", PICK: "🎰", BOMB: "💣" } as const;
 
 export default function GameDetailContent({ id }: { id: string }) {
   const { games: catalog } = useGameCatalog();
-  const [customGames, setCustomGames] = useState<GameDefinition[]>([]);
-  const [packs, setPacks] = useState<ItemPacksByGame>({});
+  const { games: customGames, setGames: setCustomGames } = useCustomGames();
+  const { packs } = useItemPacks();
+  const [submissionNote, setSubmissionNote] = useState("");
+  const [sharingConsent, setSharingConsent] = useState(false);
+  const [submissionMessage, setSubmissionMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      setCustomGames(loadCustomGames());
-      setPacks(loadItemPacks());
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
-
-  const game = useMemo(() => catalog.find((item) => item.id === id) ?? customGames.find((item) => item.id === id), [catalog, customGames, id]);
+  const game = useMemo(() => customGames.find((item) => item.id === id) ?? catalog.find((item) => item.id === id), [catalog, customGames, id]);
   const relatedGames = useMemo(() => {
     if (!game?.profile) return [];
     return catalog.filter((item) => item.id !== game.id && item.profile?.contexts.some((context) => game.profile?.contexts.includes(context))).slice(0, 3);
@@ -41,6 +40,30 @@ export default function GameDetailContent({ id }: { id: string }) {
   const itemTarget = itemTargetFor(game);
   const profile = game.profile;
 
+  async function requestReview() {
+    if (!game || game.source !== "custom") return;
+    if (!sharingConsent) {
+      setSubmissionMessage("공개 검수를 요청하려면 공개 동의가 필요해요.");
+      return;
+    }
+    setSubmitting(true);
+    setSubmissionMessage("");
+    const saved = await saveCustomGameToCloud(game);
+    if (saved === "signed-out") {
+      setSubmitting(false);
+      setSubmissionMessage("로그인한 뒤 공개 검수를 요청할 수 있어요.");
+      return;
+    }
+    if (saved === "failed" || await submitCustomGame(game.id, submissionNote) === "failed") {
+      setSubmitting(false);
+      setSubmissionMessage("검수 요청을 보내지 못했어요. 잠시 후 다시 시도해주세요.");
+      return;
+    }
+    setCustomGames(updateCustomGame(game.id, { moderationStatus: "pending_review" }));
+    setSubmitting(false);
+    setSubmissionMessage("공개 검수를 요청했어요. 운영자 검토 후 라이브러리에 반영됩니다.");
+  }
+
   return (
     <main className={styles.page}>
       <Link className={styles.breadcrumb} href="/games">← 게임 라이브러리</Link>
@@ -54,6 +77,18 @@ export default function GameDetailContent({ id }: { id: string }) {
         </div>
         <div className={styles.heroActions}><Link className={styles.primary} href="/create">이 게임으로 행사 준비 <span>→</span></Link><span>게임을 고른 뒤 행사 순서를 구성할 수 있어요.</span></div>
       </section>
+
+      {game.source === "custom" && <section className={styles.submission}>
+        <div><p>COMMUNITY</p><h2>커뮤니티 공개 상태</h2><span>{game.moderationStatus === "pending_review" ? "운영자가 게임 내용과 공개 동의를 검토하고 있어요." : game.moderationStatus === "published" ? "검수를 통과해 공개 라이브러리에 노출 중이에요." : game.moderationStatus === "rejected" ? "검토 메모를 반영한 뒤 다시 요청할 수 있어요." : "내 게임은 기본적으로 나에게만 보입니다."}</span></div>
+        {game.reviewNote && <p className={styles.reviewNote}>검토 메모 · {game.reviewNote}</p>}
+        {(game.moderationStatus === undefined || game.moderationStatus === "draft" || game.moderationStatus === "rejected") && <div className={styles.submissionForm}>
+          <Link href={`/games/${game.id}/edit`}>게임 내용과 문항 수정 →</Link>
+          <label>운영자에게 남길 말 <small>선택</small><textarea value={submissionNote} onChange={(event) => setSubmissionNote(event.target.value)} maxLength={1000} /></label>
+          <label className={styles.submissionConsent}><input type="checkbox" checked={sharingConsent} onChange={(event) => setSharingConsent(event.target.checked)} /><span>게임 내용과 문항이 검수 후 공개되는 것에 동의합니다.</span></label>
+          <button type="button" onClick={() => void requestReview()} disabled={submitting}>{submitting ? "요청 중…" : "공개 검수 요청"}</button>
+        </div>}
+        {submissionMessage && <p className={styles.submissionMessage} role="status">{submissionMessage}</p>}
+      </section>}
 
       <section className={styles.overview} aria-label="게임 운영 정보">
         <article><span>권장 인원</span><strong>{gamePeopleLabel(game)}</strong></article>

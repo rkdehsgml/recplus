@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import BrandSelect from "@/app/ui/brand-select";
 import { getAdminAccess, type AdminAccess } from "@/lib/admin-access";
 import { createSupabaseBrowserClient } from "@/lib/supabase/client";
 import {
@@ -59,6 +60,12 @@ type EditableGameRow = {
   preparations: string[];
   rule_steps: string[];
   series: string[];
+  source: "official" | "user";
+  moderation_status: "archived" | "draft" | "pending_review" | "published" | "rejected";
+  submission_note: string | null;
+  submitted_at: string | null;
+  sharing_consent_at: string | null;
+  review_note: string | null;
   visibility: "private" | "public" | "unlisted";
 };
 
@@ -97,6 +104,12 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
   const [steps, setSteps] = useState(["", "", ""]);
   const [items, setItems] = useState<ItemDraft[]>([emptyItem("item-1")]);
   const [publishNow, setPublishNow] = useState(true);
+  const [gameSource, setGameSource] = useState<"official" | "user">("official");
+  const [moderationStatus, setModerationStatus] = useState<EditableGameRow["moderation_status"]>("draft");
+  const [submissionNote, setSubmissionNote] = useState("");
+  const [submittedAt, setSubmittedAt] = useState<string | null>(null);
+  const [sharingConsentAt, setSharingConsentAt] = useState<string | null>(null);
+  const [reviewNote, setReviewNote] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
 
@@ -112,7 +125,7 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
       const supabase = createSupabaseBrowserClient();
       const { data, error: gameError } = await supabase
         .from("games")
-        .select("name, archetype, origin, series, phase, duration_minutes, places, mode, energy, description, host_script, rule_steps, people_min, people_max, contexts, preparations, difficulty, visibility, game_items ( id, kind, prompt, answer, hint, position )")
+        .select("name, archetype, origin, series, phase, duration_minutes, places, mode, energy, description, host_script, rule_steps, people_min, people_max, contexts, preparations, difficulty, source, visibility, moderation_status, submission_note, submitted_at, sharing_consent_at, review_note, game_items ( id, kind, prompt, answer, hint, position )")
         .eq("id", gameId)
         .single();
 
@@ -148,6 +161,12 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
         hint: item.hint ?? "",
       })));
       setPublishNow(game.visibility === "public");
+      setGameSource(game.source);
+      setModerationStatus(game.moderation_status);
+      setSubmissionNote(game.submission_note ?? "");
+      setSubmittedAt(game.submitted_at);
+      setSharingConsentAt(game.sharing_consent_at);
+      setReviewNote(game.review_note ?? "");
       setLoaded(true);
     }
 
@@ -213,8 +232,7 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
     }
 
     const gamePayload = {
-      visibility: publishNow ? "public" : "private",
-      moderation_status: publishNow ? "published" : "draft",
+      id,
       name: name.trim(),
       archetype,
       origin,
@@ -232,47 +250,42 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
       contexts: selectedContexts,
       preparations: preparations.split(/[\n,]/).map((item) => item.trim()).filter(Boolean),
       difficulty,
-      published_at: publishNow ? new Date().toISOString() : null,
     };
 
-    const { error: gameError } = editorMode === "create"
-      ? await supabase.from("games").insert({ id, source: "official", ...gamePayload })
-      : await supabase.from("games").update(gamePayload).eq("id", id);
-
-    if (gameError) {
+    const { error: saveError } = await supabase.rpc("save_admin_game", {
+      p_game: gamePayload,
+      p_items: preparedItems,
+      p_publish: publishNow,
+    });
+    if (saveError) {
       setSaving(false);
-      setError(editorMode === "create" ? "게임을 저장하지 못했어요. 관리자 권한과 DB 마이그레이션을 확인해주세요." : "게임 기본 정보를 저장하지 못했어요. 관리자 권한을 확인해주세요.");
+      setError("게임과 문제팩을 저장하지 못했어요. 최신 DB 마이그레이션과 관리자 권한을 확인해주세요.");
       return;
     }
 
-    if (editorMode === "edit") {
-      const { error: deleteItemsError } = await supabase.from("game_items").delete().eq("game_id", id);
-      if (deleteItemsError) {
-        setSaving(false);
-        setError("기존 문제팩을 교체하지 못했어요. 기본 정보는 저장되었으니 다시 시도해주세요.");
-        return;
-      }
+    router.replace("/admin");
+    router.refresh();
+  }
+
+  async function review(decision: "published" | "rejected") {
+    if (!gameId || gameSource !== "user") return;
+    if (decision === "rejected" && !reviewNote.trim()) {
+      setError("반려할 때는 사용자가 수정할 수 있도록 검토 메모를 남겨주세요.");
+      return;
     }
-
-    if (preparedItems.length) {
-      const { error: itemError } = await supabase.from("game_items").insert(preparedItems.map((item, index) => ({
-        id: `${id}-item-${crypto.randomUUID()}`,
-        game_id: id,
-        kind: item.kind,
-        prompt: item.prompt,
-        ...(item.kind === "quiz" && item.answer ? { answer: item.answer } : {}),
-        ...(item.kind === "quiz" && item.hint ? { hint: item.hint } : {}),
-        position: index,
-      })));
-
-      if (itemError) {
-        if (editorMode === "create") await supabase.from("games").delete().eq("id", id);
-        setSaving(false);
-        setError(editorMode === "create" ? "문제팩 저장에 실패해 게임 등록을 되돌렸어요. 다시 시도해주세요." : "문제팩 저장에 실패했어요. 문항을 다시 확인한 뒤 저장해주세요.");
-        return;
-      }
+    if (!window.confirm(decision === "published" ? "이 사용자 게임을 공개할까요?" : "이 게임을 반려할까요?")) return;
+    setSaving(true);
+    setError("");
+    const { error: reviewError } = await createSupabaseBrowserClient().rpc("review_user_game", {
+      p_game_id: gameId,
+      p_decision: decision,
+      p_review_note: reviewNote,
+    });
+    setSaving(false);
+    if (reviewError) {
+      setError("검토 결과를 저장하지 못했어요. 동의 기록과 현재 검수 상태를 확인해주세요.");
+      return;
     }
-
     router.replace("/admin");
     router.refresh();
   }
@@ -285,15 +298,23 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
   const creating = editorMode === "create";
   return (
     <main className={styles.page}>
-      <div className={styles.header}><Link href="/admin">← 관리 화면</Link><span>{creating ? "공식 게임 등록" : "공식 게임 편집"}</span></div>
+      <div className={styles.header}><Link href="/admin">← 관리 화면</Link><span>{creating ? "공식 게임 등록" : gameSource === "user" ? "사용자 게임 검수" : "공식 게임 편집"}</span></div>
       <form className={styles.form} onSubmit={submit}>
-        <section className={styles.intro}><p>{creating ? "NEW OFFICIAL GAME" : "EDIT OFFICIAL GAME"}</p><h1>{creating ? <>게임 하나를<br />라이브러리에 추가하세요.</> : <>게임 내용을<br />최신 상태로 관리하세요.</>}</h1><span>게임 계보와 프로그램 컬렉션, 기본 정보, 문제팩을 함께 저장하면 라이브러리에 같은 기준으로 반영됩니다.</span></section>
+        <section className={styles.intro}><p>{creating ? "NEW OFFICIAL GAME" : gameSource === "user" ? "COMMUNITY REVIEW" : "EDIT OFFICIAL GAME"}</p><h1>{creating ? <>게임 하나를<br />라이브러리에 추가하세요.</> : gameSource === "user" ? <>신청 내용을 확인하고<br />공개 여부를 결정하세요.</> : <>게임 내용을<br />최신 상태로 관리하세요.</>}</h1><span>게임 계보와 프로그램 컬렉션, 기본 정보, 문제팩을 함께 저장하면 라이브러리에 같은 기준으로 반영됩니다.</span></section>
+
+        {gameSource === "user" && <section className={`${styles.section} ${editorStyles.reviewPanel}`}>
+          <h2>제출 및 동의 기록</h2>
+          <dl><div><dt>현재 상태</dt><dd>{moderationStatus}</dd></div><div><dt>제출 시각</dt><dd>{submittedAt ? new Date(submittedAt).toLocaleString("ko-KR") : "기록 없음"}</dd></div><div><dt>공개 동의</dt><dd>{sharingConsentAt ? new Date(sharingConsentAt).toLocaleString("ko-KR") : "동의 기록 없음"}</dd></div></dl>
+          <label>신청자가 남긴 말<textarea value={submissionNote} readOnly /></label>
+          <label>검토 메모<textarea value={reviewNote} onChange={(event) => setReviewNote(event.target.value)} maxLength={1000} placeholder="승인 참고사항 또는 반려 사유를 남겨주세요." /></label>
+          {moderationStatus === "pending_review" && <div className={editorStyles.reviewActions}><button type="button" onClick={() => void review("rejected")} disabled={saving}>수정 요청으로 반려</button><button type="button" onClick={() => void review("published")} disabled={saving || !sharingConsentAt}>검수 승인 및 공개</button></div>}
+        </section>}
 
         <section className={styles.section}>
           <h2>기본 정보</h2>
           <label>게임 이름<input value={name} onChange={(event) => setName(event.target.value)} placeholder="예: 팀 대항 초성 퀴즈" maxLength={100} /></label>
           <label>게임 설명<textarea value={description} onChange={(event) => setDescription(event.target.value)} placeholder="누가, 어떤 상황에서, 무엇을 하며 즐기는 게임인지 적어주세요. 예: 팀별로 제한 시간 안에 초성을 보고 정답을 많이 맞히는 퀴즈예요." maxLength={1000} /></label>
-          <div className={styles.columns}><label>게임 계보<select value={origin} onChange={(event) => setOrigin(event.target.value as GameOrigin)}>{gameOrigins.map((item) => <option key={item} value={item}>{gameOriginLabels[item]}</option>)}</select></label><label>게임 유형<select value={archetype} onChange={(event) => setArchetype(event.target.value as Archetype)}>{archetypes.map((item) => <option key={item} value={item}>{archetypeLabels[item]}</option>)}</select></label><label>추천 구간<select value={phase} onChange={(event) => setPhase(event.target.value as Phase)}>{phases.map((item) => <option key={item} value={item}>{phaseLabels[item]}</option>)}</select></label></div>
+          <div className={styles.columns}><label>게임 계보<BrandSelect value={origin} onValueChange={setOrigin} options={gameOrigins.map((item) => ({ value: item, label: gameOriginLabels[item] }))} /></label><label>게임 유형<BrandSelect value={archetype} onValueChange={setArchetype} options={archetypes.map((item) => ({ value: item, label: archetypeLabels[item] }))} /></label><label>추천 구간<BrandSelect value={phase} onValueChange={setPhase} options={phases.map((item) => ({ value: item, label: phaseLabels[item] }))} /></label></div>
           <span className={styles.label}>프로그램 컬렉션 <small>방송에서 확인한 포맷일 때만 선택</small></span><div className={styles.chips}>{gameSeries.map((series) => <button className={selectedSeries.includes(series) ? styles.selected : ""} type="button" onClick={() => toggleSeries(series)} key={series}>{gameSeriesLabels[series]}</button>)}</div>
         </section>
 
@@ -302,8 +323,8 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
           <span className={styles.label}>가능한 장소</span><div className={styles.chips}>{places.map((place) => <button className={selectedPlaces.includes(place) ? styles.selected : ""} type="button" onClick={() => togglePlace(place)} key={place}>{placeLabels[place]}</button>)}</div>
           <span className={styles.label}>추천 모임 상황</span><div className={styles.chips}>{eventContexts.map((context) => <button className={selectedContexts.includes(context) ? styles.selected : ""} type="button" onClick={() => toggleContext(context)} key={context}>{eventContextLabels[context]}</button>)}</div>
           <div className={styles.columns}><label>권장 최소 인원<input type="number" min="1" value={peopleMin} onChange={(event) => setPeopleMin(Number(event.target.value))} /></label><label>권장 최대 인원<input type="number" min="1" value={peopleMax} onChange={(event) => setPeopleMax(Number(event.target.value))} /></label></div>
-          <div className={styles.columns}><label>권장 시간<select value={duration} onChange={(event) => setDuration(Number(event.target.value))}>{[5, 10, 15, 20, 30, 45, 60].map((item) => <option key={item} value={item}>{item}분</option>)}</select></label><label>진행 방식<select value={mode} onChange={(event) => setMode(event.target.value as PlayMode)}><option value="both">팀·개인 모두</option><option value="team">팀전</option><option value="personal">개인전</option></select></label></div>
-          <div className={styles.columns}><label>에너지<select value={energy} onChange={(event) => setEnergy(Number(event.target.value))}>{[1, 2, 3, 4, 5].map((item) => <option key={item} value={item}>{item}단계</option>)}</select></label><label>진행 난이도<select value={difficulty} onChange={(event) => setDifficulty(event.target.value as GameDifficulty)}>{Object.entries(difficultyLabels).map(([key, label]) => <option key={key} value={key}>{label}</option>)}</select></label></div>
+          <div className={styles.columns}><label>권장 시간<BrandSelect value={duration} onValueChange={setDuration} options={[5, 10, 15, 20, 30, 45, 60].map((item) => ({ value: item, label: `${item}분` }))} /></label><label>진행 방식<BrandSelect value={mode} onValueChange={setMode} options={[{ value: "both", label: "팀·개인 모두" }, { value: "team", label: "팀전" }, { value: "personal", label: "개인전" }] as const} /></label></div>
+          <div className={styles.columns}><label>에너지<BrandSelect value={energy} onValueChange={setEnergy} options={[1, 2, 3, 4, 5].map((item) => ({ value: item, label: `${item}단계` }))} /></label><label>진행 난이도<BrandSelect value={difficulty} onValueChange={setDifficulty} options={(Object.entries(difficultyLabels) as [GameDifficulty, string][]).map(([value, label]) => ({ value, label }))} /></label></div>
           <label>준비물 <small>쉼표 또는 줄바꿈으로 구분</small><input value={preparations} onChange={(event) => setPreparations(event.target.value)} placeholder="예: 점수판, 펜" maxLength={300} /></label>
         </section>
 
@@ -318,14 +339,14 @@ export default function GameEditor({ gameId, mode: editorMode }: GameEditorProps
           <div className={styles.sectionHead}><div><h2>문제·제시어</h2><p>문항을 고치거나 삭제하고, 위·아래 버튼으로 노출 순서를 바꿀 수 있어요.</p></div><button type="button" onClick={() => setItems((current) => [...current, emptyItem(`item-${crypto.randomUUID()}`)])}>＋ 문항 추가</button></div>
           <div className={styles.itemList}>{items.map((item, index) => <article className={styles.item} key={item.key}>
             <div className={styles.itemTop}><strong>{index + 1}번 문항</strong><span className={editorStyles.itemActions}><button type="button" onClick={() => moveItem(index, -1)} disabled={index === 0}>위로</button><button type="button" onClick={() => moveItem(index, 1)} disabled={index === items.length - 1}>아래로</button><button type="button" onClick={() => setItems((current) => current.filter((currentItem) => currentItem.key !== item.key))}>삭제</button></span></div>
-            <div className={styles.columns}><label>유형<select value={item.kind} onChange={(event) => updateItem(item.key, { kind: event.target.value as GameItemKind })}><option value="prompt">질문 카드</option><option value="quiz">퀴즈</option><option value="host-only">진행자 전용 제시어</option></select></label><label>내용<input value={item.prompt} onChange={(event) => updateItem(item.key, { prompt: event.target.value })} placeholder="예: 평생 치킨만 vs 평생 피자만" maxLength={3000} /></label></div>
+            <div className={styles.columns}><label>유형<BrandSelect value={item.kind} onValueChange={(kind) => updateItem(item.key, { kind })} options={[{ value: "prompt", label: "질문 카드" }, { value: "quiz", label: "퀴즈" }, { value: "host-only", label: "진행자 전용 제시어" }] as const} /></label><label>내용<input value={item.prompt} onChange={(event) => updateItem(item.key, { prompt: event.target.value })} placeholder="예: 평생 치킨만 vs 평생 피자만" maxLength={3000} /></label></div>
             {item.kind === "quiz" && <div className={styles.columns}><label>정답<input value={item.answer} onChange={(event) => updateItem(item.key, { answer: event.target.value })} placeholder="예: 떡볶이" maxLength={3000} /></label><label>힌트 <small>선택</small><input value={item.hint} onChange={(event) => updateItem(item.key, { hint: event.target.value })} placeholder="예: 분식집 대표 메뉴" maxLength={3000} /></label></div>}
           </article>)}</div>
         </section>
 
-        <label className={styles.publish}><input type="checkbox" checked={publishNow} onChange={(event) => setPublishNow(event.target.checked)} /><span><b>{creating ? "등록 직후 라이브러리에 공개" : "저장 후 라이브러리에 공개"}</b><small>끄면 라이브러리에서 숨긴 초안으로 저장합니다.</small></span></label>
+        {gameSource === "official" && <label className={styles.publish}><input type="checkbox" checked={publishNow} onChange={(event) => setPublishNow(event.target.checked)} /><span><b>{creating ? "등록 직후 라이브러리에 공개" : "저장 후 라이브러리에 공개"}</b><small>끄면 라이브러리에서 숨긴 초안으로 저장합니다.</small></span></label>}
         {error && <p className={styles.error} role="alert">{error}</p>}
-        <button className={styles.submit} type="submit" disabled={saving}>{saving ? "저장 중…" : publishNow ? (creating ? "공식 게임 등록 및 공개 →" : "변경사항 저장 및 공개 →") : "초안으로 저장 →"}</button>
+        <button className={styles.submit} type="submit" disabled={saving}>{saving ? "저장 중…" : gameSource === "user" ? "검수 내용 저장 →" : publishNow ? (creating ? "공식 게임 등록 및 공개 →" : "변경사항 저장 및 공개 →") : "초안으로 저장 →"}</button>
       </form>
     </main>
   );

@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { itemTargetFor } from "@/data/item-targets";
-import { loadCustomGames } from "@/lib/custom-games";
 import { gameItemsFor } from "@/lib/game-catalog";
-import { addedItemsFor, loadItemPacks, type ItemPacksByGame } from "@/lib/item-packs";
-import { archetypeLabels, type GameDefinition, type GameItem } from "@/lib/game-types";
+import { addedItemsFor } from "@/lib/item-packs";
+import { archetypeLabels, type GameItem } from "@/lib/game-types";
 import { useGameCatalog } from "@/lib/use-game-catalog";
+import { useCustomGames } from "@/lib/use-custom-games";
+import { useItemPacks } from "@/lib/use-item-packs";
 import styles from "./page.module.css";
 
 const icons = { QUIZ: "🧠", TALK: "💬", SURVIVAL: "⚡", PERFORM: "🎭", PICK: "🎰", BOMB: "💣" } as const;
@@ -32,19 +33,11 @@ function ItemAnswer({ item }: { item: GameItem }) {
 
 export default function ItemPackContent({ id }: { id: string }) {
   const { games: catalog } = useGameCatalog();
-  const [customGames, setCustomGames] = useState<GameDefinition[]>([]);
-  const [packs, setPacks] = useState<ItemPacksByGame>({});
-
-  useEffect(() => {
-    const frame = window.requestAnimationFrame(() => {
-      setCustomGames(loadCustomGames());
-      setPacks(loadItemPacks());
-    });
-    return () => window.cancelAnimationFrame(frame);
-  }, []);
+  const { games: customGames } = useCustomGames();
+  const { packs } = useItemPacks();
 
   const game = useMemo(
-    () => catalog.find((item) => item.id === id) ?? customGames.find((item) => item.id === id) ?? null,
+    () => customGames.find((item) => item.id === id) ?? catalog.find((item) => item.id === id) ?? null,
     [catalog, customGames, id],
   );
   const items = useMemo(() => {
