@@ -1,33 +1,7 @@
-import { seedGameItems } from "@/data/game-items";
-import { gameProfiles } from "@/data/game-profiles";
-import { attachGameItems } from "@/lib/game-catalog";
-import type { GameDefinition } from "@/lib/game-types";
+import { generatedFallbackGames } from "@/data/generated-game-catalog";
 
-const gameDefinitions: GameDefinition[] = [
-  { id: "chungazame", name: "청개구리 가위바위보", archetype: "SURVIVAL", phase: "opening", duration: 5, places: ["room", "hall"], mode: "both", energy: 2, description: "반대로 이겨야 하는 가위바위보로 가볍게 몸을 풉니다.", hostScript: "제가 낸 것을 이기면 지고, 지면 이기는 거예요. 가위바위보!", ruleSteps: ["진행자가 가위·바위·보 중 하나를 냅니다.", "참가자는 반대로 이기는 손을 냅니다.", "틀린 사람은 탈락하거나 가벼운 벌칙을 합니다."], origin: "classic", source: "official" },
-  { id: "nunchi", name: "눈치 게임", archetype: "SURVIVAL", phase: "opening", duration: 5, places: ["room", "restaurant", "hall"], mode: "personal", energy: 2, description: "순서 없이 숫자를 외치며 서로의 눈치를 보는 대표 게임입니다.", hostScript: "순서 없이 아무나 1부터 외쳐요. 동시에 외치면 둘 다 탈락입니다!", ruleSteps: ["목표 숫자를 정합니다.", "참가자가 아무 순서 없이 숫자를 외칩니다.", "동시에 외치거나 망설인 사람에게 벌칙을 줍니다."], origin: "classic", source: "official" },
-  { id: "game369", name: "369 게임", archetype: "SURVIVAL", phase: "opening", duration: 5, places: ["room", "restaurant"], mode: "personal", energy: 3, description: "숫자를 세다가 3·6·9에서 박수치는 빠른 템포의 게임입니다.", hostScript: "돌아가며 숫자를 세는데 3, 6, 9가 들어가면 박수예요!", ruleSteps: ["차례대로 숫자를 셉니다.", "3·6·9가 있으면 숫자 대신 박수칩니다.", "실수하면 벌칙 또는 다음 라운드 관전입니다."], origin: "classic", source: "official" },
-  { id: "balance", name: "밸런스 게임", archetype: "TALK", phase: "icebreak", duration: 15, places: ["room", "restaurant", "hall"], mode: "both", energy: 3, description: "둘 중 하나를 고르고 이유를 나누며 대화를 엽니다.", hostScript: "둘 중 하나를 고르고, 왜 골랐는지 한마디씩 말해주세요.", ruleSteps: ["질문 하나를 읽습니다.", "참가자가 둘 중 하나를 고릅니다.", "재미있는 이유를 골라 더 이야기합니다."], origin: "variety", source: "official" },
-  { id: "word-chain", name: "이어 말하기", archetype: "TALK", phase: "icebreak", duration: 10, places: ["room", "restaurant"], mode: "both", energy: 3, description: "주제 안에서 빠르게 단어를 이어 말하는 준비물 없는 게임입니다.", hostScript: "주제 안에서 돌아가며 말하세요. 3초 안에 못 대거나 중복이면 탈락!", ruleSteps: ["주제를 하나 고릅니다.", "한 명씩 관련 단어를 말합니다.", "중복·지연·오답이면 라운드에서 빠집니다."], origin: "classic", source: "official" },
-  { id: "what-if", name: "만약에", archetype: "TALK", phase: "icebreak", duration: 10, places: ["room", "restaurant"], mode: "both", energy: 2, description: "상상 질문으로 자연스러운 대화를 만드는 토크 게임입니다.", hostScript: "만약에 질문을 듣고, 떠오르는 답을 편하게 말해주세요.", ruleSteps: ["질문 하나를 읽습니다.", "각자 답을 말합니다.", "특히 재미있는 답을 이어서 물어봅니다."], origin: "classic", source: "official" },
-  { id: "sonbyeongho", name: "손병호 게임", archetype: "SURVIVAL", phase: "icebreak", duration: 10, places: ["room", "restaurant"], mode: "personal", energy: 3, description: "공통점을 발견하며 서로 알아가는 손가락 생존 게임입니다.", hostScript: "손가락 다섯 개를 펴고, 해당되면 하나씩 접어주세요.", ruleSteps: ["모두 손가락 다섯 개를 폅니다.", "질문에 해당하면 손가락을 접습니다.", "손가락을 모두 접은 사람에게 가벼운 벌칙을 줍니다."], origin: "variety", source: "official" },
-  { id: "choseong", name: "카테고리 초성 퀴즈", archetype: "QUIZ", phase: "main", duration: 20, places: ["room", "restaurant", "hall"], mode: "both", energy: 4, description: "카테고리와 초성을 보고 정답을 맞히는 퀴즈입니다.", hostScript: "카테고리와 초성을 보고 답을 외쳐주세요. 먼저 맞히면 점수!", ruleSteps: ["문제와 카테고리를 보여줍니다.", "참가자가 정답을 외칩니다.", "정답을 확인하고 점수를 기록합니다."], origin: "variety", source: "official" },
-  { id: "person-quiz", name: "인물 퀴즈", archetype: "QUIZ", phase: "main", duration: 15, places: ["room", "hall"], mode: "both", energy: 4, description: "힌트를 보고 인물을 맞히는 팀 대항 퀴즈입니다.", hostScript: "힌트 세 개를 보고 누군지 맞혀주세요!", ruleSteps: ["힌트를 하나씩 읽습니다.", "참가자가 정답을 말합니다.", "정답 팀에 점수를 줍니다."], origin: "variety", series: ["new-journey"], source: "official" },
-  { id: "charades", name: "몸으로 말해요", archetype: "PERFORM", phase: "main", duration: 15, places: ["room", "hall"], mode: "team", energy: 4, description: "말 없이 몸으로 제시어를 표현하는 팀전 게임입니다.", hostScript: "말 없이 몸으로만 표현하세요. 팀원이 맞히면 하나씩 넘어갑니다!", ruleSteps: ["팀별 출제자를 정합니다.", "제한 시간 동안 제시어를 표현합니다.", "맞힌 개수로 점수를 계산합니다."], origin: "variety", source: "official" },
-  { id: "speed-quiz", name: "스피드 퀴즈", archetype: "QUIZ", phase: "main", duration: 15, places: ["room", "hall"], mode: "team", energy: 4, description: "설명하는 사람과 맞히는 사람이 호흡을 맞추는 팀전 게임입니다.", hostScript: "출제자가 설명하고 팀원이 맞혀요. 모르면 통과할 수 있어요!", ruleSteps: ["팀별 출제자를 정합니다.", "제한 시간에 제시어를 설명합니다.", "정답 수를 세어 점수를 줍니다."], origin: "variety", source: "official" },
-  { id: "one-mind", name: "이심전심", archetype: "TALK", phase: "main", duration: 15, places: ["room", "restaurant", "hall"], mode: "team", energy: 3, description: "같은 질문에 같은 답을 적어 팀의 궁합을 겨룹니다.", hostScript: "질문을 듣고 동시에 답을 적으세요. 답이 겹치면 점수입니다!", ruleSteps: ["팀원 모두 답을 생각합니다.", "동시에 답을 공개합니다.", "겹친 답이 많을수록 점수를 얻습니다."], origin: "variety", source: "official" },
-  { id: "penalty-wheel", name: "벌칙 룰렛", archetype: "PICK", phase: "finale", duration: 5, places: ["room", "restaurant", "hall"], mode: "both", energy: 4, description: "가벼운 벌칙이나 다음 진행자를 정하는 룰렛입니다.", hostScript: "룰렛을 돌려서 오늘의 미션을 정해볼게요!", ruleSteps: ["순한 미션 목록을 확인합니다.", "룰렛을 돌립니다.", "뽑힌 미션을 즐겁게 수행합니다."], origin: "classic", source: "official" },
-  { id: "time-bomb", name: "시한폭탄", archetype: "BOMB", phase: "finale", duration: 5, places: ["room", "restaurant"], mode: "personal", energy: 5, description: "언제 끝날지 모르는 폭탄을 넘기며 긴장감을 높입니다.", hostScript: "폭탄을 들고 미션을 한 뒤 다음 사람에게 넘겨주세요!", ruleSteps: ["랜덤 타이머를 시작합니다.", "참가자가 미션 후 폭탄을 넘깁니다.", "터질 때 들고 있던 사람이 벌칙을 받습니다."], origin: "classic", source: "official" },
-  { id: "awards", name: "연말 시상식", archetype: "PICK", phase: "finale", duration: 10, places: ["room", "restaurant", "hall"], mode: "both", energy: 4, description: "오늘의 활약과 추억을 재미있는 상으로 마무리합니다.", hostScript: "오늘의 활약을 떠올리면서 각 부문 수상자를 정해볼게요!", ruleSteps: ["상 부문을 하나씩 읽습니다.", "참가자가 후보를 추천합니다.", "박수와 함께 수상자를 발표합니다."], origin: "variety", source: "official" },
-  { id: "silent-shout", name: "고요 속의 외침", archetype: "PERFORM", phase: "main", duration: 15, places: ["room", "hall"], mode: "team", energy: 5, description: "큰 소리 때문에 들리지 않는 상황에서 입모양과 몸짓만으로 제시어를 전달합니다.", hostScript: "한 명은 음악 때문에 듣지 못하고, 한 명은 입모양과 몸짓으로만 제시어를 설명합니다!", ruleSteps: ["팀별로 설명자와 맞히는 사람을 정합니다.", "맞히는 사람은 소리를 듣지 못하게 하고 제시어를 설명합니다.", "제한 시간 안에 맞힌 개수로 점수를 정합니다."], origin: "variety", series: ["new-journey"], source: "official" },
-  { id: "hunminjeongeum", name: "훈민정음", archetype: "TALK", phase: "main", duration: 10, places: ["room", "restaurant", "hall"], mode: "both", energy: 4, description: "지정한 자음만 써서 제시어를 설명하고, 제한 시간 안에 정답을 맞힙니다.", hostScript: "오늘은 특정 자음만 쓸 수 있어요. 말이 막히면 통과, 팀원이 맞히면 점수입니다!", ruleSteps: ["라운드에서 쓸 수 있는 자음을 정합니다.", "설명자는 그 자음만 써서 제시어를 설명합니다.", "제한 시간에 맞힌 개수를 기록합니다."], origin: "variety", series: ["new-journey"], source: "official" },
-  { id: "music-quiz-2v2", name: "2:2 음악 퀴즈", archetype: "QUIZ", phase: "main", duration: 15, places: ["room", "hall"], mode: "team", energy: 5, description: "짧게 들려주는 노래 도입부를 듣고 제목 또는 가수를 먼저 맞히는 팀전 퀴즈입니다.", hostScript: "도입부를 짧게 들려드릴게요. 팀원 둘이 빠르게 상의해서 정답을 외쳐주세요!", ruleSteps: ["팀별로 대답 순서와 점수를 정합니다.", "진행자가 준비한 음악 도입부를 짧게 재생합니다.", "제목 또는 가수를 먼저 맞힌 팀에 점수를 줍니다."], origin: "variety", series: ["earth-arcade"], source: "official" },
-  { id: "snack-quiz", name: "실물 과자 퀴즈", archetype: "QUIZ", phase: "icebreak", duration: 10, places: ["room", "restaurant", "hall"], mode: "both", energy: 4, description: "포장의 일부, 모양 또는 힌트를 보고 과자 이름을 맞히는 빠른 퀴즈입니다.", hostScript: "화면이나 실물로 힌트를 보여드릴게요. 가장 먼저 과자 이름을 맞히면 점수입니다!", ruleSteps: ["진행자가 과자 포장 일부나 힌트를 준비합니다.", "참가자가 보이는 단서로 과자 이름을 맞힙니다.", "정답을 확인하고 다음 문제로 넘어갑니다."], origin: "variety", series: ["earth-arcade"], source: "official" },
-];
-
-const gamesWithProfiles = gameDefinitions.map((game) => {
-  const profile = gameProfiles[game.id];
-  return profile ? { ...game, places: profile.places, profile } : game;
-});
-
-export const games = attachGameItems(gamesWithProfiles, seedGameItems);
+/**
+ * DB가 아직 비어 있거나 오프라인일 때도 CSV 원본과 동일한 카탈로그를 제공합니다.
+ * 이 파일을 직접 편집하지 말고 `data/*.csv`를 수정한 뒤 시드 생성기를 실행하세요.
+ */
+export const games = generatedFallbackGames;

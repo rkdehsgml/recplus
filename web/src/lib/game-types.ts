@@ -41,6 +41,18 @@ export type GameItem = {
   hint?: string;
 };
 
+/** 방송에서 확인한 게임의 시즌·회차별 등장 기록입니다. */
+export type GameAppearance = {
+  id: string;
+  series: GameSeries;
+  season: number;
+  episode?: number;
+  variantName: string;
+  evidenceTitle: string;
+  evidenceUrl?: string;
+  verificationStatus: "verified" | "needs-verification";
+};
+
 export type GameDefinition = {
   id: string;
   name: string;
@@ -57,6 +69,8 @@ export type GameDefinition = {
   origin?: GameOrigin;
   /** 방송 프로그램에서 확인한 게임 포맷. 하나의 게임이 여러 컬렉션에 속할 수 있습니다. */
   series?: GameSeries[];
+  /** 프로그램별 시즌·회차·변형 기록. 게임 본문과 분리해 중복을 막습니다. */
+  appearances?: GameAppearance[];
   profile?: GameProfile;
   /** DB 또는 임시 시드에서 결합된 콘텐츠 풀 */
   items?: GameItem[];

@@ -9,6 +9,7 @@ import {
   type Archetype,
   type EventContext,
   type GameDefinition,
+  type GameAppearance,
   type GameDifficulty,
   type GameItem,
   type GameItemKind,
@@ -29,6 +30,18 @@ type DatabaseGameItemRow = {
   prompt: string;
 };
 
+type DatabaseGameAppearanceRow = {
+  evidence_title: string;
+  evidence_url: string | null;
+  episode: number | null;
+  game_id: string;
+  id: string;
+  season: number;
+  series: string;
+  variant_name: string;
+  verification_status: string;
+};
+
 export type DatabaseGameRow = {
   archetype: string;
   contexts: unknown;
@@ -37,6 +50,7 @@ export type DatabaseGameRow = {
   duration_minutes: number;
   energy: number;
   game_items?: DatabaseGameItemRow[] | null;
+  game_appearances?: DatabaseGameAppearanceRow[] | null;
   host_script: string;
   id: string;
   mode: string;
@@ -87,6 +101,22 @@ function mapItem(row: DatabaseGameItemRow): GameItem | null {
   };
 }
 
+function mapAppearance(row: DatabaseGameAppearanceRow): GameAppearance | null {
+  if (!row.id || !isOneOf(row.series, gameSeries) || !row.variant_name
+    || !Number.isInteger(row.season) || row.season < 1
+    || !["verified", "needs-verification"].includes(row.verification_status)) return null;
+  return {
+    id: row.id,
+    series: row.series,
+    season: row.season,
+    ...(row.episode ? { episode: row.episode } : {}),
+    variantName: row.variant_name,
+    evidenceTitle: row.evidence_title,
+    ...(row.evidence_url ? { evidenceUrl: row.evidence_url } : {}),
+    verificationStatus: row.verification_status as GameAppearance["verificationStatus"],
+  };
+}
+
 /** Supabase 행을 기존 화면에서 사용하는 GameDefinition으로 변환합니다. */
 export function gameFromDatabaseRow(row: DatabaseGameRow): GameDefinition | null {
   if (!row.id || !row.name || !row.description
@@ -102,6 +132,10 @@ export function gameFromDatabaseRow(row: DatabaseGameRow): GameDefinition | null
     .sort((left, right) => left.position - right.position)
     .map(mapItem)
     .filter((item): item is GameItem => Boolean(item));
+  const appearances = (row.game_appearances ?? [])
+    .map(mapAppearance)
+    .filter((item): item is GameAppearance => Boolean(item))
+    .sort((left, right) => left.series.localeCompare(right.series) || left.season - right.season || (left.episode ?? 0) - (right.episode ?? 0));
 
   return {
     id: row.id,
@@ -117,6 +151,7 @@ export function gameFromDatabaseRow(row: DatabaseGameRow): GameDefinition | null
     ruleSteps: asRuleSteps(row.rule_steps),
     origin: isOneOf(row.origin, gameOrigins) ? row.origin as GameOrigin : "classic",
     series,
+    appearances,
     // 공개 카탈로그에서는 로컬 전용 게임과 구분해 읽기 전용 콘텐츠로 취급합니다.
     source: "official",
     ...(row.created_at ? { createdAt: row.created_at } : {}),
@@ -140,7 +175,8 @@ export const databaseGameSelect = `
   host_script, rule_steps, people_min, people_max, recommended_teams_min,
   recommended_teams_max, contexts, preparations, difficulty, source, origin, series,
   created_at, updated_at, moderation_status, review_note,
-  game_items ( id, game_id, kind, prompt, answer, hint, position )
+  game_items ( id, game_id, kind, prompt, answer, hint, position ),
+  game_appearances ( id, game_id, series, season, episode, variant_name, evidence_title, evidence_url, verification_status )
 `;
 
 /** 공개·발행된 게임과 문제팩을 한 번에 읽습니다. */

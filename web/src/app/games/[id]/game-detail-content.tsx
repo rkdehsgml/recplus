@@ -39,6 +39,7 @@ export default function GameDetailContent({ id }: { id: string }) {
   const items = [...gameItemsFor(game), ...addedItems];
   const itemTarget = itemTargetFor(game);
   const profile = game.profile;
+  const appearances = game.appearances ?? [];
 
   async function requestReview() {
     if (!game || game.source !== "custom") return;
@@ -104,6 +105,15 @@ export default function GameDetailContent({ id }: { id: string }) {
             <blockquote>“{game.hostScript}”</blockquote>
             <ol>{game.ruleSteps.map((step, index) => <li key={`${step}-${index}`}><span>{index + 1}</span><p>{step}</p></li>)}</ol>
           </article>
+
+          {appearances.length > 0 && <article className={styles.sectionCard}>
+            <div className={styles.sectionTitle}><p>ON SCREEN</p><h2>방송 등장 기록</h2><span>공식 페이지 또는 공식 영상으로 확인한 포맷이에요.</span></div>
+            <ul className={styles.appearanceList}>{appearances.map((appearance) => <li key={appearance.id}>
+              <div><b>{gameSeriesLabels[appearance.series]} {appearance.season}</b><span>{appearance.episode ? `${appearance.episode}회` : "시즌 기록"}</span></div>
+              <p>{appearance.variantName}</p>
+              {appearance.evidenceUrl ? <a href={appearance.evidenceUrl} target="_blank" rel="noreferrer">출처 보기 ↗</a> : <small>확인 중</small>}
+            </li>)}</ul>
+          </article>}
 
           <article className={styles.sectionCard}>
             <div className={styles.sectionTitle}><p>CONTENT PACK</p><h2>문제·제시어</h2><span>지금 {items.length}개 · 목표 {itemTarget}개{addedItems.length > 0 ? ` · 직접 추가한 ${addedItems.length}개 포함` : ""}</span></div>

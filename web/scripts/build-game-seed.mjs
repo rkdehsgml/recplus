@@ -17,7 +17,9 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const GAMES_CSV = join(root, "data", "games.csv");
 const ITEMS_CSV = join(root, "data", "game_items.csv");
+const APPEARANCES_CSV = join(root, "data", "game_appearances.csv");
 const OUT_SQL = join(root, "supabase", "seeds", "game_catalog_seed.sql");
+const OUT_FALLBACK = join(root, "src", "data", "generated-game-catalog.ts");
 
 const ARCHETYPES = ["QUIZ", "TALK", "SURVIVAL", "PERFORM", "PICK", "BOMB"];
 const PHASES = ["opening", "icebreak", "main", "finale"];
@@ -28,6 +30,7 @@ const DIFFICULTIES = ["easy", "moderate", "advanced"];
 const ORIGINS = ["variety", "classic", "original"];
 const SERIES = ["new-journey", "earth-arcade"];
 const ITEM_KINDS = ["prompt", "quiz", "host-only"];
+const APPEARANCE_STATUSES = ["verified", "needs-verification"];
 
 /** RFC 4180 최소 구현. 스프레드시트가 내보낸 따옴표·줄바꿈을 그대로 읽습니다. */
 function parseCsv(text) {
@@ -168,6 +171,26 @@ const items = parseCsv(readFileSync(ITEMS_CSV, "utf8")).map((row) => {
   };
 });
 
+const appearances = parseCsv(readFileSync(APPEARANCES_CSV, "utf8")).map((row) => {
+  if (!row.id) fail("등장 기록 id가 빈 행이 있습니다");
+  if (!gameIds.has(row.game_id)) fail(`등장 기록 ${row.id}: 존재하지 않는 game_id "${row.game_id}"`);
+  if (!SERIES.includes(row.series)) fail(`등장 기록 ${row.id}: series "${row.series}"`);
+  const season = Number(row.season);
+  if (!Number.isInteger(season) || season < 1 || season > 99) fail(`등장 기록 ${row.id}: season 값이 잘못됨`);
+  const episode = row.episode === "" ? null : Number(row.episode);
+  if (episode !== null && (!Number.isInteger(episode) || episode < 1 || episode > 999)) fail(`등장 기록 ${row.id}: episode 값이 잘못됨`);
+  if (!row.variant_name || row.variant_name.length > 100) fail(`등장 기록 ${row.id}: variant_name 길이(1~100)`);
+  if (!APPEARANCE_STATUSES.includes(row.verification_status)) fail(`등장 기록 ${row.id}: verification_status 값이 잘못됨`);
+  if (row.verification_status === "verified" && !row.evidence_url) fail(`등장 기록 ${row.id}: 검증 완료 기록에는 evidence_url이 필요함`);
+  return { id: row.id, gameId: row.game_id, series: row.series, season, episode, variantName: row.variant_name, evidenceTitle: row.evidence_title, evidenceUrl: row.evidence_url || null, verificationStatus: row.verification_status };
+});
+
+const appearanceIds = new Set();
+for (const appearance of appearances) {
+  if (appearanceIds.has(appearance.id)) fail(`등장 기록 id 중복: ${appearance.id}`);
+  appearanceIds.add(appearance.id);
+}
+
 if (errors.length > 0) {
   console.error(`검증 실패 ${errors.length}건`);
   for (const message of errors) console.error("  -", message);
@@ -176,6 +199,7 @@ if (errors.length > 0) {
 
 const withoutItems = games.filter((game) => !positionByGame.has(game.id)).map((game) => game.id);
 console.log(`게임 ${games.length}종 / 문항 ${items.length}개`);
+console.log(`방송 등장 기록 ${appearances.length}건`);
 if (withoutItems.length > 0) console.log(`문항 없는 게임: ${withoutItems.join(", ")}`);
 
 if (process.argv.includes("--check")) {
@@ -200,6 +224,11 @@ const gameValues = games.map((game) => `  (${[
 
 const itemValues = items.map((item) => `  (${[
   q(item.id), q(item.gameId), q(item.kind), q(item.prompt), q(item.answer), q(item.hint), int(item.position),
+].join(", ")})`).join(",\n");
+
+const appearanceValues = appearances.map((appearance) => `  (${[
+  q(appearance.id), q(appearance.gameId), q(appearance.series), int(appearance.season), int(appearance.episode),
+  q(appearance.variantName), q(appearance.evidenceTitle), q(appearance.evidenceUrl), q(appearance.verificationStatus),
 ].join(", ")})`).join(",\n");
 
 const sql = `-- 자동 생성 파일입니다. 직접 수정하지 마세요.
@@ -254,9 +283,39 @@ on conflict (id) do update set
   hint = excluded.hint,
   position = excluded.position;
 
+-- 방송 등장 기록도 CSV를 원본으로 동기화합니다.
+delete from public.game_appearances
+where game_id in (select id from public.games where source = 'official');
+
+insert into public.game_appearances (
+  id, game_id, series, season, episode, variant_name, evidence_title, evidence_url, verification_status
+)
+values
+${appearanceValues}
+on conflict (id) do update set
+  game_id = excluded.game_id,
+  series = excluded.series,
+  season = excluded.season,
+  episode = excluded.episode,
+  variant_name = excluded.variant_name,
+  evidence_title = excluded.evidence_title,
+  evidence_url = excluded.evidence_url,
+  verification_status = excluded.verification_status;
+
 commit;
 `;
 
 mkdirSync(dirname(OUT_SQL), { recursive: true });
 writeFileSync(OUT_SQL, sql, "utf8");
+const fallbackGames = games.map((game) => ({
+  id: game.id, name: game.name, archetype: game.archetype, phase: game.phase, duration: game.duration,
+  places: game.places, mode: game.mode, energy: game.energy, description: game.description,
+  hostScript: game.hostScript, ruleSteps: game.ruleSteps, origin: game.origin, series: game.series,
+  source: "official",
+  profile: { people: { min: game.peopleMin ?? 1, ...(game.peopleMax ? { max: game.peopleMax } : {}) }, ...(game.teamsMin && game.teamsMax ? { recommendedTeams: { min: game.teamsMin, max: game.teamsMax } } : {}), places: game.places, contexts: game.contexts, preparations: game.preparations, difficulty: game.difficulty },
+  items: items.filter((item) => item.gameId === game.id).map((item) => ({ id: item.id, gameId: item.gameId, kind: item.kind, prompt: item.prompt, ...(item.answer ? { answer: item.answer } : {}), ...(item.hint ? { hint: item.hint } : {}) })),
+  appearances: appearances.filter((appearance) => appearance.gameId === game.id).map((appearance) => ({ id: appearance.id, series: appearance.series, season: appearance.season, ...(appearance.episode ? { episode: appearance.episode } : {}), variantName: appearance.variantName, evidenceTitle: appearance.evidenceTitle, ...(appearance.evidenceUrl ? { evidenceUrl: appearance.evidenceUrl } : {}), verificationStatus: appearance.verificationStatus })),
+}));
+writeFileSync(OUT_FALLBACK, `// 자동 생성 파일입니다. 직접 수정하지 마세요.\n// 원본: data/games.csv, data/game_items.csv, data/game_appearances.csv\nimport type { GameDefinition } from "@/lib/game-types";\n\nexport const generatedFallbackGames: GameDefinition[] = ${JSON.stringify(fallbackGames, null, 2)};\n`, "utf8");
 console.log(`생성 완료: supabase/seeds/game_catalog_seed.sql (${(sql.length / 1024).toFixed(0)}KB)`);
+console.log(`생성 완료: src/data/generated-game-catalog.ts (${(JSON.stringify(fallbackGames).length / 1024).toFixed(0)}KB)`);

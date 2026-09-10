@@ -1,0 +1,11 @@
+id,game_id,series,season,episode,variant_name,evidence_title,evidence_url,verification_status
+ea1-snack-quiz-10,snack-quiz,earth-arcade,1,10,실물 과자 퀴즈,뿅뿅 지구오락실 10회 미리보기,https://tvn.cjenm.com/ko/tvneartharcade/episodes/,verified
+ea1-music-quiz-11,music-quiz-2v2,earth-arcade,1,11,2:2 음악 퀴즈,뿅뿅 지구오락실 11회 미리보기,https://tvn.cjenm.com/ko/tvneartharcade/episodes/,verified
+ea2-person-quiz-8,person-quiz,earth-arcade,2,8,인물 퀴즈,뿅뿅 지구오락실2 8회 미리보기,https://tvn.cjenm.com/ko/eartharcade2/episodes/,verified
+ea2-hunminjeongeum-curling-7,hunminjeongeum,earth-arcade,2,7,훈민정음 컬링,뿅뿅 지구오락실2 7회 미리보기,https://tvn.cjenm.com/ko/eartharcade2/episodes/,verified
+ea2-hunminjeongeum-alkkagi-11,hunminjeongeum,earth-arcade,2,11,훈민정음 알까기,뿅뿅 지구오락실2 11회 미리보기,https://tvn.cjenm.com/ko/eartharcade2/episodes/,verified
+ea3-charades-2v2-1,charades,earth-arcade,3,1,2:2 몸으로 말해요,뿅뿅 지구오락실3 1회 미리보기,https://tvn.cjenm.com/ko/eartharcade3/episodes/,verified
+ea3-word-chain-4,word-chain,earth-arcade,3,4,줄줄이 말해요,뿅뿅 지구오락실3 4회 미리보기,https://tvn.cjenm.com/ko/eartharcade3/episodes/,verified
+nj3-person-quiz-1,person-quiz,new-journey,3,1,인물 퀴즈,신서유기3 1회 미리보기,https://tvn.cjenm.com/ko/tvnbros3/episodes/,verified
+nj8-silent-shout,silent-shout,new-journey,8,,고요 속의 외침,신서유기8 게임 모음,https://www.youtube.com/watch?v=tF42lsvgEHA,verified
+nj8-hunminjeongeum,hunminjeongeum,new-journey,8,,훈민정음 탁구,신서유기8 게임 모음,https://www.youtube.com/watch?v=tF42lsvgEHA,verified
