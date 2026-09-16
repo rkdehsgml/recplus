@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "audit:supabase:readonly": "node --env-file=.env.local scripts/audit-supabase-readonly.mjs",
     "e2e:supabase": "node --env-file=.env.local scripts/verify-supabase-e2e.mjs",
     "start": "next start",
     "lint": "eslint"

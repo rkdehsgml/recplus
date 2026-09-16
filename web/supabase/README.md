@@ -12,7 +12,17 @@
 
 Supabase SQL Editor 또는 CLI에서 `migrations/` 파일을 파일명 순서대로 적용합니다. 이미 앞선 파일을 적용한 프로젝트라면 아직 적용하지 않은 파일부터 실행합니다.
 
-가장 마지막 서비스 기반 마이그레이션은 `20260906120000_service_foundation.sql`입니다. 이 파일은 원자적 저장 RPC, 로컬 데이터 동기화 대상 테이블, 제출 후 수정 잠금, 관리자 검수 RPC를 추가합니다.
+현재 저장소의 마지막 migration은 `20260916120000_add_event_plan_archive_rpc.sql`입니다. 파일럿 구조를 추가하기 전에는 먼저 이 디렉터리의 전체 목록과 대상 DB의 적용 목록을 대조합니다. 과거 파일을 수정하지 않고 새 migration을 추가합니다.
+
+## 1.1 파일럿 P00 읽기 전용 감사
+
+파일럿의 새 migration 또는 쓰기 E2E 전에 대상이 스테이징인지 운영인지 확인하고, 다음 명령으로 알려진 테이블의 접근 가능 여부와 행 수만 확인합니다.
+
+```bash
+pnpm audit:supabase:readonly
+```
+
+이 명령은 데이터를 변경하지 않고 원문·이메일·비밀값도 출력하지 않습니다. `HTTP 403`은 테이블이 비어 있다는 뜻이 아니라 현재 `service_role`에 조회 권한이 없다는 뜻입니다. `20260916110000_grant_service_role_audit_reads.sql` 적용 전 대상에서는 일부 기존 테이블이 이 상태로 보일 수 있습니다. migration 적용 이력, RLS/grant, 함수 실행 권한, 상태별 집계와 고아 참조는 SQL Editor에서 `audits/001_pilot_readonly_audit.sql`로 별도 확인합니다. 전체 절차와 통과 기준은 `../../doc/파일럿_DB적용감사.md`에 기록합니다.
 
 ## 2. 환경 변수
 

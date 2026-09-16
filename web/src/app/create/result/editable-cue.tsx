@@ -5,7 +5,7 @@ import { useMemo, useState, type DragEvent } from "react";
 import { createPortal } from "react-dom";
 import { arrangeByMoodFlow } from "@/engine/mood-flow";
 import { playModeFor, type RecommendedGame, type RecommendationInput } from "@/engine/recommend";
-import { saveCueSheet, updateCueSheet, type SavedCueSheet } from "@/lib/cuesheets";
+import { cacheCueSheet, saveCueSheet, updateCueSheet, type SavedCueSheet } from "@/lib/cuesheets";
 import { saveCueSheetToCloud } from "@/lib/event-plan-store";
 import { phaseLabels, placeLabels, type GameDefinition, type Phase } from "@/lib/game-types";
 import styles from "./page.module.css";
@@ -124,7 +124,12 @@ export default function EditableCue({ games, initialCue, input }: EditableCuePro
       ? updateCueSheet({ ...persistedCue, ...input, name: name.trim(), games: cue })
       : saveCueSheet({ ...input, name: name.trim(), games: cue });
     const cloud = await saveCueSheetToCloud(saved);
-    setPersistedCue(saved);
+    const persisted = cloud.status === "synced"
+      ? { ...saved, cloudRevision: cloud.revision }
+      : saved;
+    if (cloud.status === "synced") cacheCueSheet(persisted);
+    setCue(persisted.games);
+    setPersistedCue(persisted);
     setSavedId(saved.id);
     setSaving(false);
     setSaveMessage(

@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import BrandSelect from "@/app/ui/brand-select";
-import { playModeFor, type RecommendedGame } from "@/engine/recommend";
-import { getCueSheet, type SavedCueSheet } from "@/lib/cuesheets";
+import { playModeFor } from "@/engine/recommend";
+import { getCueSheet, type SavedCueSheet, type SavedCueSheetGame } from "@/lib/cuesheets";
 import { loadCloudCueSheet } from "@/lib/event-plan-store";
 import { createItemOrders, gameItemsFor, orderedGameItems, type ItemOrderByGame } from "@/lib/game-catalog";
 import type { GameDefinition } from "@/lib/game-types";
@@ -67,7 +67,7 @@ function withCurrentCatalog(cue: SavedCueSheet, officialGames: GameDefinition[],
 
   return {
     ...cue,
-    games: cue.games.map((game): RecommendedGame => {
+    games: cue.games.map((game): SavedCueSheetGame => {
       const latest = catalog.find((candidate) => candidate.id === game.id) ?? game;
 
       return {
@@ -75,6 +75,7 @@ function withCurrentCatalog(cue: SavedCueSheet, officialGames: GameDefinition[],
         allocatedDuration: game.allocatedDuration,
         reason: game.reason,
         playMode: game.playMode ?? playModeFor(latest, cue.mode),
+        planItemId: game.planItemId,
         items: currentItemsFor(latest, packs, catalog),
       };
     }),
